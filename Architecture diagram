@@ -1,0 +1,24 @@
+%% To create our architecture diagram we used mermaidchart.com
+graph TD;
+    A["User"] -- Requests --> B["Web App"];
+    
+    %% Frontend Layer
+    B -- API Calls --> D["API Gateway"];
+    
+    %% Java Backend
+    D -- Auth Requests --> E["Authentication Service"];
+    D -- Order Requests --> F["Order Management Service"];
+    D -- Web Requests --> J["XML"];
+    
+    %% Persistence layer
+    F -- Stores Orders --> I[("Relational Database")];
+    E -- Stores Users --> I;
+    
+    class B frontend;
+    class D,E,F backend;
+    class I,J persistence;
+    
+    %% Styling
+    classDef backend fill:#fcb42c,stroke:#333,stroke-width:2px;
+    classDef frontend fill:#fa4032,stroke:#333,stroke-width:2px;
+    classDef persistence fill:#44ccd0,stroke:#333,stroke-width:2px;
