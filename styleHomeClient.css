@@ -21,7 +21,7 @@ header {
 }
 
 footer {
-    height: 270px;
+    height: 250px;
     width: 100%;
     background-color: #fc3c30;
     margin-top: auto;
@@ -174,7 +174,7 @@ hr {
 }
 
 .about-us {
-    width: 400px;
+    width: 700px;
     height: 210px;
     background-color: #1c5c7e;
     color: white;
