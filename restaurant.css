@@ -214,6 +214,13 @@ hr {
     gap: 20px;
 }
 
+#sushi {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 20px;
+}
+
 #starters {
     display: flex;
     flex-wrap: wrap;
