@@ -1,15 +1,26 @@
-package com.example.we_tried.Order.model;
+package com.example.we_tried.order.model;
 
-import com.example.we_tried.Dish.model.Dish;
-import com.example.we_tried.Restaurant.model.Restaurant;
-import com.example.we_tried.User.model.User;
+
+import com.example.we_tried.restaurant.model.Restaurant;
+// import com.example.we_tried.User.model.User; // Uncomment this if the User class exists
+import com.example.we_tried.user.model.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Order {
 

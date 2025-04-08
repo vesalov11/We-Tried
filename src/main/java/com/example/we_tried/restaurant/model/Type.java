@@ -1,4 +1,4 @@
-package com.example.we_tried.Restaurant.model;
+package com.example.we_tried.restaurant.model;
 
 public enum Type {
 

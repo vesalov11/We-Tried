@@ -1,6 +1,6 @@
 package com.example.we_tried.user.model;
 
-import com.example.we_tried.Order.model.Order;
+import com.example.we_tried.order.model.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +47,6 @@ public class User {
     @Column(nullable = false)
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Order> orders;
 }

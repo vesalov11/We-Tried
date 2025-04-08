@@ -1,13 +1,23 @@
-package com.example.we_tried.Restaurant.model;
+package com.example.we_tried.restaurant.model;
 
-import com.example.we_tried.Dish.model.Dish;
-import com.example.we_tried.Order.model.Order;
+import com.example.we_tried.dish.model.Dish;
+import com.example.we_tried.order.model.Order;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Restaurant {
 
@@ -32,10 +42,10 @@ public class Restaurant {
 
     private String restaurantPicture;
 
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Dish> dishes;
 
 }

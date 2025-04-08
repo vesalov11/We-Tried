@@ -1,4 +1,4 @@
-package com.example.we_tried.Order.model;
+package com.example.we_tried.order.model;
 
 public enum OrderStatus {
 
