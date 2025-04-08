@@ -1,7 +1,8 @@
-package com.example.we_tried.Order.model;
+package com.example.we_tried.order.model;
 
 import com.example.we_tried.Dish.model.Dish;
 import jakarta.persistence.*;
+import org.hibernate.query.Order;
 
 import java.math.BigDecimal;
 import java.util.UUID;

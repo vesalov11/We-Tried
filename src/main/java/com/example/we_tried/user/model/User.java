@@ -1,12 +1,20 @@
-package com.example.we_tried.User.model;
+package com.example.we_tried.user.model;
 
 import com.example.we_tried.Order.model.Order;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id

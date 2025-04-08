@@ -1,4 +1,4 @@
-package com.example.we_tried.User.model;
+package com.example.we_tried.user.model;
 
 public enum Role {
 
