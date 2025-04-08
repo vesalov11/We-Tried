@@ -207,35 +207,15 @@ hr {
     text-decoration: none;
 }
 
-#pizzas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#sushi {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#starters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#salads {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#desserts {
+#pizzas,
+#pasta,
+#soups,
+#sushi,
+#main-course,
+#desserts,
+#salads,
+#starters
+ {
     display: flex;
     flex-wrap: wrap;
     justify-content: center; 
