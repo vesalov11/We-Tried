@@ -23,11 +23,11 @@ header h1 {
 
 header a button {
     background-color: #fff;
-    color: #08acb8;
+    color: #1c5c7e;
     border: none;
     padding: 10px 15px;
     margin-left: 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease;
@@ -47,7 +47,7 @@ main {
 section {
     background-color: #fff;
     border: 1px solid #0000001a;
-    border-radius: 8px;
+    border-radius: 25px;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 3px 5px #0000001a;
@@ -69,13 +69,4 @@ section p {
 
 section p strong {
     color: #333;
-}
-
-section ul {
-    list-style-type: disc;
-    padding-left: 20px;
-}
-
-section ul li {
-    margin-bottom: 5px;
 }
