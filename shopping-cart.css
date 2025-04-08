@@ -109,3 +109,89 @@ hr {
 .about-us a:hover{
     color: white;
 }
+
+main {
+    padding: 20px;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff5e0;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px #00000020;
+}
+
+  .product-info {
+    flex: 1;
+    margin-left: 20px;
+}
+  
+.qty-btn {
+    background-color: #125E78;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+  
+.qty-btn:hover {
+    background-color: #0f4e64;
+}
+
+.quantity-buttons input {
+    width: 40px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: white;
+}
+
+.order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px #00000022;
+    max-width: 400px;
+    margin: 30px auto 0 auto;
+}
+
+.order-info input,
+.order-info select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.order-info label {
+    font-weight: bold;
+    color: #444;
+}
+
+.order-button {
+    padding: 12px;
+    background-color: #125E78;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.order-button:hover {
+    background-color: #08acb8;
+    transition: background-color 0.3s ease;
+}

@@ -207,28 +207,15 @@ hr {
     text-decoration: none;
 }
 
-#pizzas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#starters {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#salads {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
-    gap: 20px;
-}
-
-#desserts {
+#pizzas,
+#pasta,
+#soups,
+#sushi,
+#main-course,
+#desserts,
+#salads,
+#starters
+ {
     display: flex;
     flex-wrap: wrap;
     justify-content: center; 
@@ -258,4 +245,55 @@ hr {
     text-align: center;
     border: 1px solid #fcbc54;
     border-radius: 10px;
+}
+
+.edit-buttons {
+    margin-left: 20px;
+    padding: 10px;
+    
+}
+
+.edit-buttons .edit {
+    background-color: #fc3c30;
+    color: white;
+    width: 50px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.edit-buttons .edit:hover {
+    background-color: #fc7f2e;
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.edit-buttons .save {
+    background-color: #1c5c7e;
+    color: white;
+    width: 50px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.edit-buttons .save:hover {
+    background-color: #08acb8;
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.edit-buttons .cancel {
+    background-color: #fc7f2e;
+    color: white;
+    width: 60px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.edit-buttons .cancel:hover {
+    background-color: #fcbc54;
+    transform: scale(1.03);
+    cursor: pointer;
 }
