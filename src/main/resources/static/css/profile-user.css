@@ -200,3 +200,61 @@ main {
     transform: translateY(-5px);
     box-shadow: 4px 8px 16px #00000033;
 }
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    #dropdown-button {
+        width: 100%;
+    }
+
+    #dropdown-content {
+        left: 0;
+        min-width: 100%;
+    }
+
+    .about-us {
+        width: 100%;
+        height: auto;
+        font-size: 14px;
+    }
+
+    .profile-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .user-info {
+        width: 90%;
+    }
+
+    .orders-title {
+        width: 90%;
+        font-size: 18px;
+    }
+
+    .order-row {
+        width: 90%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 14px;
+    }
+
+    .profile-circle {
+        width: 100px;
+        height: 100px;
+        font-size: 24px;
+    }
+
+    footer {
+        height: auto;
+        padding: 20px;
+        text-align: center;
+    }
+}
