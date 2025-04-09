@@ -8,8 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,10 +34,13 @@ public class Restaurant {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private LocalDateTime workingTime;
+    private LocalTime openingTime;
+
+    @Column(nullable = false)
+    private LocalTime closingTime;
 
     @Enumerated(EnumType.STRING)
-    private Type restaurantType;
+    private RestaurantType restaurantType;
 
     private String restaurantPicture;
 

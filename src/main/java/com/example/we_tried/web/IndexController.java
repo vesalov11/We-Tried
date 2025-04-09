@@ -22,39 +22,17 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public String getIndexPage() {
-        return "index";
-    }
-
-    @GetMapping("/register")
-    public ModelAndView getRegisterPage() {
-        ModelAndView modelAndView = new ModelAndView("register");
+    public ModelAndView getIndexPage() {
+        ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("loginRequest", new LoginRequest());
         modelAndView.addObject("registerRequest", new RegisterRequest());
         return modelAndView;
-    }
-
-    @PostMapping("/register")
-    public String processRegister(@Valid RegisterRequest registerRequest, BindingResult bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
-
-        userService.register(registerRequest);
-        return "redirect:/login";
-    }
-
-    @GetMapping("/login")
-    public ModelAndView getLoginPage() {
-        ModelAndView mav = new ModelAndView("login");
-        mav.addObject("loginRequest", new LoginRequest());
-        return mav;
-
     }
 
     @PostMapping("/login")
     public String processLogin(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
-            return "login";
+            return "index";
         }
 
         User user = userService.login(loginRequest);
@@ -62,6 +40,13 @@ public class IndexController {
         return "redirect:/home";
     }
 
+    @PostMapping("/register")
+    public String processRegister(@Valid RegisterRequest registerRequest, BindingResult bindingResult, HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            return "index";
+        }
 
-
+        userService.register(registerRequest);
+        return "redirect:/login";
+    }
 }

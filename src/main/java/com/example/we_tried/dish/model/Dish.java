@@ -40,9 +40,8 @@ public class Dish {
     private DishType dishType;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dish", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 }

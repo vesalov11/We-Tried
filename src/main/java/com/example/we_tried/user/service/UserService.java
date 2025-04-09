@@ -1,9 +1,5 @@
 package com.example.we_tried.user.service;
 
-import com.example.we_tried.exception.UsernameAlreadyExistsException;
-import com.example.we_tried.exception.UsernameNotFoundException;
-import com.example.we_tried.exception.UsernameOrPasswordNotFoundException;
-import com.example.we_tried.user.model.Role;
 import com.example.we_tried.user.model.User;
 import com.example.we_tried.user.repository.UserRepository;
 import com.example.we_tried.web.dto.LoginRequest;
@@ -30,7 +26,7 @@ public class UserService {
     public User register(RegisterRequest registerRequest) {
         Optional<User> optionalUser = userRepository.findByUsernameOrEmail(registerRequest.getUsername(), registerRequest.getEmail());
         if(optionalUser.isPresent()) {
-            throw new UsernameAlreadyExistsException("This username already exists");
+            throw new RuntimeException("This username already exists");
         }
         User user = userRepository.save(initializeUser(registerRequest));
         return user;
@@ -42,19 +38,18 @@ public class UserService {
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .confirmPassword(passwordEncoder.encode(registerRequest.getConfirmPassword()))
-                .role(Role.USER)
                 .build();
     }
 
     public User login(LoginRequest loginRequest){
         Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
         if(optionalUser.isEmpty()){
-            throw new UsernameNotFoundException("Username not found");
+            throw new RuntimeException("Invalid username or password");
         }
         User user = optionalUser.get();
 
         if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new UsernameOrPasswordNotFoundException("Incorect password");
+            throw new RuntimeException("Invalid username or password");
         }
         return user;
     }

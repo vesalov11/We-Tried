@@ -36,9 +36,6 @@ public class User {
 
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     private String profilePictureUrl;
 
     @Column(nullable = false, unique = true)
