@@ -195,3 +195,63 @@ main {
     background-color: #08acb8;
     transition: background-color 0.3s ease;
 }
+
+@media screen and (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        gap: 10px;
+    }
+
+    .about-us {
+        width: 95%;
+        height: auto;
+        padding: 15px;
+        font-size: 14px;
+        margin: 0 auto;
+    }
+
+    .product {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .product-info {
+        margin-left: 0;
+    }
+
+    .quantity-buttons {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .order-info {
+        width: 90%;
+    }
+
+    #dropdown-button {
+        width: 100%;
+    }
+
+    #dropdown-content {
+        left: 0;
+        min-width: 100%;
+    }
+
+    .qty-btn,
+    .quantity-buttons input {
+        height: 30px;
+        width: 30px;
+        font-size: 16px;
+    }
+
+    footer {
+        height: auto;
+        padding: 20px;
+        text-align: center;
+    }
+}
