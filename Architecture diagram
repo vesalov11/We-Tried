@@ -1,24 +1,15 @@
-%% To create our architecture diagram we used mermaidchart.com
+%% За създаването на архитектурната диаграма сме използвали mermaidchart.com
 graph TD;
-    A["User"] -- Requests --> B["Web App"];
-    
-    %% Frontend Layer
-    B -- API Calls --> D["API Gateway"];
-    
-    %% Java Backend
-    D -- Auth Requests --> E["Authentication Service"];
-    D -- Order Requests --> F["Order Management Service"];
-    D -- Web Requests --> J["XML"];
-    
-    %% Persistence layer
-    F -- Stores Orders --> I[("Relational Database")];
-    E -- Stores Users --> I;
-    
-    class B frontend;
-    class D,E,F backend;
-    class I,J persistence;
-    
+    A[Client] -->|HTTP Requests| B[Presentation Layer];
+    B -->|Method Calls| C[Business Logic Layer];
+    C -->|Data Access| D[Data Access Layer];
+    D -->|CRUD Operations| E[(Database)];
+
     %% Styling
-    classDef backend fill:#fcb42c,stroke:#333,stroke-width:2px;
-    classDef frontend fill:#fa4032,stroke:#333,stroke-width:2px;
-    classDef persistence fill:#44ccd0,stroke:#333,stroke-width:2px;
+    class A,B Client;
+    class C,D Server;
+    class E BD;
+
+    classDef Client fill:#fa4032,stroke:#333,stroke-width:2px;
+    classDef Server fill:#fcb42c,stroke:#333,stroke-width:2px;
+    classDef BD fill:#44ccd0,stroke:#333,stroke-width:2px;
