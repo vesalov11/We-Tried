@@ -1,0 +1,223 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fcf3e3;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #1c5c7e;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px #0000001a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo img {
+    height: 50px;
+}
+
+.orders-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.order-card {
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    display: flex;
+    gap: 2rem;
+    box-shadow: 0 2px 5px #0000001a;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px #00000033;
+}
+
+.restaurant-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.order-info {
+    flex: 1;
+}
+
+.order-info h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.items {
+    color: #34495e;
+    margin-bottom: 0.3rem;
+}
+
+.price {
+    color: #27ae60;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.address {
+    color: #7f8c8d;
+    font-style: italic;
+}
+.phone {
+    color: #34495e;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.phone:hover {
+    background-color: #d5dbdb;
+    transform: scale(1.05);
+}
+
+nav a {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nav-button {
+    background-color: white;
+    color: #1c5c7e;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.nav-button:hover {
+    background-color: #08acb8;
+    color: #fff;
+    transform: scale(1.03);
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    transform: scale(1.5);
+    cursor: pointer;
+    accent-color: #2c3e50;
+}
+
+.checkbox-container label {
+    font-size: 1.2em;
+    color: #34495e;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.checkbox-container label:hover {
+    color: #04376b;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white; 
+    color: #1c5c7e;
+    min-width: 120px; 
+    box-shadow: 0 4px 6px #0000001a;
+    border-radius: 20px;
+    z-index: 1000;
+    border: 1px solid #dcdcdc;
+}
+
+.dropdown-content a {
+    background-color: white;
+    color: #1c5c7e;
+    padding: 8px 15px; 
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #08acb8;
+    color: white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown .nav-button {
+    background-color: white;
+    color: #1c5c7e;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.dropdown .nav-button:hover {
+    background-color: #08acb8;
+    color: white;
+    transform: scale(1.05);
+}
+
+.order-card {
+    position: relative;
+}
+
+.remove-order {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.remove-order img {
+    width: 20px;
+    height: 20px;
+}
+
+.orderplased, .orderexpected {
+    font-size: 1em;
+    margin-top: 1rem;
+    color: #34495e;
+    text-shadow: none;
+    background: none;
+    box-shadow: none;
+}
