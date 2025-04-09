@@ -94,3 +94,34 @@ button:hover {
     transition: background-color 0.3s ease;
 }
 
+@media screen and (max-width: 768px) {
+    body {
+        background-attachment: scroll; 
+        padding: 20px;
+        height: auto;
+    }
+
+    .container {
+        width: 100%;
+        padding: 20px;
+        border-width: 5px;
+    }
+
+    .form-box {
+        max-width: 100%;
+    }
+
+    .toggle-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toggle-buttons label {
+        width: 100%;
+        text-align: center;
+    }
+
+    input, button {
+        font-size: 14px;
+    }
+}
