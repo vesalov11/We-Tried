@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Pizzaria Heaven</title>
-        <link rel = "stylesheet" href="restaurant.css">
+        <link rel = "stylesheet" href="../static/css/restaurant.css">
     </head>
 
     <body>
@@ -16,9 +16,10 @@
                 </div>
 
                 <div class = dropdown-menu>
-                    <button id = "dropdown-button">User</button>
+                    <button id = "dropdown-button">Admin</button>
                     <div id = "dropdown-content">
                         <a href = "profile-user.html">Profile</a>
+                        <a href="orders-admin.html">Orders</a>
                         <a href = "">Help</a>
                         <a href= "home.html">Home</a>
                         <a href = "index.html">Log Out</a>
@@ -30,11 +31,17 @@
 
         <main>
 
+            <div class="edit-buttons">
+                <button class="edit"> Edit</button>
+                <button class="save"> Save</button>
+                <button class="cancel"></i> Cancel</button>
+            </div>
+
             <div class = "menus">
                 <a href="#salads"><button>Salads</button></a>
                 <a href="#starters"><button>Starters</button></a>
                 <a href="#pizzas"><button>Pizzas</button></a>
-                <a href="#desserts"><button>Desserts</button></a>
+                <a href="desserts"><button>Desserts</button></a>
             </div>
 
             <br>
