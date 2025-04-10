@@ -2,8 +2,8 @@ package com.example.we_tried.user.service;
 
 import com.example.we_tried.user.model.User;
 import com.example.we_tried.user.repository.UserRepository;
-import com.example.we_tried.web.dto.LoginRequest;
-import com.example.we_tried.web.dto.RegisterRequest;
+import com.example.we_tried.login.LoginRequest;
+import com.example.we_tried.register.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-
 public class UserService {
     
     private final UserRepository userRepository;
@@ -23,13 +22,18 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User register(RegisterRequest registerRequest) {
+    public void register(RegisterRequest registerRequest) {
+
         Optional<User> optionalUser = userRepository.findByUsernameOrEmail(registerRequest.getUsername(), registerRequest.getEmail());
         if(optionalUser.isPresent()) {
             throw new RuntimeException("This username already exists");
         }
-        User user = userRepository.save(initializeUser(registerRequest));
-        return user;
+
+        if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+            throw new RuntimeException("Passwords do not match!");
+        }
+
+        userRepository.save(initializeUser(registerRequest));
     }
 
     private User initializeUser(RegisterRequest registerRequest) {
@@ -37,11 +41,11 @@ public class UserService {
                 .username(registerRequest.getUsername())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .confirmPassword(passwordEncoder.encode(registerRequest.getConfirmPassword()))
                 .build();
     }
 
     public User login(LoginRequest loginRequest){
+
         Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
         if(optionalUser.isEmpty()){
             throw new RuntimeException("Invalid username or password");
@@ -51,6 +55,7 @@ public class UserService {
         if(!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid username or password");
         }
+
         return user;
     }
 }
