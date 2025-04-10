@@ -1,9 +1,9 @@
 %% За създаването на архитектурната диаграма сме използвали mermaidchart.com
 graph TD;
-    A[Client] -->|HTTP Requests| B[Presentation Layer];
-    B -->|Method Calls| C[Business Logic Layer];
-    C -->|Data Access| D[Data Access Layer];
-    D -->|CRUD Operations| E[(Database)];
+    A[Client] --> B[Presentation Layer];
+    B --> C[Business Logic Layer];
+    C --> D[Data Access Layer];
+    D --> E[(Database)];
 
     %% Styling
     class A,B Client;
