@@ -1,0 +1,15 @@
+%% За създаването на архитектурната диаграма сме използвали mermaidchart.com
+graph TD;
+    A[Client] --> B[Presentation Layer];
+    B --> C[Business Logic Layer];
+    C --> D[Data Access Layer];
+    D --> E[(Database)];
+
+    %% Styling
+    class A,B Client;
+    class C,D Server;
+    class E BD;
+
+    classDef Client fill:#fa4032,stroke:#333,stroke-width:2px;
+    classDef Server fill:#fcb42c,stroke:#333,stroke-width:2px;
+    classDef BD fill:#44ccd0,stroke:#333,stroke-width:2px;
