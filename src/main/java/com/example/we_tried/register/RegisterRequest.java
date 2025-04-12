@@ -23,6 +23,4 @@ public class RegisterRequest {
     @NotNull
     @Size(min = 6, max = 20, message = "The length must be between 6 and 20 symbols")
     private String confirmPassword;
-
-
 }
