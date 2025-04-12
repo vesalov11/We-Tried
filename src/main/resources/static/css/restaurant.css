@@ -222,6 +222,10 @@ hr {
     gap: 20px;
 }
 
+.price {
+    color: #1c5c7e;
+}
+
 .dish {
     display: inline-block;
     margin: 15px;
