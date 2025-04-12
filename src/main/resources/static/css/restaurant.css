@@ -257,7 +257,7 @@ hr {
     
 }
 
-.edit-buttons .edit {
+.edit-buttons .add {
     background-color: #fc3c30;
     color: white;
     width: 50px;
@@ -266,7 +266,7 @@ hr {
     border-radius: 5px;
 }
 
-.edit-buttons .edit:hover {
+.edit-buttons .add:hover {
     background-color: #fc7f2e;
     transform: scale(1.03);
     cursor: pointer;
@@ -287,7 +287,7 @@ hr {
     cursor: pointer;
 }
 
-.edit-buttons .cancel {
+.edit-buttons .delete {
     background-color: #fc7f2e;
     color: white;
     width: 60px;
@@ -296,7 +296,7 @@ hr {
     border-radius: 5px;
 }
 
-.edit-buttons .cancel:hover {
+.edit-buttons .delete:hover {
     background-color: #fcbc54;
     transform: scale(1.03);
     cursor: pointer;
