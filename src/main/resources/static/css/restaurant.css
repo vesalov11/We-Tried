@@ -302,6 +302,23 @@ hr {
     cursor: pointer;
 }
 
+.add {
+    padding: 10px;
+    width: 100px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1c5c7e;
+    color: white;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.add:hover{
+    background-color: #08acb8;
+    transform: scale(1.03);
+}
+
 @media screen and (max-width: 768px) {
     .navbar {
         flex-direction: column;
