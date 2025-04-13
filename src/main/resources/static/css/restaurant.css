@@ -272,16 +272,16 @@ hr {
     cursor: pointer;
 }
 
-.edit-buttons .save {
+.edit-buttons .update {
     background-color: #1c5c7e;
     color: white;
-    width: 50px;
+    width: 70px;
     padding: 10px;
     border: none;
     border-radius: 5px;
 }
 
-.edit-buttons .save:hover {
+.edit-buttons .update:hover {
     background-color: #08acb8;
     transform: scale(1.03);
     cursor: pointer;
