@@ -3,6 +3,7 @@ package com.example.we_tried.restaurant.service;
 import com.example.we_tried.restaurant.controller.CreateRestaurantRequest;
 import com.example.we_tried.restaurant.controller.UpdateRestaurantRequest;
 import com.example.we_tried.restaurant.model.Restaurant;
+import com.example.we_tried.restaurant.model.RestaurantType;
 import com.example.we_tried.restaurant.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,19 @@ public class RestaurantService {
 
     public Restaurant getById(UUID id) {
         return restaurantRepository.findById(id).orElseThrow(() -> new RuntimeException("Restaurant not found"));
+    }
+
+    public List<Restaurant> getByType(RestaurantType type) {
+        return restaurantRepository.findByType(type);
+    }
+
+    public List<Restaurant> searchByName(String query) {
+        return restaurantRepository.findByNameContainingIgnoreCase(query);
+    }
+
+    public Restaurant getByIdWithDishes(UUID id) {
+        return restaurantRepository.findByIdWithDishes(id)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
     }
 
     public void create(CreateRestaurantRequest request) {

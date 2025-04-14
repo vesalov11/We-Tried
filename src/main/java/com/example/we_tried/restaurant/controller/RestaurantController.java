@@ -1,4 +1,5 @@
 package com.example.we_tried.restaurant.controller;
+import com.example.we_tried.dish.model.DishType;
 import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.restaurant.model.RestaurantType;
 import com.example.we_tried.restaurant.service.RestaurantService;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -25,6 +28,41 @@ public class RestaurantController {
     @Autowired
     public RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
+    }
+
+    @GetMapping
+    public ModelAndView getAllRestaurants(
+            @RequestParam(required = false) RestaurantType type,
+            @RequestParam(required = false) String search
+    ) {
+        List<Restaurant> restaurants;
+
+        if(type != null) {
+            restaurants = restaurantService.getByType(type);
+        } else if(search != null && !search.isEmpty()) {
+            restaurants = restaurantService.searchByName(search);
+        } else {
+            restaurants = restaurantService.getAll();
+        }
+
+        ModelAndView modelAndView = new ModelAndView("home");
+        modelAndView.addObject("restaurants", restaurants);
+        modelAndView.addObject("restaurantTypes", RestaurantType.values());
+        modelAndView.addObject("searchQuery", search);
+        return modelAndView;
+    }
+
+
+    @GetMapping("/{restaurantId}")
+    public ModelAndView getRestaurantDetails(@PathVariable UUID restaurantId) {
+
+        Restaurant restaurant = restaurantService.getByIdWithDishes(restaurantId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("restaurant");
+        modelAndView.addObject("restaurant", restaurant);
+        modelAndView.addObject("dishTypes", DishType.values());
+        return modelAndView;
     }
 
     @DeleteMapping("/delete/{restaurantId}")

@@ -7,8 +7,10 @@ import com.example.we_tried.register.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -57,5 +59,10 @@ public class UserService {
         }
 
         return user;
+    }
+
+    public User getById(@PathVariable UUID id) {
+
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User with id [%s] not found.".formatted(id)));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.we_tried.order.model;
 
 
+import com.example.we_tried.cart.model.Cart;
 import com.example.we_tried.restaurant.model.Restaurant;
 // import com.example.we_tried.User.model.User; // Uncomment this if the User class exists
 import com.example.we_tried.user.model.User;
@@ -37,7 +38,11 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private String deliveryAddress;
+
+    private String paymentMethod;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @ManyToOne
@@ -45,5 +50,8 @@ public class Order {
 
     @ManyToOne
     private Restaurant restaurant;
+
+    @ManyToOne
+    private Cart cart;
 
 }
