@@ -29,8 +29,16 @@ public class LoginController {
         }
 
         User user = userService.login(loginRequest);
-        session.setAttribute("user_id", user.getId());
 
-        return "redirect:/home";
+        session.setAttribute("user_id", user.getId());
+        session.setAttribute("role", user.getRole());
+
+
+        switch (user.getRole()) {
+            case DELIVERER:
+                return "redirect:/deliverer/home";
+            default:
+                return "redirect:/home";
+        }
     }
 }
