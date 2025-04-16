@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Budget</title>
+    <link rel="stylesheet" href="../static/css/revenue.css">
+</head>
+
+<body>
+<header>
+    <div class="navbar">
+        <div id="logo">LOGO</div>
+
+        <div class="search-box-container">
+            <input type="text" class="search-box" placeholder="Search here...">
+            <button class="search-button">Search</button>
+        </div>
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Admin</button>
+            <div id="dropdown-content">
+                <a href="profile-admin.html">Profile</a>
+                <a href="orders-admin.html">Orders</a>
+                <a href="#">Help</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="filter-buttons">
+        <button class="filter" onclick="fetchData('daily')">Daily</button>
+        <button class="filter" onclick="fetchData('weekly')">Weekly</button>
+        <button class="filter" onclick="fetchData('monthly')">Monthly</button>
+        <button class="filter" onclick="fetchData('yearly')">Yearly</button>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="data-section">
+        <h2>Revenue Data</h2>
+        <table id="revenue-table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Revenue</th>
+            </tr>
+            </thead>
+            <tbody id="revenue-body"></tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+</main>
+
+<footer>
+    <div class="about-us"></div>
+    <strong>WeDeliver</strong><br>
+    <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
+        Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+    <p>Find us on:<br>
+        📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+        📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+    </p>
+
+    <p>Or you can call us on 📞 +359*********<br>
+        and send us an email on 📧 wedeliver@gmail.com</p>
+    </div>
+</footer>
+
+<script>
+    const data = {
+        daily: [
+            { date: '2023-10-01', revenue: '$500' },
+            { date: '2023-10-02', revenue: '$450' },
+        ],
+        weekly: [
+            { date: '2', revenue: '$3000' },
+            { date: '4/8/2025 - 4/16/2025', revenue: '$3200' },
+        ],
+        monthly: [
+            { date: 'October', revenue: '$12000' },
+            { date: 'November', revenue: '$15000' },
+        ],
+        yearly: [
+            { date: '2022', revenue: '$150000' },
+            { date: '2023', revenue: '$180000' },
+        ],
+    };
+
+    function fetchData(period) {
+        const tableBody = document.getElementById('revenue-body');
+        tableBody.innerHTML = ''; // Clear existing data
+
+        const periodData = data[period];
+        periodData.forEach(entry => {
+            const row = document.createElement('tr');
+            const dateCell = document.createElement('td');
+            const revenueCell = document.createElement('td');
+
+            dateCell.textContent = entry.date;
+            revenueCell.textContent = entry.revenue;
+
+            row.appendChild(dateCell);
+            row.appendChild(revenueCell);
+            tableBody.appendChild(row);
+        });
+    }
+</script>
+</body>
+</html>
