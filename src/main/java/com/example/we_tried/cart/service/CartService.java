@@ -7,6 +7,7 @@ import com.example.we_tried.dish.repository.DishRepository;
 import com.example.we_tried.order.model.Order;
 import com.example.we_tried.order.model.OrderItem;
 import com.example.we_tried.order.model.OrderStatus;
+import com.example.we_tried.order.model.PaymentMethod;
 import com.example.we_tried.order.repository.OrderItemRepository;
 import com.example.we_tried.order.repository.OrderRepository;
 import com.example.we_tried.restaurant.model.Restaurant;
@@ -145,7 +146,7 @@ public class CartService {
 
         for (Order order : cart.getOrders()) {
             order.setDeliveryAddress(deliveryAddress);
-            order.setPaymentMethod(paymentMethod);
+            order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
             order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
             order.setCart(null);
             orderRepository.save(order);
