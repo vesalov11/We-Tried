@@ -15,6 +15,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,13 +40,18 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
+    @Column(nullable = false)
     private String deliveryAddress;
 
-    private String paymentMethod;
+    @Column(nullable = false)
+    private PaymentMethod paymentMethod;
 
-    private LocalDateTime acceptedAt;
+    private LocalTime acceptedAt;
 
-    private LocalDateTime deliveredAt;
+    private LocalTime deliveredAt;
+
+    @Column(nullable = false)
+    private String phoneNumber;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;

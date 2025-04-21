@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Budget</title>
+    <title>Revenue</title>
     <link rel="stylesheet" href="../static/css/revenue.css">
 </head>
-
 <body>
 <header>
     <div class="navbar">
@@ -19,7 +18,7 @@
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
                 <a href="profile-user.html">Profile</a>
-                <!-- Да се добави път-->
+                <!-- Add paths -->
                 <a href="">Orders</a>
                 <a href="#">Help</a>
             </div>
@@ -29,10 +28,10 @@
 
 <main>
     <div class="filter-buttons">
-        <button class="filter" onclick="fetchData('daily')">Daily</button>
-        <button class="filter" onclick="fetchData('weekly')">Weekly</button>
-        <button class="filter" onclick="fetchData('monthly')">Monthly</button>
-        <button class="filter" onclick="fetchData('yearly')">Yearly</button>
+        <button class="filter" th:onclick="'fetchData('daily')'">Daily</button>
+        <button class="filter" th:onclick="'fetchData('weekly')'">Weekly</button>
+        <button class="filter" th:onclick="'fetchData('monthly')'">Monthly</button>
+        <button class="filter" th:onclick="'fetchData('yearly')'">Yearly</button>
     </div>
 
     <br>
@@ -48,8 +47,11 @@
                 <th>Revenue</th>
             </tr>
             </thead>
-            <tbody id="revenue-body"></tbody>
-
+            <tbody id="revenue-body">
+            <tr th:each="revenue : ${revenueList}">
+                <td th:text="${revenue.date}"></td>
+                <td th:text="${revenue.revenue}"></td>
+            </tr>
             </tbody>
         </table>
     </div>
@@ -97,7 +99,7 @@
 
     function fetchData(period) {
         const tableBody = document.getElementById('revenue-body');
-        tableBody.innerHTML = ''; // Clear existing data
+        tableBody.innerHTML = '';
 
         const periodData = data[period];
         periodData.forEach(entry => {
@@ -114,5 +116,6 @@
         });
     }
 </script>
+
 </body>
 </html>

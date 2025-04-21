@@ -1,101 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
 </head>
 
 <body>
 <header>
-    <div class = "navbar">
-        <div id = "logo">LOGO</div>
+    <div class="navbar">
+        <div id="logo">LOGO</div>
 
-        <div class = "search-box-container">
-            <input type="text" class = "search-box" placeholder="Search here...">
-            <button class="search-button">Search</button>
+        <div class="search-box-container">
+            <form th:action="@{/restaurants}" th:method="GET">
+                <input type="text" class="search-box" name="search" th:value="${searchQuery}" placeholder="Search here...">
+                <button class="search-button" type="submit">Search</button>
+            </form>
         </div>
 
-        <div class = dropdown-menu>
-            <button id = "dropdown-button">User</button>
-            <div id = "dropdown-content">
-                <a href = "profile-user.html">Profile</a>
-                <a href = "">Help</a>
-                <a href = "index.html">Log Out</a>
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Admin</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile-admin}">Profile</a>
+                <a th:href="@{/orders-admin}">Orders</a>
+                <a href="#">Help</a>
+                <a th:href="@{/}">Log Out</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="edit-buttons">
+        <a th:href="@{/restaurants/new}">
+            <button class="add">Add</button>
+        </a>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="restaurants-list">
+        <div class="restaurants" th:each="restaurant : ${restaurants}">
+            <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">
+                <img th:src="@{${restaurant.restaurantPicture}}" th:alt="${restaurant.name}">
+            </a>
+            <div class="description" th:text="${restaurant.name}">Restaurant Name</div>
+
+            <div class="edit-buttons">
+                <a th:href="@{/restaurants/update/{restaurantId}(restaurantId=${restaurant.id})}">
+                    <button class="update">Update</button>
+                </a>
+                <form th:action="@{/restaurants/delete/{restaurantId}(restaurantId=${restaurant.id})}" method="post">
+                    <input type="hidden" name="_method" value="delete"/>
+                    <button type="submit" class="delete">Delete</button>
+                </form>
             </div>
         </div>
     </div>
 
-</header>
-
-<main>
-
-    <br>
-    <hr>
-    <br>
-
-    <div class = "restaurants-list">
-        <div class = "restaurants">
-            <a href="restaurant1.html">
-                <img src = "/images/restaurant1.jpg" alt = "Pizzaria Heaven">
-            </a>
-            <div class = "description">Pizzaria Heaven</div>
-        </div>
-
-        <div class = "restaurants">
-            <a href="restaurant2.html">
-                <img src = "/images/restaurant2.jpg" alt = "Asian Point">
-            </a>
-            <div class = "description">Asian Point</div>
-        </div>
-
-        <div class = "restaurants">
-            <a href="restaurant3.html">
-                <img src = "/images/restaurant3.jpg" alt = "Bulgarian Devotion">
-            </a>
-            <div class = "description">Bulgarian Devotion</div>
-        </div>
-
-        <div class = "restaurants">
-            <a href="restaurant4.html">
-                <img src = "/images/restaurant4.jpg" alt = "Italiana">
-            </a>
-            <div class = "description">Italiana</div>
-        </div>
-
-        <div class = "restaurants">
-            <a href="restaurant5.html">
-                <img src = "/images/restaurant5.jpg" alt = "Mediterranean Guy">
-            </a>
-            <div class = "description">Mediterranean Guy</div>
-        </div>
-
-    </div>
-
-    <a href = "shopping-cart.html">
-        <div class = "cart-icon">
+    <a th:href="@{/shopping-cart}">
+        <div class="cart-icon">
             🛒
         </div>
     </a>
+
     <br>
     <hr>
     <br>
-
 </main>
 
 <footer>
-    <div class = "about-us">WeDeliver<br>
-        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants. <br>
+    <div class="about-us">
+        <strong>WeDeliver</strong><br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
             Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
 
         <p>Find us on:<br>
-            📸Instagram: <a href = "www.instagram.com">@wedeliver</a><br>
-            📘Facebook: <a href = "www.facebook.com">WeDeliver</a>
+            📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
         </p>
 
-        <p>Or you can call us on 📞+359*********<br>
-            and send us an email on 📧wedeliver@gmail.com</p>
+        <p>Or you can call us on 📞 +359*********<br>
+            and email us on 📧 wedeliver@gmail.com</p>
     </div>
 </footer>
-
 </body>
 </html>

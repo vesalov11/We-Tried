@@ -1,83 +1,74 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
-  <title>Delivery Profile</title>
-  <link rel="stylesheet" href="../static/css/profile-user.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Profile</title>
+    <link rel="stylesheet" th:href="@{/css/profile-user.css}"/>
 </head>
 <body>
 
-    <header>
+<header>
+    <div class="navbar">
+        <div id="logo">LOGO</div>
 
-        <div class = "navbar">
-            <div id = "logo">LOGO</div>
-
-            <div class = dropdown-menu>
-                <button id = "dropdown-button">User</button>
-                <div id = "dropdown-content">
-                    <a href = "profile-user.html">Profile</a>
-                    <a href = "">Help</a>
-                    <a href= "home.html">Home</a>
-                    <a href = "index.html">Log Out</a>
-                </div>
+        <div class="dropdown-menu">
+            <button id="dropdown-button">User</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile-user}">Profile</a>
+                <a href="#">Help</a>
+                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/logout}">Log Out</a>
             </div>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <div class="profile-section" th:object="${user}">
+        <div class="profile-circle">
+
+            <img th:src="@{|/images/${user.profilePictureUrl}|}" alt="Profile Picture"/>
+
+        </div>
+        <div class="user-info">
+            <p><strong>Username:</strong>
+                <a th:href="@{/users/{id}(id=${user.id})}" th:text="${user.username}">username</a>
+            </p>
+            <p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
+            <p><strong>Password:</strong> ************</p>
+        </div>
     </div>
 
-    </header>
-
-    <main>
-        <div class="profile-section">
-          <div class="profile-circle">
-            <img src="image.png" alt="Profile Picture">
-            <span>DS</span>
-          </div>
-          <div class="user-info">
-            <p><strong>Username:</strong> <a href="#">sjdkfsldvgsm</a></p>
-            <p><strong>Email:</strong> fake.mail@test.com</p>
-            <p><strong>Password:</strong> ************</p>
-          </div>
+    <h2 class="orders-title">My Orders</h2>
+    <div class="orders">
+        <div class="order-row" th:each="order : ${user.orders}">
+            <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}">2025-04-01</span>
+            <span th:text="${order.orderStatus}">Delivered</span>
+            <span th:text="${order.totalPrice}">15.00</span>
         </div>
-    
-        <h2 class="orders-title">My Orders</h2>
-    
-        <div class="orders">
-          <div class="order-row">
-            <span>2025-04-01</span>
-            <span>Delivered</span>
-            <span>5⭐</span>
-            <span>$15.00</span>
-          </div>
-    
-          <div class="order-row">
-            <span>2025-03-27</span>
-            <span>In progress</span>
-            <span>-</span>
-            <span>$9.99</span>
-          </div>
-    
-          <div class="order-row">
-            <span>2025-03-20</span>
-            <span>Canceled</span>
-            <span>-</span>
-            <span>$0.00</span>
-          </div>
-        </div>
-      </main>
+    </div>
+</main>
 
-  <footer>
-    <div class = "about-us">WeDeliver<br>
-        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants. <br>
-            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
-
-        <p>Find us on:<br>
-        📸Instagram: <a href = "www.instagram.com">@wedeliver</a><br>
-        📘Facebook: <a href = "www.facebook.com">WeDeliver</a>
+<footer>
+    <div class="about-us">
+        WeDeliver<br/>
+        <p>
+            WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.
         </p>
-
-        <p>Or you can call us on 📞+359*********<br>
-        and send us an email on 📧wedeliver@gmail.com</p>
+        <p>
+            Find us on:<br/>
+            📸 Instagram: <a href="https://www.instagram.com/wedeliver">@wedeliver</a><br/>
+            📘 Facebook: <a href="https://www.facebook.com/wedeliver">WeDeliver</a>
+        </p>
+        <p>
+            Or you can call us on 📞 +359*********<br/>
+            and email us on 📧 wedeliver@gmail.com
+        </p>
     </div>
 </footer>
 
 </body>
-
+</html>

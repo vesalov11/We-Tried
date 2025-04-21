@@ -11,5 +11,4 @@ public class RevenueResponse {
     private String date;
     private BigDecimal revenue;
 
-
 }

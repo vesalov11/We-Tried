@@ -2,9 +2,11 @@ package com.example.we_tried.cart;
 
 import com.example.we_tried.cart.model.Cart;
 import com.example.we_tried.cart.service.CartService;
+import com.example.we_tried.security.AuthenticationMetaData;
 import com.example.we_tried.user.model.User;
 import com.example.we_tried.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,19 +22,16 @@ import java.util.UUID;
 public class CartController {
 
     private final CartService cartService;
-    private final UserService userService;
 
     @Autowired
-    public CartController(CartService cartService, UserService userService) {
+    public CartController(CartService cartService) {
         this.cartService = cartService;
-        this.userService = userService;
     }
 
-    @GetMapping("{userId}")
-    public ModelAndView getShoppingCart(@PathVariable UUID userId) {
+    @GetMapping
+    public ModelAndView getShoppingCart(@AuthenticationPrincipal AuthenticationMetaData authenticationMetaData) {
 
-        User user = userService.getById(userId);
-        Cart cart = cartService.getOrCreateCart(user);
+        Cart cart = cartService.getOrCreateCart(authenticationMetaData.getId());
 
         ModelAndView model = new ModelAndView("shopping-cart");
         model.addObject("cart", cart);
@@ -42,25 +41,34 @@ public class CartController {
         return model;
     }
 
-    @PostMapping("/{userId}/add/{dishId}")
-    public String addToCart(@PathVariable UUID dishId, @PathVariable UUID userId, @RequestParam(defaultValue = "1") int quantity) {
+    @PostMapping("/add/{dishId}")
+    public String addToCart(@PathVariable UUID dishId, @AuthenticationPrincipal AuthenticationMetaData authenticationMetaData, @RequestParam(defaultValue = "1") int quantity) {
 
-        User user = userService.getById(userId);
+        cartService.addToCart(dishId, quantity, authenticationMetaData.getId());
 
-        cartService.addToCart(dishId, quantity, user);
-
-        return "redirect:/cart/" + userId;
+        return "redirect:/cart";
     }
 
-    @PostMapping("/{userId}/checkout")
+    @PostMapping("/checkout")
     public String checkout(
-            @PathVariable UUID userId,
+            @AuthenticationPrincipal AuthenticationMetaData authenticationMetaData,
             @RequestParam String deliveryAddress,
             @RequestParam String paymentMethod) {
 
-        User user = userService.getById(userId);
-        cartService.checkout(user, deliveryAddress, paymentMethod);
-        return "redirect:/cart/" + userId;
+        cartService.checkout(authenticationMetaData.getId(), deliveryAddress, paymentMethod);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/increase/{orderItemId}")
+    public String increaseQuantity(@PathVariable UUID orderItemId) {
+        cartService.increaseQuantity(orderItemId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/decrease/{orderItemId}")
+    public String decreaseQuantity(@PathVariable UUID orderItemId) {
+        cartService.decreaseQuantity(orderItemId);
+        return "redirect:/cart";
     }
 
 

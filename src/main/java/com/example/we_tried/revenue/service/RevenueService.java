@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.List;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,23 +27,27 @@ public class RevenueService {
         List<Order> completedOrders = orderRepository.findByOrderStatus(OrderStatus.COMPLETED);
 
         return switch (period.toLowerCase()) {
-            case "daily" -> groupByDay(completedOrders);
-            case "weekly" -> groupByWeek(completedOrders);
+            case "daily"   -> groupByDay(completedOrders);
+            case "weekly"  -> groupByWeek(completedOrders);
             case "monthly" -> groupByMonth(completedOrders);
-            case "yearly" -> groupByYear(completedOrders);
-            default -> throw new IllegalArgumentException("Invalid period: " + period);
+            case "yearly"  -> groupByYear(completedOrders);
+            default        -> throw new IllegalArgumentException("Invalid period: " + period);
         };
     }
 
     private List<RevenueResponse> groupByDay(List<Order> orders) {
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return orders.stream()
                 .collect(Collectors.groupingBy(
-                        o -> o.getDeliveredAt().toLocalDate(),
+                        o -> o.getOrderDate().toLocalDate().format(fmt),
                         TreeMap::new,
-                        Collectors.mapping(Order::getTotalPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))
+                        Collectors.mapping(
+                                Order::getTotalPrice,
+                                Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                        )
                 ))
                 .entrySet().stream()
-                .map(e -> new RevenueResponse(e.getKey().toString(), e.getValue()))
+                .map(e -> new RevenueResponse(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
     }
 
@@ -50,13 +55,16 @@ public class RevenueService {
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         o -> {
-                            LocalDate date = o.getDeliveredAt().toLocalDate();
+                            LocalDate date = o.getOrderDate().toLocalDate();
                             int week = date.get(java.time.temporal.IsoFields.WEEK_OF_WEEK_BASED_YEAR);
                             int year = date.getYear();
                             return String.format("Week %d (%d)", week, year);
                         },
                         TreeMap::new,
-                        Collectors.mapping(Order::getTotalPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))
+                        Collectors.mapping(
+                                Order::getTotalPrice,
+                                Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                        )
                 ))
                 .entrySet().stream()
                 .map(e -> new RevenueResponse(e.getKey(), e.getValue()))
@@ -65,12 +73,14 @@ public class RevenueService {
 
     private List<RevenueResponse> groupByMonth(List<Order> orders) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-
         return orders.stream()
                 .collect(Collectors.groupingBy(
-                        o -> YearMonth.from(o.getDeliveredAt()).format(formatter),
+                        o -> YearMonth.from(o.getOrderDate()).format(formatter),
                         TreeMap::new,
-                        Collectors.mapping(Order::getTotalPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))
+                        Collectors.mapping(
+                                Order::getTotalPrice,
+                                Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                        )
                 ))
                 .entrySet().stream()
                 .map(e -> new RevenueResponse(e.getKey(), e.getValue()))
@@ -80,9 +90,12 @@ public class RevenueService {
     private List<RevenueResponse> groupByYear(List<Order> orders) {
         return orders.stream()
                 .collect(Collectors.groupingBy(
-                        o -> String.valueOf(o.getDeliveredAt().getYear()),
+                        o -> String.valueOf(o.getOrderDate().getYear()),
                         TreeMap::new,
-                        Collectors.mapping(Order::getTotalPrice, Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))
+                        Collectors.mapping(
+                                Order::getTotalPrice,
+                                Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
+                        )
                 ))
                 .entrySet().stream()
                 .map(e -> new RevenueResponse(e.getKey(), e.getValue()))

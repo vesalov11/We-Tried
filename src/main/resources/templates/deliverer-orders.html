@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Orders</title>
-    <link rel="stylesheet" th:href="@{/css/all-orders.css}">
+    <title>My Orders</title>
+    <link rel="stylesheet" th:href="@{/static/css/deliverer-orders.css}">
 </head>
 <body>
 <header>
@@ -12,12 +12,12 @@
         <img th:src="@{/images/company-logo.png}" alt="Company Logo">
     </div>
     <nav>
-        <a th:href="@{/deliverer-orders}" class="nav-button">My Orders</a>
+        <a th:href="@{/all-orders}" class="nav-button">All Orders</a>
         <div class="dropdown">
-            <a href="#" class="nav-button">Profile</a>
+            <a href="#" class="nav-button">Delivery</a>
             <div class="dropdown-content">
                 <a th:href="@{/profile-delivery}">Profile</a>
-                <a href="">Help</a>
+                <a href="#">Help</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>
@@ -25,7 +25,7 @@
 </header>
 
 <div class="orders-container">
-    <div class="order-card" th:each="order : ${allOrders}">
+    <div class="order-card" th:each="order : ${delivererOrders}">
         <img src="https://via.placeholder.com/150" alt="Restaurant" class="restaurant-img">
         <div class="order-info">
             <h3 th:text="${order.restaurant}">Burger Palace</h3>
@@ -33,16 +33,13 @@
             <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
             <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
             <p class="orderplaced" th:text="'Order placed in: ' + ${order.acceptedAt}">Order placed in: 12:00</p>
-            <p class="orderdelivered" th:text="'Order delivered in: ' + ${order.getDeliveredAt()}">Order delivered in: 13:00</p>
+            <p class="orderedelivered" th:text="'Order delivered in: ' + ${order.deliveredAt}">Order delivered in: 13:00</p>
             <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
-        </div>
-        <div class="checkbox-container">
-            <input type="checkbox" th:id="'order' + ${order.id}" style="transform: scale(1.5);">
-            <label th:for="'order' + ${order.id}"></label>
+            <button class="remove-order" title="Remove Order">
+                <img src="img/garbage-bin-10420.png" alt="Remove">
+            </button>
         </div>
     </div>
 </div>
-
-<button id="addButton">Add</button>
 </body>
 </html>

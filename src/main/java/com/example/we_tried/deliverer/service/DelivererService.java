@@ -32,7 +32,7 @@ public class DelivererService {
     }
 
     public List<Order> getCompletedOrders(UUID delivererId) {
-        // Подава се OrderStatus вместо стринг
+
         return orderRepository.findByDelivererIdAndOrderStatus(delivererId, OrderStatus.COMPLETED); // Променено на OrderStatus
     }
 
@@ -40,7 +40,6 @@ public class DelivererService {
         LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
         LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusSeconds(1);
 
-        // Подава се OrderStatus вместо стринг
         return orderRepository.sumTotalByDelivererIdAndCompletedBetween(delivererId, OrderStatus.COMPLETED, startOfMonth, endOfMonth) // Променено на OrderStatus
                 .orElse(BigDecimal.ZERO);
     }
@@ -55,9 +54,18 @@ public class DelivererService {
 
     public boolean isEligibleForBonus(UUID delivererId) {
         BigDecimal revenue = calculateMonthlyRevenue(delivererId);
-        BigDecimal bonusThreshold = new BigDecimal("300"); // зададена сума
+        BigDecimal bonusThreshold = new BigDecimal("300");
 
         return revenue.compareTo(bonusThreshold) >= 0;
+    }
+
+    public BigDecimal calculateTotalOrdersValue(UUID delivererId) {
+
+        List<Order> orders = orderRepository.findByDelivererId(delivererId);
+
+        return orders.stream()
+                .map(Order::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
 }

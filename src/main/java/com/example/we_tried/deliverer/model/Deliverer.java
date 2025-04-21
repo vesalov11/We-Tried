@@ -31,6 +31,9 @@ public class Deliverer extends BaseUser {
     private boolean active;
 
     @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
     private Double value;
 
     private BigDecimal monthlyTarget;

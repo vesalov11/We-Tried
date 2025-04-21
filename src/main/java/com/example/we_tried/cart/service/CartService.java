@@ -11,6 +11,7 @@ import com.example.we_tried.order.repository.OrderItemRepository;
 import com.example.we_tried.order.repository.OrderRepository;
 import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.user.model.User;
+import com.example.we_tried.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,19 +28,21 @@ public class CartService {
     private final DishRepository dishRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public CartService(CartRepository cartRepository, DishRepository dishRepository, OrderRepository orderRepository, OrderItemRepository orderItemRepository) {
+    public CartService(CartRepository cartRepository, DishRepository dishRepository, OrderRepository orderRepository, OrderItemRepository orderItemRepository, UserRepository userRepository) {
         this.cartRepository = cartRepository;
         this.dishRepository = dishRepository;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
-    public void addToCart(UUID dishId, int quantity, User user) {
-        Cart cart = cartRepository.findByOwner(user)
-                .orElseGet(() -> createNewCart(user));
+    public void addToCart(UUID dishId, int quantity, UUID userId) {
+        Cart cart = cartRepository.findByOwner(userId)
+                .orElseGet(() -> createNewCart(userId));
 
         Dish dish = dishRepository.findById(dishId)
                 .orElseThrow(() -> new RuntimeException("Dish not found"));
@@ -63,12 +66,15 @@ public class CartService {
         updateCartTotal(cart);
     }
 
-    public Cart getOrCreateCart(User user) {
-        return cartRepository.findByOwner(user)
-                .orElseGet(() -> createNewCart(user));
+    public Cart getOrCreateCart(UUID userId) {
+        return cartRepository.findByOwner(userId)
+                .orElseGet(() -> createNewCart(userId));
     }
 
-    private Cart createNewCart(User user) {
+    private Cart createNewCart(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User with id [%s] not found".formatted(userId)));
+
         Cart newCart = new Cart();
         newCart.setOwner(user);
         newCart.setTotalPrice(BigDecimal.ZERO);
@@ -120,9 +126,8 @@ public class CartService {
         return cart.getTotalPrice();
     }
 
-    // CartService.java
     @Transactional
-    public void checkout(User user, String deliveryAddress, String paymentMethod) {
+    public void checkout(UUID user, String deliveryAddress, String paymentMethod) {
         Cart cart = cartRepository.findByOwner(user)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
@@ -150,4 +155,39 @@ public class CartService {
         cart.setTotalPrice(BigDecimal.ZERO);
         cartRepository.save(cart);
     }
+
+    @Transactional
+    public void increaseQuantity(UUID orderItemId) {
+        OrderItem item = orderItemRepository.findById(orderItemId)
+                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
+
+        item.setQuantity(item.getQuantity() + 1);
+        orderItemRepository.save(item);
+
+        updateOrderTotal(item.getOrder());
+        updateCartTotal(item.getOrder().getCart());
+    }
+
+    @Transactional
+    public void decreaseQuantity(UUID orderItemId) {
+        OrderItem item = orderItemRepository.findById(orderItemId)
+                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
+
+        if (item.getQuantity() > 1) {
+            item.setQuantity(item.getQuantity() - 1);
+            orderItemRepository.save(item);
+
+            updateOrderTotal(item.getOrder());
+            updateCartTotal(item.getOrder().getCart());
+        } else {
+
+            Order order = item.getOrder();
+            order.getOrderItems().remove(item);
+            orderItemRepository.delete(item);
+
+            updateOrderTotal(order);
+            updateCartTotal(order.getCart());
+        }
+    }
+
 }

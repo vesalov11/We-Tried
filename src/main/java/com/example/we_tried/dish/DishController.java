@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @Controller
@@ -44,7 +45,7 @@ public class DishController {
     @PostMapping("/add/{restaurantId}")
     public String submitNewDish(@PathVariable UUID restaurantId,
                                 @Valid @ModelAttribute("createDishRequest") CreateDishRequest request,
-                                BindingResult bindingResult) {
+                                BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "add-dish";

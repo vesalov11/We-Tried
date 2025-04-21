@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${restaurant.name}">Restaurant Page</title>
+    <link rel="stylesheet" href="/css/restaurant.css">
+</head>
+
+<body>
+<header>
+    <div class="navbar">
+        <div id="logo">LOGO</div>
+
+        <div class="search-box-container">
+            <input type="text" class="search-box" placeholder="Search here...">
+            <button class="search-button">Search</button>
+        </div>
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Admin</button>
+            <div id="dropdown-content">
+                <a href="/profile-admin">Profile</a>
+                <a href="/orders-admin">Orders</a>
+                <a href="#">Help</a>
+                <a href="/home">Home</a>
+                <a href="/logout">Log Out</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="edit-buttons">
+        <a th:href="@{'/restaurants/update/' + ${restaurant.id}}"><button class="add">Edit Restaurant</button></a>
+    </div>
+
+    <div class="menus">
+        <a th:href="'#' + ${type.toString().toLowerCase()}" th:each="type : ${dishTypes}">
+            <button th:text="${type.toString()}"></button>
+        </a>
+    </div>
+
+    <br><hr><br>
+
+    <div class="food-catalog">
+        <div th:each="type : ${dishTypes}">
+            <div th:attr="id=${type.toString().toLowerCase()}">
+                <h2 th:text="${type}"></h2>
+                <div class="dish" th:each="dish : ${restaurant.dishes}">
+                    <div th:if="${dish.dishType == type}">
+                        <img th:src="@{'/images/' + ${dish.dishImage}}" th:alt="${dish.name}">
+                        <div class="description" th:text="${dish.name}">
+                            <p class="price" th:text="${dish.price + ' lv.'}"></p>
+                            <p th:utext="${#strings.replace(dish.description, '\n', '<br>')}"></p>
+                            <button class="add">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><hr><br>
+
+    <a href="/shopping-cart">
+        <div class="cart-icon">🛒</div>
+    </a>
+</main>
+
+<footer>
+    <div class="about-us">
+        Pizza Heaven<br>
+        <p>-------------------------</p>
+        <p>Pizza Heaven, established in 2010, has won the prize "Best Pizza Restaurant in Europe" for 2022.</p>
+        <p>Working Hours: 10:00am - 11:30pm<br></p>
+        <p>Address: Sofia, Bulgaria str. ***** №**</p>
+        <p>Call on 📞+359*********<br>Or send an email on ✉️pizza.heaven@gmail.com</p>
+    </div>
+</footer>
+</body>
+</html>

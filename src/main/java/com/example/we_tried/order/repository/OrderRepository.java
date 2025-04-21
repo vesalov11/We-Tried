@@ -19,12 +19,12 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
     @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.deliverer.id = :delivererId AND o.orderStatus = :status AND o.deliveredAt BETWEEN :start AND :end")
     Optional<BigDecimal> sumTotalByDelivererIdAndCompletedBetween(
             @Param("delivererId") UUID delivererId,
-            @Param("status") OrderStatus status, // Променено на OrderStatus
+            @Param("status") OrderStatus status,
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
 
-    List<Order> findByDelivererIdAndOrderStatus(UUID delivererId, OrderStatus status); // Променено на OrderStatus
+    List<Order> findByDelivererIdAndOrderStatus(UUID delivererId, OrderStatus status);
 
     List<Order> findByDelivererId(UUID delivererId);
 

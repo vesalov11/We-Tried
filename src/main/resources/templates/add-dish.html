@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Dish</title>
+    <link rel="stylesheet" href="../static/css/add-restaurant.css" th:href="@{/css/add-restaurant.css}">
+</head>
+
+<body>
+<header>
+    <div class="navbar">
+        <div id="logo">LOGO</div>
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Admin</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile-admin}">Profile</a>
+                <a th:href="@{/home-admin}">Home</a>
+                <a th:href="@{/orders-admin}">Orders</a>
+                <a href="#">Help</a>
+                <a th:href="@{/logout}">Log Out</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="form-container">
+        <form th:action="@{/dishes/add}" th:object="${createDishRequest}" method="POST" enctype="multipart/form-data">
+
+            <h2>Add New Dish</h2>
+
+            <label for="name">Dish Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="danger" style="color: #fc2e2e; font-size: 15px;"></span>
+
+            <label for="description">Ingredients (separate with commas):</label>
+            <textarea id="description" th:field="*{description}" required></textarea>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="danger" style="color: #fc2e2e; font-size: 15px;"></span>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" th:field="*{price}" step="0.01" min="0" required>
+            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="danger" style="color: #fc2e2e; font-size: 15px;"></span>
+
+            <label for="dishType">Dish Type:</label>
+            <select id="dishType" th:field="*{dishType}" required>
+                <option th:each="type : ${T(com.example.we_tried.dish.model.DishType).values()}"
+                        th:value="${type}"
+                        th:text="${type}">Type</option>
+            </select>
+            <span th:if="${#fields.hasErrors('dishType')}" th:errors="*{dishType}" class="danger" style="color: #fc2e2e; font-size: 15px;"></span>
+
+            <label for="image">Dish Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <button type="submit">Add Dish</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

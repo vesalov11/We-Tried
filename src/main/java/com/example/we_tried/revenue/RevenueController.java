@@ -21,7 +21,7 @@ public class RevenueController {
     public ModelAndView showRevenue(@RequestParam(defaultValue = "daily") String period) {
         List<RevenueResponse> revenueList = revenueService.getRevenueByPeriod(period);
 
-        ModelAndView modelAndView = new ModelAndView("budget");
+        ModelAndView modelAndView = new ModelAndView("revenue");
         modelAndView.addObject("revenueList", revenueList);
         modelAndView.addObject("selectedPeriod", period);
 

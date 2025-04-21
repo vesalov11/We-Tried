@@ -5,6 +5,7 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 
@@ -21,7 +22,10 @@ public class CreateDishRequest {
     @DecimalMin(value = "0.0", inclusive = false, message = "Dish price must be greater than 0!")
     private BigDecimal price;
 
-    @NotNull(message = "Dish dish type cannot be empty!")
+    @NotNull(message = "Dish type cannot be empty!")
     private DishType dishType;
+
+    @NotNull(message = "Dish image cannot be empty!")
+    private MultipartFile dishImage;
 
 }

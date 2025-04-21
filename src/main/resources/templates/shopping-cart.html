@@ -1,90 +1,90 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" th:href="@{/css/shopping-cart.css}">
+</head>
 
-<html>
-    <head>
-        <title>Shopping Cart</title>
-        <link rel="stylesheet" href="../static/css/shopping-cart.css">
-    </head>
+<body>
+<header>
+    <div class="navbar">
+        <div id="logo">LOGO</div>
 
-    <body>
-        <header>
-            <div class = "navbar">
-                <div id = "logo">LOGO</div>
-
-                <div class = dropdown-menu>
-                    <button id = "dropdown-button">User</button>
-                    <div id = "dropdown-content">
-                        <a href = "profile-user.html">Profile</a>
-                        <a href = "">Help</a>
-                        <a href= "home.html">Home</a>
-                        <a href = "index.html">Log Out</a>
-                    </div>
-                </div>
+        <div class="dropdown-menu">
+            <button id="dropdown-button">User</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile}">Profile</a>
+                <a href="#">Help</a>
+                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/logout}">Log Out</a>
+            </div>
         </div>
+    </div>
+</header>
 
-        </header>
-
-        <main>
-            <div class="product">
-                <img src="product.jpg" alt="Product Image">
-                <div class="product-info">
-                  <h4>Pizza Margherita</h4>
-                  <p>12,45 lv.</p>
-                </div>
-                <div class="quantity-buttons">
-                  <button class="qty-btn">−</button>
-                  <input type="text" disabled placeholder="">
-                  <button class="qty-btn">+</button>
-                </div>
-              </div>
-        
-              <div class="product">
-                <img src="product.jpg" alt="Product Image">
-                <div class="product-info">
-                  <h4>Pizza Margherita</h4>
-                  <p>12,45 lv.</p>
-                </div>
-                <div class="quantity-buttons">
-                  <button class="qty-btn">−</button>
-                  <input type="text" disabled placeholder="">
-                  <button class="qty-btn">+</button>
-                </div>
-              </div>
-        
-            <hr>
-        
-            <div class="order-info">
-                <label>Address of order</label>
-                <input type="text" placeholder="Enter your address">
-            
-                <label>Total</label>
-                <input type="text" placeholder="Total" disabled>
-            
-                <label>Payment Method</label>
-                <select>
-                    <option>Credit Card</option>
-                    <option>Cash</option>
-                    <option>PayPal</option>
-                </select>
-            
-                <button class="order-button">ORDER</button>
+<main>
+    <div th:each="order : ${orders}">
+        <div th:each="item : ${order.orderItems}" class="product">
+            <img th:src="@{/images/default-dish.jpg}" alt="Product Image">
+            <div class="product-info">
+                <h4 th:text="${item.dish.name}">Dish Name</h4>
+                <p th:text="${item.price} + ' lv.'">Price</p>
             </div>
 
-        </main>
+            <div class="quantity-buttons">
+                <!-- Decrease quantity -->
+                <form th:action="@{/cart/decrease/{id}(id=${item.id})}" method="post" style="display:inline;">
+                    <button class="qty-btn" type="submit">−</button>
+                </form>
 
-        <footer>
-            <div class = "about-us">WeDeliver<br>
-                <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants. <br>
-                    Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+                <!-- Show quantity -->
+                <input type="text" disabled th:placeholder="${item.quantity}" />
 
-                <p>Find us on:<br>
-                📸Instagram: <a href = "www.instagram.com">@wedeliver</a><br>
-                📘Facebook: <a href = "www.facebook.com">WeDeliver</a>
-                </p>
-
-                <p>Or you can call us on 📞+359*********<br>
-                and send us an email on 📧wedeliver@gmail.com</p>
+                <!-- Increase quantity -->
+                <form th:action="@{/cart/increase/{id}(id=${item.id})}" method="post" style="display:inline;">
+                    <button class="qty-btn" type="submit">+</button>
+                </form>
             </div>
-        </footer>
-    </body>
+        </div>
+    </div>
+
+    <hr>
+
+    <form th:action="@{/cart/checkout}" method="post" class="order-info">
+        <label>Address of order</label>
+        <input type="text" name="deliveryAddress" placeholder="Enter your address" required>
+
+        <label>Total</label>
+        <input type="text" th:value="${totalPrice} + ' lv.'" disabled>
+
+        <label>Payment Method</label>
+        <select name="paymentMethod" required>
+            <option th:each="method : ${T(com.example.we_tried.order.model.PaymentMethod).values()}"
+                    th:value="${method}"
+                    th:text="${method.name()}">
+            </option>
+        </select>
+
+        <button class="order-button" type="submit">ORDER</button>
+    </form>
+</main>
+
+<footer>
+    <div class="about-us">
+        WeDeliver<br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants. <br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+        <p>Find us on:<br>
+            📸Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
+
+        <p>Or you can call us on 📞+359*********<br>
+            and send us an email on 📧wedeliver@gmail.com</p>
+    </div>
+</footer>
+</body>
 </html>

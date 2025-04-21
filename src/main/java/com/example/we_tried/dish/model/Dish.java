@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.core.annotation.Order;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,6 +37,9 @@ public class Dish {
 
     @Enumerated(EnumType.STRING)
     private DishType dishType;
+
+    @Column(nullable = false)
+    private String dishImage;
 
     @ManyToOne
     private Restaurant restaurant;
