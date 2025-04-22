@@ -1,126 +1,126 @@
+/* General Styles */
 body {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed; 
-    background-size: cover;
-    margin: 0;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #dd6610, #9face6);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
 }
 
 .container {
-    width: 100%;
-    max-width: 500px;
-    background-color: #fcf3e3;
-    padding: 30px;
-    border-radius: 20px;
-    border: 9px solid #fc7f2e;
-    box-shadow: 0 4px 15px #00000033;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn 1s ease-in-out;
 }
 
-.form-box {
-    width: 100%;
-    max-width: 500px;
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-}
-
-h2 {
-    color: #fc7f2e;
-}
-
-#show-login:checked ~ #login {
-    display: flex;
-}
-
-#show-register:checked ~ #register {
-    display: flex;
-}
-
+/* Toggle Buttons */
 .toggle-buttons {
     display: flex;
     justify-content: space-around;
-    width: 100%;
-    margin-bottom: 20px;
+    background: #f7f7f7;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .toggle-buttons label {
-    padding: 10px 20px;
-    background-color: #1c5c7e;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
     font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .toggle-buttons label:hover {
-    background-color: #08acb8;
-    transition: background-color 0.3s ease;
+    color: #007bff;
 }
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #fc7f2e;
-    border-radius: 10px;
-    box-sizing: border-box;
-    font-size: 16px;
+/* Form Box */
+.form-box {
+    padding: 20px;
+    display: none;
+    animation: slideIn 0.5s ease-in-out;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: #1c5c7e;
-    color: white;
+#show-login:checked ~ .form-box#login,
+#show-register:checked ~ .form-box#register {
+    display: block;
+}
+
+.form-box h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.form-box form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-box input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-box input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-box button {
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
     border: none;
-    border-radius: 10px;
-    cursor: pointer;
+    border-radius: 5px;
     font-size: 16px;
-    margin-top: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
-button:hover {
-    background-color: #08acb8;
-    transition: background-color 0.3s ease;
+.form-box button:hover {
+    background: #0056b3;
 }
 
-@media screen and (max-width: 768px) {
-    body {
-        background-attachment: scroll; 
-        padding: 20px;
-        height: auto;
-    }
+/* Error Messages */
+.error {
+    font-size: 12px;
+    color: #fc2e2e;
+    margin-bottom: 10px;
+}
 
-    .container {
-        width: 100%;
-        padding: 20px;
-        border-width: 5px;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
     }
-
-    .form-box {
-        max-width: 100%;
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
+}
 
-    .toggle-buttons {
-        flex-direction: column;
-        gap: 10px;
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
     }
-
-    .toggle-buttons label {
-        width: 100%;
-        text-align: center;
-    }
-
-    input, button {
-        font-size: 14px;
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }

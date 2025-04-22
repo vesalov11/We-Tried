@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${restaurant.name}">Restaurant Page</title>
-    <link rel="stylesheet" href="/css/restaurant.css">
+    <link rel="stylesheet" href="/static/css/restaurant.css">
 </head>
 
 <body>
@@ -20,11 +20,10 @@
         <div class="dropdown-menu">
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
-                <a href="/profile-admin">Profile</a>
-                <a href="/orders-admin">Orders</a>
-                <a href="#">Help</a>
-                <a href="/home">Home</a>
-                <a href="/logout">Log Out</a>
+                <a href="/templates/profile-user.html">Profile</a>
+                <a href="/templates/all-orders.html">Orders</a>
+                <a href="/templates/home.html">Home</a>
+                <a href="/templates/index.html">Log Out</a>
             </div>
         </div>
     </div>
@@ -37,7 +36,7 @@
 
     <div class="menus">
         <a th:href="'#' + ${type.toString().toLowerCase()}" th:each="type : ${dishTypes}">
-            <button th:text="${type.toString()}"></button>
+            <button th:text="${type.toString()}">Menu</button>
         </a>
     </div>
 
@@ -63,19 +62,24 @@
 
     <br><hr><br>
 
-    <a href="/shopping-cart">
+    <a href="/templates/shopping-cart.html">
         <div class="cart-icon">🛒</div>
     </a>
 </main>
 
 <footer>
     <div class="about-us">
-        Pizza Heaven<br>
-        <p>-------------------------</p>
-        <p>Pizza Heaven, established in 2010, has won the prize "Best Pizza Restaurant in Europe" for 2022.</p>
-        <p>Working Hours: 10:00am - 11:30pm<br></p>
-        <p>Address: Sofia, Bulgaria str. ***** №**</p>
-        <p>Call on 📞+359*********<br>Or send an email on ✉️pizza.heaven@gmail.com</p>
+        <strong>WeDeliver</strong><br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+        <p>Find us on:<br>
+            📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
+
+        <p>Or you can call us on 📞 +359*********<br>
+            and email us on 📧 wedeliver@gmail.com</p>
     </div>
 </footer>
 </body>
