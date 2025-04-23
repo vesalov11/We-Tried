@@ -1,145 +1,206 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #F4F6F6;
+    color: #34495E;
+    animation: fadeIn 0.8s ease-out;
 }
 
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Header */
 header {
-    background-color: #4CAF50;
+    background-color: #34495E;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-#logo {
-    font-size: 24px;
-    font-weight: bold;
+.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    animation: bounce 2s ease-in-out infinite alternate;
 }
 
-.navbar .dropdown-menu {
+/* Dropdown Menu */
+.dropdown-menu {
     position: relative;
 }
 
 #dropdown-button {
-    background-color: #4CAF50;
+    background-color: #2ECC71;
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
     font-size: 16px;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: background-color 0.3s ease;
 }
 
 #dropdown-button:hover {
-    background-color: #45a049;
+    background-color: #27ae60;
 }
 
 #dropdown-content {
     display: none;
     position: absolute;
+    right: 0;
     background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
     overflow: hidden;
-    z-index: 1;
+    z-index: 100;
+    animation: fadeIn 0.3s ease;
 }
 
 #dropdown-content a {
-    color: #333;
-    padding: 10px 15px;
+    color: #34495E;
+    padding: 10px 16px;
     text-decoration: none;
     display: block;
     transition: background-color 0.3s ease;
 }
 
 #dropdown-content a:hover {
-    background-color: #f1f1f1;
+    background-color: #F4F6F6;
 }
 
 .dropdown-menu:hover #dropdown-content {
     display: block;
 }
 
-/* Form Styles */
+/* Form Container */
 .form-container {
     max-width: 600px;
     margin: 50px auto;
     background-color: white;
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Form Styles */
 form h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #4CAF50;
+    color: #E74C3C;
 }
 
 form label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    color: #34495E;
 }
 
-form input, form textarea, form select {
+form input,
+form textarea,
+form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 16px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-form input:focus, form textarea:focus, form select:focus {
-    border-color: #4CAF50;
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #E74C3C;
+    box-shadow: 0 0 10px #E74C3Caa;
     outline: none;
 }
 
 form button {
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #E74C3C;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s;
 }
 
 form button:hover {
-    background-color: #45a049;
+    background-color: #C0392B;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: bounce 0.4s ease;
 }
 
-/* Danger Messages */
+/* Validation Message */
 .danger {
-    font-size: 14px;
     margin-top: -10px;
     margin-bottom: 10px;
+    color: #E74C3C;
+    font-size: 15px;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     header {
         flex-direction: column;
         align-items: flex-start;
     }
 
+    .form-container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    form h2 {
+        font-size: 20px;
+    }
+
+    form button {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
     #dropdown-button {
-        width: 100%;
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    #dropdown-content a {
+        font-size: 14px;
+        padding: 8px 12px;
     }
 
     .form-container {
-        margin: 20px;
+        margin: 10px;
         padding: 15px;
     }
 }

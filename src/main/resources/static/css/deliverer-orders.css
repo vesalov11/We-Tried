@@ -14,21 +14,36 @@ header {
     background-color: #4CAF50;
     padding: 10px 20px;
     color: white;
+    flex-wrap: wrap;
 }
 
-header .logo img {
-    height: 50px;
+.logo{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: bounce 0.4s ease;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
 }
 
 nav {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .nav-button {
     color: white;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 5px;
     padding: 8px 15px;
     background-color: #45a049;
     border-radius: 5px;
@@ -133,13 +148,70 @@ nav {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    header, nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+}
+
 @media (max-width: 768px) {
     .orders-container {
         flex-direction: column;
         align-items: center;
+        padding: 10px;
     }
 
     .order-card {
-        width: 90%;
+        width: 100%;
+        max-width: 90%;
+    }
+
+    .order-info h3 {
+        font-size: 18px;
+    }
+
+    .order-info p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 10px;
+    }
+
+    header .logo img {
+        height: 40px;
+    }
+
+    .nav-button {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .order-info {
+        padding: 10px;
+    }
+
+    .remove-order img {
+        width: 18px;
+        height: 18px;
     }
 }

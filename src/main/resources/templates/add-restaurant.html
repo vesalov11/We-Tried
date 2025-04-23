@@ -9,16 +9,14 @@
 
 <body>
 <header>
+    <img src="/static/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
     <div class="navbar">
-        <div id="logo">LOGO</div>
-
         <div class="dropdown-menu">
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
                 <a th:href="@{/profile-admin}">Profile</a>
                 <a th:href="@{/home-admin}">Home</a>
                 <a th:href="@{/orders-admin}">Orders</a>
-                <a href="#">Help</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>

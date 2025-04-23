@@ -9,8 +9,8 @@
 }
 
 body {
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: #F4F6F6;
+    color: #34495E;
     animation: fadeIn 0.8s ease-out;
 }
 
@@ -39,7 +39,7 @@ body {
 
 /* --- Header/Navbar --- */
 header {
-    background-color: #222;
+    background-color: #34495E;
     padding: 15px 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: sticky;
@@ -54,10 +54,21 @@ header {
     flex-wrap: wrap;
 }
 
-#logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
+.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: bounce 0.4s ease;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
 }
 
 /* --- Search Box --- */
@@ -78,15 +89,15 @@ header {
 
 .search-box:focus {
     outline: none;
-    border-color: #ff6f61;
-    box-shadow: 0 0 10px #ff6f61aa;
+    border-color: #E74C3C;
+    box-shadow: 0 0 10px #E74C3Caa;
 }
 
 .search-button {
     margin-left: 10px;
     padding: 8px 16px;
     border: none;
-    background-color: #ff6f61;
+    background-color: #E74C3C;
     color: white;
     border-radius: 20px;
     cursor: pointer;
@@ -94,7 +105,7 @@ header {
 }
 
 .search-button:hover {
-    background-color: #e75a4f;
+    background-color: #C0392B;
 }
 
 /* --- Dropdown Menu --- */
@@ -103,7 +114,7 @@ header {
 }
 
 #dropdown-button {
-    background-color: #444;
+    background-color: #2ECC71;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -129,12 +140,12 @@ header {
     display: block;
     padding: 10px 16px;
     text-decoration: none;
-    color: #333;
+    color: #34495E;
     transition: background-color 0.3s ease;
 }
 
 #dropdown-content a:hover {
-    background-color: #f0f0f0;
+    background-color: #F4F6F6;
 }
 
 .dropdown-menu:hover #dropdown-content {
@@ -150,37 +161,47 @@ main > * {
     animation: slideUp 0.8s ease-out;
 }
 
+/* --- Подравнени бутони --- */
 .edit-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     margin-bottom: 20px;
 }
 
-button.add, button.update, button.delete {
+button.add,
+button.update,
+button.delete {
+    width: 160px;
+    text-align: center;
     padding: 10px 18px;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    margin-right: 10px;
     transition: transform 0.2s, background-color 0.3s ease;
 }
 
 button.add {
-    background-color: #28a745;
+    background-color: #2ECC71;
     color: white;
 }
 
 button.update {
-    background-color: #ffc107;
-    color: black;
+    background-color: #F1C40F;
+    color: #34495E;
 }
 
 button.delete {
-    background-color: #dc3545;
+    background-color: #E74C3C;
     color: white;
 }
 
 button:hover {
     transform: scale(1.05);
     opacity: 0.9;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: bounce 0.4s ease;
 }
 
 /* --- Restaurants Grid --- */
@@ -190,7 +211,6 @@ button:hover {
     gap: 30px;
 }
 
-/* --- Ресторант блокове с анимация --- */
 .restaurants-list .restaurants {
     background-color: white;
     border-radius: 10px;
@@ -206,7 +226,6 @@ button:hover {
 .restaurants-list .restaurants:nth-child(2) { animation-delay: 0.2s; }
 .restaurants-list .restaurants:nth-child(3) { animation-delay: 0.3s; }
 .restaurants-list .restaurants:nth-child(4) { animation-delay: 0.4s; }
-/* Добави още при нужда */
 
 .restaurants:hover {
     transform: translateY(-10px) scale(1.02);
@@ -232,7 +251,7 @@ button:hover {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background-color: #ff6f61;
+    background-color: #E74C3C;
     color: white;
     font-size: 28px;
     padding: 15px;
@@ -243,13 +262,13 @@ button:hover {
 }
 
 .cart-icon:hover {
-    background-color: #e75a4f;
+    background-color: #C0392B;
     animation: bounce 0.4s ease;
 }
 
 /* --- Footer --- */
 footer {
-    background-color: #222;
+    background-color: #34495E;
     color: white;
     padding: 40px 20px;
     text-align: center;
@@ -257,10 +276,50 @@ footer {
 }
 
 footer a {
-    color: #ff6f61;
+    color: #F1C40F;
     text-decoration: none;
 }
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* --- Responsive Design --- */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-box-container {
+        margin: 10px 0;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-button {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    .restaurants-list {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .cart-icon {
+        bottom: 20px;
+        right: 20px;
+        font-size: 24px;
+        padding: 12px;
+    }
 }

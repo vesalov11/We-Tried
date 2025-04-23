@@ -21,18 +21,31 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-#logo {
-    font-size: 24px;
-    font-weight: bold;
-    letter-spacing: 1px;
+.logo{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: bounce 0.4s ease;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
 }
 
 .search-box-container {
     display: flex;
     align-items: center;
     gap: 5px;
+    flex-wrap: wrap;
 }
 
 .search-box {
@@ -110,6 +123,7 @@ main {
     gap: 10px;
     justify-content: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .filter {
@@ -132,6 +146,7 @@ main {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
 }
 
 #revenue-table {
@@ -140,7 +155,8 @@ main {
     margin-top: 10px;
 }
 
-#revenue-table th, #revenue-table td {
+#revenue-table th,
+#revenue-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -166,4 +182,49 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+/* Адаптация за мобилни устройства */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-button {
+        width: 100%;
+    }
+
+    .filter-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filter {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    #logo {
+        font-size: 20px;
+    }
+
+    #dropdown-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #dropdown-content {
+        width: 100%;
+        right: 0;
+        left: 0;
+    }
 }

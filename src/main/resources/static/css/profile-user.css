@@ -19,6 +19,7 @@ a:hover {
 /* Navbar */
 .navbar {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     background-color: #007bff;
@@ -26,9 +27,21 @@ a:hover {
     padding: 10px 20px;
 }
 
-#logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+.logo{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: bounce 0.4s ease;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
 }
 
 .dropdown-menu {
@@ -93,6 +106,7 @@ a:hover {
     overflow: hidden;
     margin-right: 20px;
     border: 3px solid #007bff;
+    flex-shrink: 0;
 }
 
 .profile-circle img {
@@ -160,12 +174,19 @@ footer a:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .profile-section {
         flex-direction: column;
         align-items: center;
+        text-align: center;
     }
 
     .profile-circle {
+        margin-right: 0;
         margin-bottom: 20px;
     }
 
@@ -176,5 +197,43 @@ footer a:hover {
 
     .order-row span {
         margin-bottom: 10px;
+    }
+
+    #dropdown-content {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .dropdown-menu:hover #dropdown-content {
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    #logo {
+        font-size: 1.2rem;
+    }
+
+    #dropdown-button {
+        padding: 8px 12px;
+    }
+
+    .profile-section, .orders {
+        padding: 15px;
+        margin: 15px;
+    }
+
+    .order-row span {
+        font-size: 0.9rem;
+    }
+
+    footer {
+        font-size: 14px;
+        padding: 15px;
     }
 }

@@ -13,6 +13,7 @@ body {
 
 .container {
     width: 400px;
+    max-width: 90%;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -122,5 +123,27 @@ body {
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 480px) {
+    .container {
+        width: 95%;
+        margin: 0 10px;
+    }
+
+    .toggle-buttons label {
+        font-size: 14px;
+    }
+
+    .form-box h2 {
+        font-size: 20px;
+    }
+
+    .form-box input,
+    .form-box button {
+        font-size: 14px;
+        padding: 8px;
     }
 }
