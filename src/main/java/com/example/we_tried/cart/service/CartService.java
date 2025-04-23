@@ -105,7 +105,7 @@ public class CartService {
                 .build());
     }
 
-    private void updateOrderTotal(Order order) {
+    public void updateOrderTotal(Order order) {
         BigDecimal total = order.getOrderItems().stream()
                 .map(i -> i.getPrice().multiply(BigDecimal.valueOf(i.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -114,7 +114,7 @@ public class CartService {
         orderRepository.save(order);
     }
 
-    private void updateCartTotal(Cart cart) {
+    public void updateCartTotal(Cart cart) {
         BigDecimal total = cart.getOrders().stream()
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
