@@ -1,20 +1,26 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
+* {
     margin: 0;
     padding: 0;
-    background-color: #F4F6F6;
-    color: #34495E;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fcf3e3;
+    min-height: 100vh;
+    line-height: 1.6;
 }
 
 header {
+    background-color: #1c5c7e;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #2ECC71;
-    padding: 10px 20px;
-    color: white;
-    flex-wrap: wrap;
+    box-shadow: 0 4px 6px #0000001a;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .logo {
@@ -41,51 +47,78 @@ nav {
     gap: 10px;
 }
 
-.nav-button {
+nav a {
     text-decoration: none;
-    color: white;
-    margin: 0 10px;
-    padding: 8px 15px;
-    background-color: #E74C3C;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.nav-button {
+    background-color: white;
+    color: #1c5c7e;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .nav-button:hover {
-    background-color: #C0392B;
+    background-color: #08acb8;
+    color: #fff;
+    transform: scale(1.03);
 }
 
 .dropdown {
     position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-    overflow: hidden;
-    z-index: 1;
+    background-color: white; 
+    color: #1c5c7e;
+    min-width: 120px; 
+    box-shadow: 0 4px 6px #0000001a;
+    border-radius: 20px;
+    z-index: 1000;
+    border: 1px solid #dcdcdc;
 }
 
 .dropdown-content a {
-    display: block;
-    padding: 10px 15px;
+    background-color: white;
+    color: #1c5c7e;
+    padding: 8px 15px; 
     text-decoration: none;
-    color: #34495E;
-    transition: background-color 0.3s ease;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .dropdown-content a:hover {
-    background-color: #F1C40F;
+    background-color: #08acb8;
+    color: white;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* Orders Container */
+.dropdown .nav-button {
+    background-color: white;
+    color: #1c5c7e;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.dropdown .nav-button:hover {
+    background-color: #08acb8;
+    color: white;
+    transform: scale(1.05);
+}
+
 .orders-container {
     display: flex;
     flex-wrap: wrap;
@@ -133,29 +166,29 @@ nav {
     justify-content: center;
     align-items: center;
     padding: 10px;
-    background-color: #F1C40F;
+    background-color: #fcbc54;
 }
 
-/* Add Button */
 #addButton {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #E74C3C;
+    background-color: #1c5c7e;
     color: white;
     border: none;
+    padding: 10px 20px;
     border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #addButton:hover {
-    background-color: #C0392B;
-    transform: scale(1.05);
+    background-color: #08acb8;
+    transform: scale(1.03);
 }
 
-/* Responsive Styles */
 @media screen and (max-width: 768px) {
     header {
         flex-direction: column;
