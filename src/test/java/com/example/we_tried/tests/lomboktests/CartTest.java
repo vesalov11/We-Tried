@@ -1,4 +1,4 @@
-package com.example.we_tried.tests.lomboktest;
+package com.example.we_tried.tests.lomboktests;
 
 import com.example.we_tried.cart.model.Cart;
 import org.junit.jupiter.api.Test;

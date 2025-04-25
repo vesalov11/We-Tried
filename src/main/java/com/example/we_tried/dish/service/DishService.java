@@ -40,7 +40,7 @@ public class DishService {
         dishRepository.save(dish);
     }
 
-    private String storeImage(MultipartFile image) throws IOException {
+    public String storeImage(MultipartFile image) throws IOException {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(image.getOriginalFilename()));
         Path uploadPath = Paths.get("src/main/resources/static/images");
 

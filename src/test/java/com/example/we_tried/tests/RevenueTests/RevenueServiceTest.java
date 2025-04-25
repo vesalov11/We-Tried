@@ -1,4 +1,4 @@
-package com.example.we_tried.tests.RevenueTest;
+package com.example.we_tried.tests.RevenueTests;
 
 import com.example.we_tried.order.model.Order;
 import com.example.we_tried.order.model.OrderStatus;
