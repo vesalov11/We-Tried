@@ -1,6 +1,6 @@
 package com.example.we_tried.deliverer.model;
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.user.model.BaseUser;
 import jakarta.persistence.Column;
@@ -42,6 +42,6 @@ public class Deliverer extends BaseUser {
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "deliverer", fetch = FetchType.EAGER)
-    private List<Order> orders;
+    private List<FoodOrder> orders;
 
 }

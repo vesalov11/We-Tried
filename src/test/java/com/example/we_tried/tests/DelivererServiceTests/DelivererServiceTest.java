@@ -3,7 +3,7 @@ package com.example.we_tried.tests.DelivererServiceTests;
 import com.example.we_tried.deliverer.model.Deliverer;
 import com.example.we_tried.deliverer.repository.DelivererRepository;
 import com.example.we_tried.deliverer.service.DelivererService;
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderStatus;
 import com.example.we_tried.order.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,10 +50,10 @@ class DelivererServiceTest {
     @Test
     void getCompletedOrders_shouldReturnOrders() {
         UUID id = UUID.randomUUID();
-        List<Order> orders = List.of(new Order(), new Order());
+        List<FoodOrder> orders = List.of(new FoodOrder(), new FoodOrder());
         when(orderRepository.findByDelivererIdAndOrderStatus(id, OrderStatus.COMPLETED)).thenReturn(orders);
 
-        List<Order> result = delivererService.getCompletedOrders(id);
+        List<FoodOrder> result = delivererService.getCompletedOrders(id);
 
         assertEquals(2, result.size());
     }
@@ -84,10 +84,10 @@ class DelivererServiceTest {
 
     @Test
     void getAllOrders_shouldReturnAllOrders() {
-        List<Order> orders = List.of(new Order(), new Order(), new Order());
+        List<FoodOrder> orders = List.of(new FoodOrder(), new FoodOrder(), new FoodOrder());
         when(orderRepository.findAll()).thenReturn(orders);
 
-        List<Order> result = delivererService.getAllOrders();
+        List<FoodOrder> result = delivererService.getAllOrders();
 
         assertEquals(3, result.size());
     }
@@ -95,10 +95,10 @@ class DelivererServiceTest {
     @Test
     void getDelivererOrders_shouldReturnOrders() {
         UUID id = UUID.randomUUID();
-        List<Order> orders = List.of(new Order(), new Order());
+        List<FoodOrder> orders = List.of(new FoodOrder(), new FoodOrder());
         when(orderRepository.findByDelivererId(id)).thenReturn(orders);
 
-        List<Order> result = delivererService.getDelivererOrders(id);
+        List<FoodOrder> result = delivererService.getDelivererOrders(id);
 
         assertEquals(2, result.size());
     }
@@ -130,9 +130,9 @@ class DelivererServiceTest {
     @Test
     void calculateTotalOrdersValue_shouldReturnSum() {
         UUID id = UUID.randomUUID();
-        Order o1 = new Order();
+        FoodOrder o1 = new FoodOrder();
         o1.setTotalPrice(new BigDecimal("100"));
-        Order o2 = new Order();
+        FoodOrder o2 = new FoodOrder();
         o2.setTotalPrice(new BigDecimal("200"));
 
         when(orderRepository.findByDelivererId(id)).thenReturn(List.of(o1, o2));

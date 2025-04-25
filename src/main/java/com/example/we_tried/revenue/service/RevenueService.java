@@ -1,6 +1,6 @@
 package com.example.we_tried.revenue.service;
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderStatus;
 import com.example.we_tried.order.repository.OrderRepository;
 import com.example.we_tried.revenue.RevenueResponse;
@@ -24,7 +24,7 @@ public class RevenueService {
     }
 
     public List<RevenueResponse> getRevenueByPeriod(String period) {
-        List<Order> completedOrders = orderRepository.findByOrderStatus(OrderStatus.COMPLETED);
+        List<FoodOrder> completedOrders = orderRepository.findByOrderStatus(OrderStatus.COMPLETED);
 
         return switch (period.toLowerCase()) {
             case "daily"   -> groupByDay(completedOrders);
@@ -35,14 +35,14 @@ public class RevenueService {
         };
     }
 
-    private List<RevenueResponse> groupByDay(List<Order> orders) {
+    private List<RevenueResponse> groupByDay(List<FoodOrder> orders) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         o -> o.getOrderDate().toLocalDate().format(fmt),
                         TreeMap::new,
                         Collectors.mapping(
-                                Order::getTotalPrice,
+                                FoodOrder::getTotalPrice,
                                 Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
                         )
                 ))
@@ -51,7 +51,7 @@ public class RevenueService {
                 .collect(Collectors.toList());
     }
 
-    private List<RevenueResponse> groupByWeek(List<Order> orders) {
+    private List<RevenueResponse> groupByWeek(List<FoodOrder> orders) {
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         o -> {
@@ -62,7 +62,7 @@ public class RevenueService {
                         },
                         TreeMap::new,
                         Collectors.mapping(
-                                Order::getTotalPrice,
+                                FoodOrder::getTotalPrice,
                                 Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
                         )
                 ))
@@ -71,14 +71,14 @@ public class RevenueService {
                 .collect(Collectors.toList());
     }
 
-    private List<RevenueResponse> groupByMonth(List<Order> orders) {
+    private List<RevenueResponse> groupByMonth(List<FoodOrder> orders) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         o -> YearMonth.from(o.getOrderDate()).format(formatter),
                         TreeMap::new,
                         Collectors.mapping(
-                                Order::getTotalPrice,
+                                FoodOrder::getTotalPrice,
                                 Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
                         )
                 ))
@@ -87,13 +87,13 @@ public class RevenueService {
                 .collect(Collectors.toList());
     }
 
-    private List<RevenueResponse> groupByYear(List<Order> orders) {
+    private List<RevenueResponse> groupByYear(List<FoodOrder> orders) {
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         o -> String.valueOf(o.getOrderDate().getYear()),
                         TreeMap::new,
                         Collectors.mapping(
-                                Order::getTotalPrice,
+                                FoodOrder::getTotalPrice,
                                 Collectors.reducing(BigDecimal.ZERO, BigDecimal::add)
                         )
                 ))

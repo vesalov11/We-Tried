@@ -5,11 +5,13 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/register")
+
 public class RegisterController {
 
     private final UserService userService;
@@ -19,14 +21,26 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @PostMapping
-    public String processRegister(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
+    @GetMapping("/register")
+    public ModelAndView getRegisterPage() {
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("register");
+        mv.addObject("registerRequest", new RegisterRequest());
+
+        return mv;
+    }
+
+    @PostMapping("/register")
+    public String registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "index";
+            return "register";
         }
 
         userService.register(registerRequest);
+
         return "redirect:/login";
+
     }
 }

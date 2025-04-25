@@ -1,6 +1,6 @@
 package com.example.we_tried.tests.RevenueTests;
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderStatus;
 import com.example.we_tried.order.repository.OrderRepository;
 import com.example.we_tried.revenue.RevenueResponse;
@@ -27,8 +27,8 @@ class RevenueServiceTest {
     @InjectMocks
     private RevenueService revenueService;
 
-    private Order createOrder(OrderStatus status, BigDecimal price, int year, int month, int day) {
-        Order order = new Order();
+    private FoodOrder createOrder(OrderStatus status, BigDecimal price, int year, int month, int day) {
+        FoodOrder order = new FoodOrder();
         order.setOrderStatus(status);
         order.setTotalPrice(price);
         order.setOrderDate(LocalDateTime.of(year, month, day, 10, 0));
@@ -59,8 +59,8 @@ class RevenueServiceTest {
 
     @Test
     void getRevenueByPeriod_shouldIgnoreNonCompletedOrders() {
-        Order completedOrder = createOrder(OrderStatus.COMPLETED, new BigDecimal("100.00"), 2023, 1, 1);
-        Order pendingOrder = createOrder(OrderStatus.PICKED_UP, new BigDecimal("50.00"), 2023, 1, 1);
+        FoodOrder completedOrder = createOrder(OrderStatus.COMPLETED, new BigDecimal("100.00"), 2023, 1, 1);
+        FoodOrder pendingOrder = createOrder(OrderStatus.PICKED_UP, new BigDecimal("50.00"), 2023, 1, 1);
 
         when(orderRepository.findByOrderStatus(OrderStatus.COMPLETED))
                 .thenReturn(List.of(completedOrder));

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalTime;
 
@@ -29,6 +30,6 @@ public class CreateRestaurantRequest {
     @NotNull(message = "Restaurant type cannot be empty!")
     private RestaurantType restaurantType;
 
-    private String restaurantPicture;
+    private MultipartFile restaurantPicture;
 
 }

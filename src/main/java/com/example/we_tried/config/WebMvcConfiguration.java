@@ -24,7 +24,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/restaurants")
                         .failureUrl("/login?error")
                         .permitAll())
                 .logout(logout -> logout

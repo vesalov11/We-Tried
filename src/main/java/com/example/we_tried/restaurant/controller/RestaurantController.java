@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -85,7 +86,7 @@ public class RestaurantController {
     }
 
     @PostMapping("/new")
-    public String createRestaurant(@Valid @ModelAttribute("createRestaurantRequest") CreateRestaurantRequest restaurant, BindingResult bindingResult) {
+    public String createRestaurant(@Valid @ModelAttribute("createRestaurantRequest") CreateRestaurantRequest restaurant, BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "add-restaurant";

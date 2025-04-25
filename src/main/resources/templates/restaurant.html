@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${restaurant.name}">Restaurant Page</title>
-    <link rel="stylesheet" href="/static/css/restaurant.css">
+    <link rel="stylesheet" href="/css/restaurant.css">
 </head>
 
 <body>
 <header>
     <div class="navbar">
-        <img src="/static/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
 
         <div class="search-box-container">
             <input type="text" class="search-box" placeholder="Search here...">
@@ -20,10 +20,9 @@
         <div class="dropdown-menu">
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
-                <a href="/templates/profile-user.html">Profile</a>
-                <a href="/templates/all-orders.html">Orders</a>
-                <a href="/templates/home.html">Home</a>
-                <a href="/templates/index.html">Log Out</a>
+                <a th:href="@{/profile}">Profile</a>
+                <a th:href="@{/restaurants}">Home</a>
+                <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>
     </div>
@@ -31,7 +30,7 @@
 
 <main>
     <div class="edit-buttons">
-        <a th:href="@{'/restaurants/update/' + ${restaurant.id}}"><button class="add">Edit Restaurant</button></a>
+        <a th:href="@{'/dishes/add/' + ${restaurant.id}}"><button class="add">Add Dish</button></a>
     </div>
 
     <div class="menus">
@@ -62,7 +61,7 @@
 
     <br><hr><br>
 
-    <a href="/templates/shopping-cart.html">
+    <a th:href="@{/cart}">
         <div class="cart-icon">🛒</div>
     </a>
 </main>

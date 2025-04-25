@@ -1,7 +1,7 @@
 package com.example.we_tried.order.service;
 
+import com.example.we_tried.order.model.FoodOrder;
 import org.springframework.stereotype.Service;
-import com.example.we_tried.order.model.Order;
 import com.example.we_tried.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
@@ -17,12 +17,12 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> getAllOrders() {
+    public List<FoodOrder> getAllOrders() {
 
         return orderRepository.findAll();
     }
 
-    public List<Order> getDelivererOrders(UUID delivererId) {
+    public List<FoodOrder> getDelivererOrders(UUID delivererId) {
         return orderRepository.findByDelivererId(delivererId);
     }
 }

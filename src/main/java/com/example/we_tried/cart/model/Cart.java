@@ -1,6 +1,7 @@
 package com.example.we_tried.cart.model;
 
-import com.example.we_tried.order.model.Order;
+
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.user.model.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,6 +38,6 @@ public class Cart {
     private User owner;
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
-    private List<Order> orders;
+    private List<FoodOrder> orders;
 
 }

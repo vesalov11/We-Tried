@@ -4,7 +4,7 @@ import com.example.we_tried.cart.model.Cart;
 import com.example.we_tried.cart.repository.CartRepository;
 import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.repository.DishRepository;
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderItem;
 import com.example.we_tried.order.model.OrderStatus;
 import com.example.we_tried.order.model.PaymentMethod;
@@ -42,14 +42,14 @@ public class CartService {
 
     @Transactional
     public void addToCart(UUID dishId, int quantity, UUID userId) {
-        Cart cart = cartRepository.findByOwner(userId)
+        Cart cart = cartRepository.findByOwnerId(userId)
                 .orElseGet(() -> createNewCart(userId));
 
         Dish dish = dishRepository.findById(dishId)
                 .orElseThrow(() -> new RuntimeException("Dish not found"));
         Restaurant restaurant = dish.getRestaurant();
 
-        Order order = cart.getOrders().stream()
+        FoodOrder order = cart.getOrders().stream()
                 .filter(o -> o.getRestaurant().equals(restaurant))
                 .findFirst()
                 .orElseGet(() -> createNewOrder(cart, restaurant));
@@ -68,7 +68,7 @@ public class CartService {
     }
 
     public Cart getOrCreateCart(UUID userId) {
-        return cartRepository.findByOwner(userId)
+        return cartRepository.findByOwnerId(userId)
                 .orElseGet(() -> createNewCart(userId));
     }
 
@@ -83,8 +83,8 @@ public class CartService {
         return cartRepository.save(newCart);
     }
 
-    private Order createNewOrder(Cart cart, Restaurant restaurant) {
-        Order newOrder = orderRepository.save(Order.builder()
+    private FoodOrder createNewOrder(Cart cart, Restaurant restaurant) {
+        FoodOrder newOrder = orderRepository.save(FoodOrder.builder()
                 .restaurant(restaurant)
                 .orderStatus(OrderStatus.WAITING_FOR_DELIVERY)
                 .orderDate(LocalDateTime.now())
@@ -96,7 +96,7 @@ public class CartService {
         return newOrder;
     }
 
-    private OrderItem createNewOrderItem(Order order, Dish dish) {
+    private OrderItem createNewOrderItem(FoodOrder order, Dish dish) {
         return orderItemRepository.save(OrderItem.builder()
                 .dish(dish)
                 .price(dish.getPrice())
@@ -105,7 +105,7 @@ public class CartService {
                 .build());
     }
 
-    public void updateOrderTotal(Order order) {
+    public void updateOrderTotal(FoodOrder order) {
         BigDecimal total = order.getOrderItems().stream()
                 .map(i -> i.getPrice().multiply(BigDecimal.valueOf(i.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -116,7 +116,7 @@ public class CartService {
 
     public void updateCartTotal(Cart cart) {
         BigDecimal total = cart.getOrders().stream()
-                .map(Order::getTotalPrice)
+                .map(FoodOrder::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         cart.setTotalPrice(total);
@@ -129,7 +129,7 @@ public class CartService {
 
     @Transactional
     public void checkout(UUID user, String deliveryAddress, String paymentMethod) {
-        Cart cart = cartRepository.findByOwner(user)
+        Cart cart = cartRepository.findByOwnerId(user)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         if (cart.getOrders().isEmpty()) {
@@ -144,7 +144,7 @@ public class CartService {
             throw new RuntimeException("Payment method is required");
         }
 
-        for (Order order : cart.getOrders()) {
+        for (FoodOrder order : cart.getOrders()) {
             order.setDeliveryAddress(deliveryAddress);
             order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
             order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
@@ -182,7 +182,7 @@ public class CartService {
             updateCartTotal(item.getOrder().getCart());
         } else {
 
-            Order order = item.getOrder();
+            FoodOrder order = item.getOrder();
             order.getOrderItems().remove(item);
             orderItemRepository.delete(item);
 

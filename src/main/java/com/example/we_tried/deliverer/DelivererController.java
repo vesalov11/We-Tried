@@ -2,7 +2,7 @@ package com.example.we_tried.deliverer;
 
 import com.example.we_tried.deliverer.model.Deliverer;
 import com.example.we_tried.deliverer.service.DelivererService;
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ public class DelivererController {
     @GetMapping("/profile/{delivererId}")
     public ModelAndView getDelivererProfile(@PathVariable UUID delivererId) {
         Deliverer deliverer = delivererService.getDelivererById(delivererId);
-        List<Order> deliveredOrders = delivererService.getCompletedOrders(delivererId);
+        List<FoodOrder> deliveredOrders = delivererService.getCompletedOrders(delivererId);
         BigDecimal monthlyRevenue = delivererService.calculateMonthlyRevenue(delivererId);
         BigDecimal totalOrdersValue = delivererService.calculateTotalOrdersValue(delivererId);
         boolean hasBonus = delivererService.isEligibleForBonus(delivererId);
@@ -45,7 +45,7 @@ public class DelivererController {
 
     @GetMapping("/all")
     public ModelAndView getAllOrders() {
-        List<Order> allOrders = delivererService.getAllOrders();
+        List<FoodOrder> allOrders = delivererService.getAllOrders();
 
         ModelAndView modelAndView = new ModelAndView("all-orders");
         modelAndView.addObject("orders", allOrders);
@@ -55,7 +55,7 @@ public class DelivererController {
 
     @GetMapping("/my-orders/{delivererId}")
     public ModelAndView getMyOrders(@PathVariable UUID delivererId) {
-        List<Order> delivererOrders = delivererService.getDelivererOrders(delivererId);
+        List<FoodOrder> delivererOrders = delivererService.getDelivererOrders(delivererId);
 
         ModelAndView modelAndView = new ModelAndView("deliverer-orders");
         modelAndView.addObject("delivererOrders", delivererOrders);

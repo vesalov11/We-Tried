@@ -1,6 +1,5 @@
 package com.example.we_tried.dish;
 
-import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.model.DishType;
 import com.example.we_tried.dish.service.DishService;
 import com.example.we_tried.restaurant.model.Restaurant;

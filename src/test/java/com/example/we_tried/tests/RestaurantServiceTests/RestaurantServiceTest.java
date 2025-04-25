@@ -16,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -91,7 +92,7 @@ class RestaurantServiceTest {
 
     @Test
     void getByType_shouldReturnRestaurantsOfType() {
-        when(restaurantRepository.findByType(RestaurantType.BULGARIAN)).thenReturn(List.of(restaurant));
+        when(restaurantRepository.findByRestaurantType(RestaurantType.BULGARIAN)).thenReturn(List.of(restaurant));
 
         List<Restaurant> result = restaurantService.getByType(RestaurantType.BULGARIAN);
 
@@ -126,7 +127,7 @@ class RestaurantServiceTest {
     }
 
     @Test
-    void create_shouldSaveNewRestaurant() {
+    void create_shouldSaveNewRestaurant() throws IOException {
         when(restaurantRepository.findByName("Restaurant Rodopi")).thenReturn(Optional.empty());
         when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
 

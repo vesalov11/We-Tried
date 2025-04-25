@@ -2,7 +2,8 @@ package com.example.we_tried.deliverer.service;
 
 import com.example.we_tried.deliverer.model.Deliverer;
 import com.example.we_tried.deliverer.repository.DelivererRepository;
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderStatus; // Добавяне на OrderStatus
 import com.example.we_tried.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class DelivererService {
                 .orElseThrow(() -> new IllegalArgumentException("Deliverer not found with ID: " + delivererId));
     }
 
-    public List<Order> getCompletedOrders(UUID delivererId) {
+    public List<FoodOrder> getCompletedOrders(UUID delivererId) {
 
         return orderRepository.findByDelivererIdAndOrderStatus(delivererId, OrderStatus.COMPLETED); // Променено на OrderStatus
     }
@@ -44,11 +45,11 @@ public class DelivererService {
                 .orElse(BigDecimal.ZERO);
     }
 
-    public List<Order> getAllOrders() {
+    public List<FoodOrder> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    public List<Order> getDelivererOrders(UUID delivererId) {
+    public List<FoodOrder> getDelivererOrders(UUID delivererId) {
         return orderRepository.findByDelivererId(delivererId);
     }
 
@@ -61,10 +62,10 @@ public class DelivererService {
 
     public BigDecimal calculateTotalOrdersValue(UUID delivererId) {
 
-        List<Order> orders = orderRepository.findByDelivererId(delivererId);
+        List<FoodOrder> orders = orderRepository.findByDelivererId(delivererId);
 
         return orders.stream()
-                .map(Order::getTotalPrice)
+                .map(FoodOrder::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

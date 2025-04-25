@@ -9,7 +9,7 @@ import com.example.we_tried.cart.repository.CartRepository;
 import com.example.we_tried.cart.service.CartService;
 import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.repository.DishRepository;
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderItem;
 import com.example.we_tried.order.model.OrderStatus;
 import com.example.we_tried.order.model.PaymentMethod;
@@ -56,7 +56,7 @@ class CartServiceTest {
     private Dish dish;
     private Restaurant restaurant;
     private Cart cart;
-    private Order order;
+    private FoodOrder order;
     private OrderItem orderItem;
 
     @BeforeEach
@@ -79,7 +79,7 @@ class CartServiceTest {
         cart.setTotalPrice(BigDecimal.ZERO);
         cart.setOrders(new ArrayList<>());
 
-        order = new Order();
+        order = new FoodOrder();
         order.setId(UUID.randomUUID());
         order.setRestaurant(restaurant);
         order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
@@ -98,17 +98,17 @@ class CartServiceTest {
 
     @Test
     void addToCart_shouldCreateNewCartWhenNotExists() {
-        when(cartRepository.findByOwner(userId)).thenReturn(Optional.empty());
+        when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.empty());
         when(dishRepository.findById(dishId)).thenReturn(Optional.of(dish));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
-        when(orderRepository.save(any(Order.class))).thenReturn(order);
+        when(orderRepository.save(any(FoodOrder.class))).thenReturn(order);
         when(orderItemRepository.save(any(OrderItem.class))).thenReturn(orderItem);
 
         cartService.addToCart(dishId, 2, userId);
 
         verify(cartRepository).save(any(Cart.class));
-        verify(orderRepository).save(any(Order.class));
+        verify(orderRepository).save(any(FoodOrder.class));
         verify(orderItemRepository).save(any(OrderItem.class));
     }
 
@@ -117,7 +117,7 @@ class CartServiceTest {
         order.getOrderItems().add(orderItem);
         cart.getOrders().add(order);
 
-        when(cartRepository.findByOwner(userId)).thenReturn(Optional.of(cart));
+        when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.of(cart));
         when(dishRepository.findById(dishId)).thenReturn(Optional.of(dish));
 
         cartService.addToCart(dishId, 3, userId);
@@ -128,7 +128,7 @@ class CartServiceTest {
 
     @Test
     void getOrCreateCart_shouldReturnExistingCart() {
-        when(cartRepository.findByOwner(userId)).thenReturn(Optional.of(cart));
+        when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.of(cart));
 
         Cart result = cartService.getOrCreateCart(userId);
 
@@ -138,7 +138,7 @@ class CartServiceTest {
 
     @Test
     void getOrCreateCart_shouldCreateNewCartWhenNotExists() {
-        when(cartRepository.findByOwner(userId)).thenReturn(Optional.empty());
+        when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.empty());
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
@@ -153,7 +153,7 @@ class CartServiceTest {
         order.getOrderItems().add(orderItem);
         cart.getOrders().add(order);
 
-        when(cartRepository.findByOwner(userId)).thenReturn(Optional.of(cart));
+        when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.of(cart));
 
         cartService.checkout(userId, "Ivan Mihailov N49", "CARD");
 
@@ -210,7 +210,7 @@ class CartServiceTest {
 
     @Test
     void updateCartTotal_shouldCalculateCorrectTotal() {
-        Order order2 = new Order();
+        FoodOrder order2 = new FoodOrder();
         order2.setTotalPrice(BigDecimal.valueOf(15));
         cart.getOrders().addAll(List.of(order, order2));
 

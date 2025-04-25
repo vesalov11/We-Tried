@@ -4,58 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WeDeliver</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
 </head>
 <body>
 
 <main>
     <div class="container">
+        <h1>Welcome to WeDeliver</h1>
+        <p>Please choose an option below:</p>
 
-        <input type="radio" name="form-toggle" id="show-login" checked hidden>
-        <input type="radio" name="form-toggle" id="show-register" hidden>
-
-        <div class="toggle-buttons">
-            <label for="show-login">Log In</label>
-            <label for="show-register">Register</label>
+        <div class="buttons">
+            <a href="/login" class="btn">Log In</a>
+            <a href="/register" class="btn">Register</a>
         </div>
-
-        <div class="form-box" id="login">
-            <h2>Log In</h2>
-            <form th:action="@{/login}" th:object="${loginRequest}" method="post">
-                <input type="text" th:field="*{username}" placeholder="Username">
-                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
-                <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
-
-                <input type="password" th:field="*{password}" placeholder="Password">
-                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
-                <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
-                <button type="submit">Log In</button>
-            </form>
-        </div>
-
-        <div class="form-box" id="register">
-            <h2>Register</h2>
-            <form th:action="@{/register}" th:object="${registerRequest}" method="post">
-                <input type="text" th:field="*{username}" placeholder="Username">
-                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
-                <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
-
-                <input type="email" th:field="*{email}" placeholder="Email">
-                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
-                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
-
-                <input type="password" th:field="*{password}" placeholder="Password">
-                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
-                <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
-
-                <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password">
-                <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error"></div>
-                <small th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
-
-                <button type="submit">Register</button>
-            </form>
-        </div>
-
     </div>
 </main>
 

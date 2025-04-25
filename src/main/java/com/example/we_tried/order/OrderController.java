@@ -1,6 +1,6 @@
 package com.example.we_tried.order;
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.service.OrderService;
 import com.example.we_tried.security.AuthenticationMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class OrderController {
     @GetMapping("/all-orders")
     public ModelAndView getAllOrders() {
 
-        List<Order> allOrders = orderService.getAllOrders();
+        List<FoodOrder> allOrders = orderService.getAllOrders();
 
         ModelAndView modelAndView = new ModelAndView("all-orders");
         modelAndView.addObject("allOrders", allOrders);
@@ -37,7 +37,7 @@ public class OrderController {
     public ModelAndView getDelivererOrders(@AuthenticationPrincipal AuthenticationMetaData authenticationMetaData) {
 
         UUID delivererId = authenticationMetaData.getId();
-        List<Order> delivererOrders = orderService.getDelivererOrders(delivererId);
+        List<FoodOrder> delivererOrders = orderService.getDelivererOrders(delivererId);
 
         ModelAndView modelAndView = new ModelAndView("deliverer-orders");
         modelAndView.addObject("delivererOrders", delivererOrders);

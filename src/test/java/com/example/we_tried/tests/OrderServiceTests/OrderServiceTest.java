@@ -1,7 +1,8 @@
 package com.example.we_tried.tests.OrderServiceTests;
 
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.repository.OrderRepository;
 import com.example.we_tried.order.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,10 +26,10 @@ class OrderServiceTest {
 
     @Test
     void getAllOrders_shouldReturnAllOrders() {
-        List<Order> orders = List.of(new Order(), new Order());
+        List<FoodOrder> orders = List.of(new FoodOrder(), new FoodOrder());
         when(orderRepository.findAll()).thenReturn(orders);
 
-        List<Order> result = orderService.getAllOrders();
+        List<FoodOrder> result = orderService.getAllOrders();
 
         assertEquals(2, result.size());
         verify(orderRepository).findAll();
@@ -37,10 +38,10 @@ class OrderServiceTest {
     @Test
     void getDelivererOrders_shouldReturnDelivererOrders() {
         UUID delivererId = UUID.randomUUID();
-        List<Order> orders = List.of(new Order());
+        List<FoodOrder> orders = List.of(new FoodOrder());
         when(orderRepository.findByDelivererId(delivererId)).thenReturn(orders);
 
-        List<Order> result = orderService.getDelivererOrders(delivererId);
+        List<FoodOrder> result = orderService.getDelivererOrders(delivererId);
 
         assertEquals(1, result.size());
         verify(orderRepository).findByDelivererId(delivererId);
