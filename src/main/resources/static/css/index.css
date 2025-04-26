@@ -47,6 +47,7 @@ body {
 
 .buttons a:hover {
     background-color: #08acb8;
+    transform: scale(1.05);
 }
 
 @keyframes fadeIn {
