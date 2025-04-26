@@ -1,9 +1,8 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #dd6610, #9face6);
+    background: linear-gradient(135deg, #fc3c30, #fcbc54);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,21 +19,22 @@ body {
 }
 
 .container {
-    width: 400px;
+    width: 600px;
     max-width: 90%;
-    background: #fff;
+    background: #fcf3e3;
     border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px #0000001a;
     overflow: hidden;
     position: relative;
     animation: fadeIn 1s ease-in-out;
+    color: white;
 }
 
-/* Toggle Buttons */
+
 .toggle-buttons {
     display: flex;
     justify-content: space-around;
-    background: #f7f7f7;
+    background: #fcf3e3;
     padding: 10px 0;
     border-bottom: 1px solid #ddd;
 }
@@ -42,16 +42,16 @@ body {
 .toggle-buttons label {
     font-size: 16px;
     font-weight: bold;
-    color: #555;
+    color: #1c5c7e;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
 .toggle-buttons label:hover {
-    color: #007bff;
+    color: #08acb8;
 }
 
-/* Form Box */
+
 .form-box {
     padding: 20px;
     display: none;
@@ -66,7 +66,7 @@ body {
 .form-box h2 {
     margin-bottom: 20px;
     font-size: 24px;
-    color: #333;
+    color: #1c5c7e;
     text-align: center;
 }
 
@@ -85,13 +85,13 @@ body {
 }
 
 .form-box input:focus {
-    border-color: #007bff;
+    border-color: #1c5c7e;
     outline: none;
 }
 
 .form-box button {
     padding: 10px;
-    background: #007bff;
+    background: #1c5c7e;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -101,17 +101,18 @@ body {
 }
 
 .form-box button:hover {
-    background: #0056b3;
+    background: #08acb8;
+    transform: scale(1.05);
 }
 
-/* Error Messages */
+
 .error {
     font-size: 12px;
     color: #fc2e2e;
     margin-bottom: 10px;
 }
 
-/* Animations */
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -134,7 +135,6 @@ body {
     }
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     .container {
         width: 95%;
