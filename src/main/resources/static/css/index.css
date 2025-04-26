@@ -1,9 +1,8 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #dd6610, #9face6);
+    background: linear-gradient(135deg, #fc3c30, #fcbc54);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,17 +11,18 @@ body {
 }
 
 .container {
-    width: 400px;
+    width: 600px;
     max-width: 90%;
-    background: #fff;
+    background: #fcf3e3;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     position: relative;
     animation: fadeIn 1s ease-in-out;
+    text-align: center;
+    color: #fc3c30;
 }
 
-/* Buttons */
 .buttons {
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@ body {
     width: 80%;
     padding: 15px;
     margin: 10px 0;
-    background-color: #007bff;
+    background-color: #1c5c7e;
     color: white;
     text-align: center;
     text-decoration: none;
@@ -46,10 +46,9 @@ body {
 }
 
 .buttons a:hover {
-    background-color: #0056b3;
+    background-color: #08acb8;
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -61,7 +60,6 @@ body {
     }
 }
 
-/* Responsive Design */
 @media screen and (max-width: 480px) {
     .container {
         width: 95%;
