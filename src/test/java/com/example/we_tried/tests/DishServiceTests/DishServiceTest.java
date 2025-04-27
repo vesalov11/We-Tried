@@ -44,9 +44,9 @@ class DishServiceTest {
         Restaurant restaurant = new Restaurant();
 
         DishService spyService = Mockito.spy(dishService);
-        doReturn(fileName).when(spyService).storeImage(any());
+        doReturn(fileName).when(spyService).handleImageUpload(any());
 
-        spyService.createDish(request, restaurant);
+        spyService.createDish(request, restaurant, fileName);
 
         ArgumentCaptor<Dish> dishCaptor = ArgumentCaptor.forClass(Dish.class);
         verify(dishRepository).save(dishCaptor.capture());
@@ -70,7 +70,7 @@ class DishServiceTest {
         Files.createDirectories(uploadPath);
         Files.deleteIfExists(uploadPath.resolve(fileName));
 
-        String storedFileName = dishService.storeImage(image);
+        String storedFileName = dishService.handleImageUpload(image);
 
         assertEquals(StringUtils.cleanPath(fileName), storedFileName);
         assert(Files.exists(uploadPath.resolve(storedFileName)));

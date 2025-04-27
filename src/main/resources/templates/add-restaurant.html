@@ -11,7 +11,7 @@
 
 <main>
     <div class="form-container">
-        <form th:action="@{/restaurants/new}" th:object="${createRestaurantRequest}" method="POST">
+        <form th:action="@{/restaurants/new}" th:object="${createRestaurantRequest}" method="POST" enctype="multipart/form-data">
 
             <h2>Add Restaurant</h2>
 
@@ -49,8 +49,5 @@
     </div>
 </main>
 
-<footer>
-    <!-- Footer content -->
-</footer>
 </body>
 </html>

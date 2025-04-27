@@ -1,5 +1,6 @@
 package com.example.we_tried.dish;
 
+import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.model.DishType;
 import com.example.we_tried.dish.service.DishService;
 import com.example.we_tried.restaurant.model.Restaurant;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -44,16 +47,52 @@ public class DishController {
     @PostMapping("/add/{restaurantId}")
     public String submitNewDish(@PathVariable UUID restaurantId,
                                 @Valid @ModelAttribute("createDishRequest") CreateDishRequest request,
+                                @RequestParam(value = "image", required = false) MultipartFile image,
                                 BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "add-dish";
         }
 
+        String imagePath = null;
+        if (!image.isEmpty()) {
+            imagePath = dishService.handleImageUpload(image);
+        }
+
         Restaurant restaurant = restaurantService.getById(restaurantId);
-        dishService.createDish(request, restaurant);
+        dishService.createDish(request, restaurant, imagePath);
 
         return "redirect:/restaurants/" + restaurantId;
+    }
+
+    @GetMapping("/update/{dishId}")
+    public ModelAndView updateDish(@PathVariable UUID dishId) {
+        Dish dish = dishService.getById(dishId);
+        ModelAndView modelAndView = new ModelAndView("update-dish");
+        modelAndView.addObject("dish", dish);
+        modelAndView.addObject("updateDishRequest", new UpdateDishRequest());
+        modelAndView.addObject("dishTypes", DishType.values());
+        return modelAndView;
+    }
+
+    @PostMapping("/update/{dishId}")
+    public String submitUpdateDish(@PathVariable UUID dishId,
+                                   @Valid @ModelAttribute("updateDishRequest") UpdateDishRequest request,
+                                   @RequestParam(value = "image", required = false) MultipartFile image,
+                                   BindingResult bindingResult) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return "update-dish";
+        }
+
+        String imagePath = null;
+        if (!image.isEmpty()) {
+            imagePath = dishService.handleImageUpload(image);
+        }
+
+        dishService.updateDish(dishId, request, imagePath);
+
+        return "redirect:/dishes";
     }
 
 }

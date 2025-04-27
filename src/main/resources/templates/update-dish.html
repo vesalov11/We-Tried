@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Dish</title>
+    <link rel="stylesheet" href="/css/update-restaurant.css">
+</head>
+
+<body>
+<main>
+    <div class="form-container">
+        <form th:action="@{/dishes/update/{dishId}(dishId=${dish.id})}"
+              th:object="${updateDishRequest}"
+              method="POST"
+              enctype="multipart/form-data">
+            <h2>Update Dish</h2>
+
+            <label for="name">Name</label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Dish Name">
+
+            <label for="description">Description</label>
+            <input type="text" id="description" th:field="*{description}" placeholder="Dish Description">
+
+            <label for="price">Price</label>
+            <input type="number" id="price" th:field="*{price}" placeholder="Dish Price" min="0" step="0.01">
+
+            <label for="dishType">Dish Type</label>
+            <select id="dishType" th:field="*{dishType}">
+                <option th:each="type : ${T(com.example.we_tried.dish.model.DishType).values()}"
+                        th:value="${type}"
+                        th:text="${type}"></option>
+            </select>
+
+            <label for="dishImage">Dish Image (Optional)</label>
+            <input type="file" id="dishImage" name="dishImage" accept="image/*">
+
+            <button type="submit">Update Dish</button>
+        </form>
+    </div>
+</main>
+
+<footer>
+</footer>
+</body>
+</html>

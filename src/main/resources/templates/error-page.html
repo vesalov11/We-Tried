@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Error</title>
-  <link rel="stylesheet" href="error-page.css">
+  <link rel="stylesheet" type="text/css" href="/css/error-page.css">
 </head>
 
 <body>
@@ -12,7 +13,7 @@
     <h1 class="glitch" data-text="Error">Error</h1>
     <p class="subtitle">Our developers are working on fixing the issue.</p>
 
-    <a href="home.html" class="home-button">Return to Home Page</a>
+    <a th:href="@{/restaurants}" class="home-button">Return to Home Page</a>
   </div>
 </body>
 </html>

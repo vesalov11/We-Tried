@@ -12,7 +12,7 @@
 
 <main>
   <div class="form-container">
-    <form th:action="@{/restaurants/update}" th:object="${updateRestaurantRequest}" method="POST">
+    <form th:action="@{/restaurants/update}" th:object="${updateRestaurantRequest}" method="POST" enctype="multipart/form-data">
 
       <h2>Update Restaurant</h2>
 
@@ -39,8 +39,8 @@
                 th:value="${type}" th:text="${type}">Type</option>
       </select>
 
-      <label for="restaurantPicture">Restaurant Picture URL</label>
-      <input type="text" id="restaurantPicture" th:field="*{restaurantPicture}">
+      <label for="image">Restaurant Image:</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
 
       <button type="submit">Update Restaurant</button>
     </form>

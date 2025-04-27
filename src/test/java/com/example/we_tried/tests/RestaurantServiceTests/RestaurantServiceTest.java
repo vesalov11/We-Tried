@@ -131,7 +131,7 @@ class RestaurantServiceTest {
         when(restaurantRepository.findByName("Restaurant Rodopi")).thenReturn(Optional.empty());
         when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
 
-        restaurantService.create(createRequest);
+        restaurantService.createRestaurant(createRequest, "file.jpg");
 
         verify(restaurantRepository).save(any(Restaurant.class));
     }
@@ -140,7 +140,7 @@ class RestaurantServiceTest {
     void create_shouldThrowExceptionWhenRestaurantExists() {
         when(restaurantRepository.findByName("Restaurant Rodopi")).thenReturn(Optional.of(restaurant));
 
-        assertThrows(RuntimeException.class, () -> restaurantService.create(createRequest));
+        assertThrows(RuntimeException.class, () -> restaurantService.createRestaurant(createRequest, "file.jpg"));
     }
 
     @Test
@@ -148,7 +148,7 @@ class RestaurantServiceTest {
         when(restaurantRepository.findById(restaurantId)).thenReturn(Optional.of(restaurant));
         when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
 
-        restaurantService.update(restaurantId, updateRequest);
+        restaurantService.updateRestaurant(restaurantId, updateRequest);
 
         assertEquals("Restaurant Chernomorets", restaurant.getName());
         assertEquals("ul.Sozopol N7", restaurant.getAddress());
