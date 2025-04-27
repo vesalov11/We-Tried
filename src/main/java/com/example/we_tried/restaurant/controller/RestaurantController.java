@@ -129,7 +129,7 @@ public class RestaurantController {
             imagePath = restaurantService.handleImageUpload(image);
         }
 
-        restaurantService.updateRestaurant(restaurantId, updateRestaurantRequest);
+        restaurantService.updateRestaurant(restaurantId, updateRestaurantRequest, imagePath);
 
         return "redirect:/restaurants";
     }
