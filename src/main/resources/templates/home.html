@@ -49,6 +49,11 @@
             </a>
             <div class="description" th:text="${restaurant.name}">Restaurant Name</div>
 
+            <div class="open-close-time">
+                <span th:text="'Open: ' + ${restaurant.openingTime}">Open: 10:00</span> |
+                <span th:text="'Close: ' + ${restaurant.closingTime}">Close: 22:00</span>
+            </div>
+
             <div class="edit-buttons">
                 <a th:href="@{/restaurants/update/{restaurantId}(restaurantId=${restaurant.id})}">
                     <button class="update">Update</button>
