@@ -20,6 +20,7 @@
         <div class="form-box" id="login">
             <h2>Log In</h2>
             <form th:action="@{/login}" th:object="${loginRequest}" method="post">
+
                 <input type="text" th:field="*{username}" placeholder="Username">
                 <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
                 <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
@@ -27,6 +28,9 @@
                 <input type="password" th:field="*{password}" placeholder="Password">
                 <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
                 <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+                <div th:if="${errorMessage}" class="error" style="color: #fc2e2e; margin-bottom: 10px;">
+                    <p th:text="${errorMessage}"></p>
+                </div>
                 <button type="submit">Log In</button>
             </form>
         </div>

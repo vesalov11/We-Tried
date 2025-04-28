@@ -145,15 +145,19 @@ class RestaurantServiceTest {
 
     @Test
     void update_shouldUpdateExistingRestaurant() {
+
         when(restaurantRepository.findById(restaurantId)).thenReturn(Optional.of(restaurant));
         when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
 
-        restaurantService.updateRestaurant(restaurantId, updateRequest);
+        String username = "testUser";
+
+        restaurantService.updateRestaurant(restaurantId, updateRequest, username);
 
         assertEquals("Restaurant Chernomorets", restaurant.getName());
         assertEquals("ul.Sozopol N7", restaurant.getAddress());
         verify(restaurantRepository).save(restaurant);
     }
+
 
     @Test
     void delete_shouldRemoveRestaurant() {
