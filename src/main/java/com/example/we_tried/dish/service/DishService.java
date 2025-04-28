@@ -75,4 +75,10 @@ public class DishService {
     public Dish getById(UUID dishId) {
         return dishRepository.findById(dishId).orElseThrow(() -> new RuntimeException("Dish not found"));
     }
+
+    public void delete(UUID dishId) {
+        Dish dish = getById(dishId);
+
+        dishRepository.delete(dish);
+    }
 }

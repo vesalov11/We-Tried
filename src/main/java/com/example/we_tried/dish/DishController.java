@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +36,7 @@ public class DishController {
         this.restaurantService = restaurantService;
     }
 
-    @GetMapping("/add/{restaurantId}")
+    @GetMapping("/{restaurantId}/add")
     public ModelAndView createNewDish(@PathVariable UUID restaurantId) {
         ModelAndView modelAndView = new ModelAndView("add-dish");
         modelAndView.addObject("createDishRequest", new CreateDishRequest());
@@ -44,7 +45,7 @@ public class DishController {
         return modelAndView;
     }
 
-    @PostMapping("/add/{restaurantId}")
+    @PostMapping("/{restaurantId}/add")
     public String submitNewDish(@PathVariable UUID restaurantId,
                                 @Valid @ModelAttribute("createDishRequest") CreateDishRequest request,
                                 @RequestParam(value = "image", required = false) MultipartFile image,
@@ -65,7 +66,7 @@ public class DishController {
         return "redirect:/restaurants/" + restaurantId;
     }
 
-    @GetMapping("/update/{dishId}")
+    @GetMapping("/{dishId}/update")
     public ModelAndView updateDish(@PathVariable UUID dishId) {
         Dish dish = dishService.getById(dishId);
         ModelAndView modelAndView = new ModelAndView("update-dish");
@@ -75,7 +76,7 @@ public class DishController {
         return modelAndView;
     }
 
-    @PostMapping("/update/{dishId}")
+    @PostMapping("/{dishId}/update")
     public String submitUpdateDish(@PathVariable UUID dishId,
                                    @Valid @ModelAttribute("updateDishRequest") UpdateDishRequest request,
                                    @RequestParam(value = "image", required = false) MultipartFile image,
@@ -93,6 +94,14 @@ public class DishController {
         dishService.updateDish(dishId, request, imagePath);
 
         return "redirect:/dishes";
+    }
+
+    @DeleteMapping("/{dishId}/delete")
+    public String deleteRestaurant(@PathVariable UUID dishId) {
+
+        dishService.delete(dishId);
+
+        return "redirect:/restaurants";
     }
 
 }
