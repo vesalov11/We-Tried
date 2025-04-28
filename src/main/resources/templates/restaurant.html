@@ -18,7 +18,7 @@
         </div>
 
         <div class="dropdown-menu">
-            <button id="dropdown-button">Admin</button>
+            <button id="dropdown-button">User</button>
             <div id="dropdown-content">
                 <a th:href="@{/profile}">Profile</a>
                 <a th:href="@{/restaurants}">Home</a>
@@ -30,7 +30,7 @@
 
 <main>
     <div class="edit-buttons">
-        <a th:href="@{'/dishes/add/' + ${restaurant.id}}"><button class="add">Add Dish</button></a>
+        <a th:href="@{'/dishes/' + ${restaurant.id} + '/add'}"><button class="add">Add Dish</button></a>
     </div>
 
     <div class="menus">
