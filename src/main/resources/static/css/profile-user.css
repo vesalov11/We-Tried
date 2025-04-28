@@ -1,28 +1,29 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* За да гарантираш, че тялото ще запълва цялата височина на екрана */
 }
 
 a {
     text-decoration: none;
-    color: #007bff;
+    color: #34495E;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
-/* Navbar */
 .navbar {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    background-color: #007bff;
+    background-color: #34495E;
     color: white;
     padding: 10px 20px;
 }
@@ -49,8 +50,8 @@ a:hover {
 }
 
 #dropdown-button {
-    background-color: #0056b3;
-    color: white;
+    background-color: white;
+    color: black;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
@@ -58,7 +59,8 @@ a:hover {
 }
 
 #dropdown-button:hover {
-    background-color: #003f7f;
+    background-color: #1c5c7e;
+    color: white;
 }
 
 #dropdown-content {
@@ -76,6 +78,7 @@ a:hover {
     display: block;
     padding: 10px 15px;
     color: #333;
+    text-decoration: none;
 }
 
 #dropdown-content a:hover {
@@ -86,7 +89,6 @@ a:hover {
     display: block;
 }
 
-/* Profile Section */
 .profile-section {
     display: flex;
     align-items: center;
@@ -105,7 +107,7 @@ a:hover {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 20px;
-    border: 3px solid #007bff;
+    border: 3px solid #34495E;
     flex-shrink: 0;
 }
 
@@ -120,14 +122,13 @@ a:hover {
 }
 
 .user-info strong {
-    color: #007bff;
+    color: #34495E;
 }
 
-/* Orders Section */
 .orders-title {
     text-align: center;
     margin: 20px 0;
-    color: #007bff;
+    color: #34495E;
 }
 
 .orders {
@@ -155,13 +156,12 @@ a:hover {
     text-align: center;
 }
 
-/* Footer */
 footer {
-    background-color: #007bff;
+    background-color: #34495E;
     color: white;
     padding: 20px;
     text-align: center;
-    margin-top: 20px;
+    margin-top: auto; /* Това ще гарантира, че footer-ът е на дъното */
 }
 
 footer a {
@@ -172,7 +172,6 @@ footer a:hover {
     color: #ffd700;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
