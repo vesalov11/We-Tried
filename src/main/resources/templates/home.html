@@ -10,11 +10,10 @@
 <body>
 <header>
     <div class="navbar">
-
-        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo">
 
         <div class="search-box-container">
-            <form th:action="@{/restaurants}" th:method="GET">
+            <form th:action="@{/restaurants}" method="get">
                 <input type="text" class="search-box" name="search" th:value="${searchQuery}" placeholder="Search here...">
                 <button class="search-button" type="submit">Search</button>
             </form>
@@ -32,44 +31,44 @@
 </header>
 
 <main>
+
     <div class="edit-buttons">
         <a th:href="@{/restaurants/new}">
             <button class="add">Add</button>
         </a>
     </div>
 
-    <br>
-    <hr>
-    <br>
+    <br><hr><br>
 
     <div class="restaurants-list">
         <div class="restaurants" th:each="restaurant : ${restaurants}">
+
             <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">
                 <img th:src="@{${restaurant.restaurantPicture}}" th:alt="${restaurant.name}">
             </a>
+
             <div class="description" th:text="${restaurant.name}">Restaurant Name</div>
 
             <div class="edit-buttons">
-                <a th:href="@{/restaurants/update/{restaurantId}(restaurantId=${restaurant.id})}">
+                <a th:href="@{/restaurants/{restaurantId}/update(restaurantId=${restaurant.id})}">
                     <button class="update">Update</button>
                 </a>
-                <form th:action="@{/restaurants/delete/{restaurantId}(restaurantId=${restaurant.id})}" method="post">
+
+                <form th:action="@{/restaurants/{restaurantId}/delete(restaurantId=${restaurant.id})}" method="post">
                     <input type="hidden" name="_method" value="delete"/>
                     <button type="submit" class="delete">Delete</button>
                 </form>
             </div>
+
         </div>
     </div>
 
     <a th:href="@{/cart}">
-        <div class="cart-icon">
-            🛒
-        </div>
+        <div class="cart-icon">🛒</div>
     </a>
 
-    <br>
-    <hr>
-    <br>
+    <br><hr><br>
+
 </main>
 
 <footer>
@@ -87,5 +86,6 @@
             and email us on 📧 wedeliver@gmail.com</p>
     </div>
 </footer>
+
 </body>
 </html>

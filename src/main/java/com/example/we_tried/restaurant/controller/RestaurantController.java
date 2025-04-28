@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -67,7 +68,7 @@ public class RestaurantController {
         return modelAndView;
     }
 
-    @DeleteMapping("/delete/{restaurantId}")
+    @DeleteMapping("/{restaurantId}/delete")
     public String deleteRestaurant(@PathVariable UUID restaurantId) {
 
         restaurantService.delete(restaurantId);
@@ -100,7 +101,7 @@ public class RestaurantController {
         return "redirect:/restaurants";
     }
 
-    @GetMapping("/update/{restaurantId}")
+    @GetMapping("/{restaurantId}/update")
     public ModelAndView getUpdateRestaurantPage(@PathVariable UUID restaurantId) {
 
         Restaurant restaurant = restaurantService.getById(restaurantId);
@@ -114,7 +115,7 @@ public class RestaurantController {
         return modelAndView;
     }
 
-    @PostMapping("/update/{restaurantId}")
+    @PutMapping("/{restaurantId}/update")
     public String updateRestaurant(@PathVariable UUID restaurantId,
                                    @Valid @ModelAttribute("updateRestaurantRequest") UpdateRestaurantRequest updateRestaurantRequest,
                                    @RequestParam(value = "image", required = false) MultipartFile image,
