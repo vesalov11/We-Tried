@@ -10,7 +10,7 @@
 <body>
 <main>
     <div class="form-container">
-        <form th:action="@{/dishes/update/{dishId}(dishId=${dish.id})}"
+        <form th:action="@{/dishes/{dishId}/update(dishId=${dish.id})}"
               th:object="${updateDishRequest}"
               method="POST"
               enctype="multipart/form-data">
