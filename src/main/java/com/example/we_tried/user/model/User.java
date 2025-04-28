@@ -1,6 +1,6 @@
 package com.example.we_tried.user.model;
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +22,8 @@ public class User extends BaseUser {
 
     private String profilePictureUrl;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Order> orders;
+    private List<FoodOrder> orders;
 }

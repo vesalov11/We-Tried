@@ -1,143 +1,272 @@
-* {
+/* Основни стилове */
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F4F6F6; /* от home.css */
+    color: #34495E; /* от home.css */
+    animation: fadeIn 0.8s ease-out;
 }
 
-body {
-    background-color: #fcf3e3;
-    margin: 0;
+/* Навигационна лента */
+.navbar {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #34495E; /* от home.css */
+    color: white;
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* от home.css */
 }
 
-header {
-    height: 100px;
-    width: auto;
-    background-color: #fcbc54;
+.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: bounce 0.4s ease;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
 }
 
-footer {
-    height: 50px;
-    width: 100%;
-    background-color: #fc3c30;
-    margin-top: auto;
-    padding: 10px;
-}
-
+/* Dropdown меню */
 .dropdown-menu {
     position: relative;
-    display: inline-block;
 }
 
 #dropdown-button {
-    border: none;
-    background-color: #1c5c7e;
+    background-color: #2ECC71; /* от home.css */
     color: white;
-    height: 50px;
-    width: 130px;
-    border-radius: 25px ;
-    font-size: 16px;
+    border: none;
+    padding: 10px 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
 }
 
 #dropdown-button:hover {
-    background-color: #08acb8;
-    transform: scale(1.05);
-}
-
-.dropdown-menu a {
-    display: block;
-    text-decoration: none;
-    color: white;
-    padding: 12px 16px;
-    text-align: center;
-    transition: background-color 0.3s ease;
+    background-color: #27AE60; /* по-тъмен нюанс */
 }
 
 #dropdown-content {
     display: none;
     position: absolute;
-    top: 55px;
-    left: -7%;
-    background-color: #1c5c7e;
-    min-width: 150px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px #00000033;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    border-radius: 8px;
     overflow: hidden;
+    animation: fadeIn 0.3s ease;
+    transform-origin: top;
+}
+
+#dropdown-content a {
+    color: #34495E; /* от home.css */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+#dropdown-content a:hover {
+    background-color: #F4F6F6; /* от home.css */
 }
 
 .dropdown-menu:hover #dropdown-content {
     display: block;
 }
 
-.dropdown-menu a:hover {
-    background-color: #08acb8;
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100px;
-    padding: 0 20px;
-}
-
-form {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px #0000001a;
-    width: 100%;
-    max-width: 500px;
-
-}
-
-.form-container {
+/* Основно съдържание */
+main {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-    padding: 20px;
+    padding: 40px 20px;
+    animation: slideUp 0.8s ease-out;
 }
 
-h2 {
+/* Контейнер на формата */
+.form-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Формата */
+form h2 {
     text-align: center;
-    margin-bottom: 25px;
-    color:#1c5c7e;
+    margin-bottom: 20px;
+    color: #34495E; /* от home.css */
 }
 
 label {
     display: block;
     margin-top: 15px;
     font-weight: 600;
-    color: #1c5c7e;
 }
 
-input, select {
+input[type="text"],
+input[type="time"],
+select {
     width: 100%;
     padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
     margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    font-size: 16px;
+    transition: border 0.3s;
 }
 
-button {
+input:focus,
+select:focus {
+    border-color: #E74C3C; /* от home.css */
+    box-shadow: 0 0 10px #E74C3Caa;
+    outline: none;
+}
+
+.danger {
+    font-size: 13px;
+    color: #E74C3C; /* от home.css */
+    margin-top: 5px;
+}
+
+/* Бутон */
+button[type="submit"] {
+    margin-top: 25px;
     width: 100%;
     padding: 12px;
-    margin-top: 25px;
-    background-color: #1c5c7e;
+    background: #2ECC71; /* от home.css */
     color: white;
     font-size: 16px;
+    font-weight: bold;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-button:hover {
-    background-color: #08acb8;
+button[type="submit"]:hover {
+    background: #27AE60;
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: bounce 0.4s ease;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: white;
+    background-color: #34495E; /* от home.css */
+    padding: 40px 20px;
+    font-size: 14px;
+}
+
+footer a {
+    color: #F1C40F; /* от home.css */
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px 15px;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    #dropdown-button {
+        padding: 8px 16px;
+    }
+
+    form h2 {
+        font-size: 22px;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    select {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 8px 12px;
+    }
+
+    .form-container {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    #dropdown-button {
+        padding: 7px 14px;
+    }
+
+    form h2 {
+        font-size: 20px;
+    }
+
+    input[type="text"],
+    input[type="time"],
+    select {
+        padding: 7px;
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        font-size: 13px;
+        padding: 8px;
+    }
 }

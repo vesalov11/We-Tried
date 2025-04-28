@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue</title>
-    <link rel="stylesheet" href="../static/css/revenue.css">
+    <link rel="stylesheet" href="/css/revenue.css">
 </head>
 <body>
 <header>
     <div class="navbar">
-        <div id="logo">LOGO</div>
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
 
         <div class="search-box-container">
             <input type="text" class="search-box" placeholder="Search here...">
@@ -17,10 +19,9 @@
         <div class="dropdown-menu">
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
-                <a href="profile-user.html">Profile</a>
+                <a th:href="@{/restaurants}">Profile</a>
                 <!-- Add paths -->
                 <a href="">Orders</a>
-                <a href="#">Help</a>
             </div>
         </div>
     </div>

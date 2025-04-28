@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,30 +72,32 @@ public class RestaurantController {
 
         restaurantService.delete(restaurantId);
 
-        return "redirect:/home";
+        return "redirect:/restaurants";
     }
 
     @GetMapping("/new")
     public ModelAndView getNewRestaurantPage() {
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-restaurant");
         modelAndView.addObject("createRestaurantRequest", new CreateRestaurantRequest());
         modelAndView.addObject("restaurantType", RestaurantType.values());
-
         return modelAndView;
     }
 
     @PostMapping("/new")
-    public String createRestaurant(@Valid @ModelAttribute("createRestaurantRequest") CreateRestaurantRequest restaurant, BindingResult bindingResult) {
+    public String createRestaurant(@Valid @ModelAttribute("createRestaurantRequest") CreateRestaurantRequest restaurant,
+                                   @RequestParam("image") MultipartFile image,
+                                   BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "add-restaurant";
         }
 
-        restaurantService.create(restaurant);
+        String imagePath = restaurantService.handleImageUpload(image);
 
-        return "redirect:/home";
+        restaurantService.createRestaurant(restaurant, imagePath);
+
+        return "redirect:/restaurants";
     }
 
     @GetMapping("/update/{restaurantId}")
@@ -111,15 +115,23 @@ public class RestaurantController {
     }
 
     @PostMapping("/update/{restaurantId}")
-    public String updateRestaurant(@PathVariable UUID restaurantId, @Valid @ModelAttribute("updateRestaurantRequest") UpdateRestaurantRequest updateRestaurantRequest, BindingResult bindingResult) {
+    public String updateRestaurant(@PathVariable UUID restaurantId,
+                                   @Valid @ModelAttribute("updateRestaurantRequest") UpdateRestaurantRequest updateRestaurantRequest,
+                                   @RequestParam(value = "image", required = false) MultipartFile image,
+                                   BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "update-restaurant";
         }
 
-        restaurantService.update(restaurantId, updateRestaurantRequest);
+        String imagePath = null;
+        if (!image.isEmpty()) {
+            imagePath = restaurantService.handleImageUpload(image);
+        }
 
-        return "redirect:/home";
+        restaurantService.updateRestaurant(restaurantId, updateRestaurantRequest, imagePath);
+
+        return "redirect:/restaurants";
     }
 
 }

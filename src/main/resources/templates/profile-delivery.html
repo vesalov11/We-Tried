@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" th:href="@{/css/profile-delivery.css}"/>
+    <link rel="stylesheet"  href="/css/profile-delivery.css">
 </head>
 
 <body>
 
 <header>
-    <div>
-        <h1>Logo</h1>
-    </div>
+    <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
 
     <div>
         <a th:href="@{/deliverer-orders}"><button>My orders</button></a>
         <a th:href="@{/all-orders}"><button>All orders</button></a>
-        <a th:href="@{/profile-delivery}"><button>Profile</button></a>
         <a href="#"><button>Help</button></a>
     </div>
 </header>

@@ -1,6 +1,7 @@
 package com.example.we_tried.user.service;
 
 import com.example.we_tried.security.AuthenticationMetaData;
+import com.example.we_tried.user.model.Role;
 import com.example.we_tried.user.model.User;
 import com.example.we_tried.user.repository.UserRepository;
 import com.example.we_tried.login.LoginRequest;
@@ -47,6 +48,7 @@ public class UserService implements UserDetailsService {
                 .username(registerRequest.getUsername())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .role(Role.USER)
                 .build();
     }
 

@@ -4,20 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Profile</title>
-    <link rel="stylesheet" th:href="@{/css/profile-user.css}"/>
+    <link rel="stylesheet" href="/css/profile-user.css">
 </head>
 <body>
 
 <header>
     <div class="navbar">
-        <div id="logo">LOGO</div>
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo">
 
         <div class="dropdown-menu">
             <button id="dropdown-button">User</button>
             <div id="dropdown-content">
-                <a th:href="@{/profile-user}">Profile</a>
-                <a href="#">Help</a>
-                <a th:href="@{/home}">Home</a>
+                <a th:href="@{/restaurants}">Home</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>

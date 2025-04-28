@@ -25,7 +25,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Order {
+public class FoodOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

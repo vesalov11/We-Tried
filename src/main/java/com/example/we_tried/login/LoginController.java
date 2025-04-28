@@ -7,38 +7,27 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
-    private final UserService userService;
+    @GetMapping("/login")
+    public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String errorParam) {
 
-    @Autowired
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("login");
+        mv.addObject("loginRequest", new LoginRequest());
 
-    @PostMapping
-    public String processLogin(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session) {
-
-        if (bindingResult.hasErrors()) {
-            return "index";
+        if (errorParam != null) {
+            mv.addObject("errorMessage", "Incorrect username or password!");
         }
 
-        User user = userService.login(loginRequest);
-
-        session.setAttribute("user_id", user.getId());
-        session.setAttribute("role", user.getRole());
-
-
-        switch (user.getRole()) {
-            case DELIVERER:
-                return "redirect:/deliverer/home";
-            default:
-                return "redirect:/home";
-        }
+        return mv;
     }
+
 }

@@ -29,7 +29,7 @@ public class OrderItem {
     private BigDecimal price;
 
     @ManyToOne
-    private Order order;
+    private FoodOrder order;
 
     @ManyToOne
     private Dish dish;

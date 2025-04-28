@@ -3,8 +3,6 @@ package com.example.we_tried.cart;
 import com.example.we_tried.cart.model.Cart;
 import com.example.we_tried.cart.service.CartService;
 import com.example.we_tried.security.AuthenticationMetaData;
-import com.example.we_tried.user.model.User;
-import com.example.we_tried.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

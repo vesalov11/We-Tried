@@ -7,14 +7,24 @@ import com.example.we_tried.restaurant.model.RestaurantType;
 import com.example.we_tried.restaurant.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+
 
 @Service
 public class RestaurantService {
+
+
+    private static final String UPLOAD_DIR = "src/main/resources/static/img/";
+
     private final RestaurantRepository restaurantRepository;
+
     @Autowired
     public RestaurantService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
@@ -29,7 +39,7 @@ public class RestaurantService {
     }
 
     public List<Restaurant> getByType(RestaurantType type) {
-        return restaurantRepository.findByType(type);
+        return restaurantRepository.findByRestaurantType(type);
     }
 
     public List<Restaurant> searchByName(String query) {
@@ -41,34 +51,46 @@ public class RestaurantService {
                 .orElseThrow(() -> new RuntimeException("Restaurant not found"));
     }
 
-    public void create(CreateRestaurantRequest request) {
-        Optional<Restaurant> optionalRestaurant = restaurantRepository.findByName(request.getName());
-        if (optionalRestaurant.isPresent()) {
-            throw new RuntimeException("Restaurant already exists");
-        }
+    public String handleImageUpload(MultipartFile image) throws IOException {
+        if (!image.isEmpty()) {
+            String imageName = image.getOriginalFilename();
 
-        Restaurant restaurant = Restaurant.builder()
-                .name(request.getName())
-                .address(request.getAddress())
-                .phoneNumber(request.getPhoneNumber())
-                .restaurantPicture(request.getRestaurantPicture())
-                .restaurantType(request.getRestaurantType())
-                .openingTime(request.getOpeningTime())
-                .closingTime(request.getClosingTime())
-                .build();
+            Path path = Paths.get(UPLOAD_DIR + imageName);
+            Files.createDirectories(path.getParent());
+            image.transferTo(path);
+
+            return "/img/" + imageName;
+        }
+        return null;
+    }
+
+    public void createRestaurant(CreateRestaurantRequest restaurantRequest, String imagePath) {
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName(restaurantRequest.getName());
+        restaurant.setAddress(restaurantRequest.getAddress());
+        restaurant.setPhoneNumber(restaurantRequest.getPhoneNumber());
+        restaurant.setOpeningTime(restaurantRequest.getOpeningTime());
+        restaurant.setClosingTime(restaurantRequest.getClosingTime());
+        restaurant.setRestaurantType(restaurantRequest.getRestaurantType());
+        restaurant.setRestaurantPicture(imagePath);
 
         restaurantRepository.save(restaurant);
     }
 
-    public void update(UUID id, UpdateRestaurantRequest request) {
-        Restaurant restaurant = getById(id);
+    public void updateRestaurant(UUID restaurantId, UpdateRestaurantRequest restaurantRequest, String imagePath) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(() -> new RuntimeException("Restaurant not found"));
 
-        restaurant.setName(request.getName());
-        restaurant.setAddress(request.getAddress());
-        restaurant.setPhoneNumber(request.getPhoneNumber());
-        restaurant.setOpeningTime(request.getOpeningTime());
-        restaurant.setClosingTime(request.getClosingTime());
-        restaurant.setRestaurantType(request.getRestaurantType());
+        restaurant.setName(restaurantRequest.getName());
+        restaurant.setAddress(restaurantRequest.getAddress());
+        restaurant.setPhoneNumber(restaurantRequest.getPhoneNumber());
+        restaurant.setOpeningTime(restaurantRequest.getOpeningTime());
+        restaurant.setClosingTime(restaurantRequest.getClosingTime());
+        restaurant.setRestaurantType(restaurantRequest.getRestaurantType());
+
+        if (imagePath != null) {
+            restaurant.setRestaurantPicture(imagePath);
+        }
 
         restaurantRepository.save(restaurant);
     }

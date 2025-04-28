@@ -1,7 +1,6 @@
 package com.example.we_tried.deliverer.repository;
 
 import com.example.we_tried.deliverer.model.Deliverer;
-import com.example.we_tried.order.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

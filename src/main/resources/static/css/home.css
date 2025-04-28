@@ -1,313 +1,325 @@
+/* home.css */
+
+/* --- Рестарт на стила --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #fcf3e3;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    background-color: #F4F6F6;
+    color: #34495E;
+    animation: fadeIn 0.8s ease-out;
 }
 
+/* --- Анимации --- */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* --- Header/Navbar --- */
 header {
-    height: 100px;
-    width: auto;
-    background-color: #fcbc54;
-}
-
-footer {
-    height: 200px;
-    width: 100%;
-    background-color: #fc3c30;
-    margin-top: auto;
-    padding: 10px;
-}
-
-hr {
-    border: 1px solid #fc3c30;
-}
-
-
-.dropdown-menu {
-    position: relative;
-    display: inline-block;
-}
-
-#dropdown-button {
-    border: none;
-    background-color: #1c5c7e;
-    color: white;
-    height: 50px;
-    width: 130px;
-    border-radius: 25px ;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#dropdown-button:hover {
-    background-color: #08acb8;
-    transform: scale(1.05);
-}
-
-.dropdown-menu a {
-    display: block;
-    text-decoration: none;
-    color: white;
-    padding: 12px 16px;
-    text-align: center;
-    transition: background-color 0.3s ease;
-}
-
-#dropdown-content {
-    display: none;
-    position: absolute;
-    top: 55px;
-    left: -7%;
-    background-color: #1c5c7e;
-    min-width: 150px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px #00000033;
-    overflow: hidden;
-}
-
-.dropdown-menu:hover #dropdown-content {
-    display: block;
-}
-
-.dropdown-menu a:hover {
-    background-color: #08acb8;
-}
-
-.restaurants-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-}
-
-.restaurants {
-    display: inline-block;
-    margin: 15px;
-    width: 300px;
-}
-
-.restaurants img {
-    width: 100%;
-    height: 350px;
-    border: 2px solid #fc3c30;
-    border-radius: 30px;
-}
-
-.restaurants:hover img {
-    border: 2px solid #1c5c7e;
-    transform: scale(1.06);
-}
-
-.restaurants .description {
-    padding: 10px;
-    text-align: center;
-}
-
-
-.search-box-container {
-    display: flex;
-    align-items: center;
-    background: #fcf3e3;
-    border: 3px solid #fc7f2e;
-    border-radius: 25px;
-    width: 300px;
-    padding: 5px 10px;
-    justify-content: center;
-}
-
-.search-box {
-    border: none;
-    outline: none;
-    background: transparent;
-    flex: 1;
-    padding: 8px;
-    font-size: 16px;
+    background-color: #34495E;
+    padding: 15px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100px;
-    padding: 0 20px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: bounce 0.4s ease;
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-play-state: running;
+}
+
+/* --- Search Box --- */
+.search-box-container {
+    flex: 1;
+    margin: 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.search-box {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: #E74C3C;
+    box-shadow: 0 0 10px #E74C3Caa;
 }
 
 .search-button {
+    margin-left: 10px;
+    padding: 8px 16px;
     border: none;
-    background-color: #fcbc54;
-    padding: 9px;
-    border-radius: 25px;
+    background-color: #E74C3C;
     color: white;
+    border-radius: 20px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .search-button:hover {
-    background-color: #fc7f2e;
+    background-color: #C0392B;
+}
+
+/* --- Dropdown Menu --- */
+.dropdown-menu {
+    position: relative;
+}
+
+#dropdown-button {
+    background-color: #2ECC71;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
 }
 
+#dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: fadeIn 0.3s ease;
+    transform-origin: top;
+}
 
+#dropdown-content a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: #34495E;
+    transition: background-color 0.3s ease;
+}
+
+#dropdown-content a:hover {
+    background-color: #F4F6F6;
+}
+
+.dropdown-menu:hover #dropdown-content {
+    display: block;
+}
+
+/* --- Main --- */
+main {
+    padding: 40px;
+}
+
+main > * {
+    animation: slideUp 0.8s ease-out;
+}
+
+/* --- Подравнени бутони --- */
+.edit-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+button.add,
+button.update,
+button.delete {
+    width: 160px;
+    text-align: center;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s ease;
+}
+
+button.add {
+    background-color: #2ECC71;
+    color: white;
+}
+
+button.update {
+    background-color: #F1C40F;
+    color: #34495E;
+}
+
+button.delete {
+    background-color: #E74C3C;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    animation: bounce 0.4s ease;
+}
+
+/* --- Restaurants Grid --- */
+.restaurants-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.restaurants-list .restaurants {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 0.6s ease-out forwards;
+}
+
+.restaurants-list .restaurants:nth-child(1) { animation-delay: 0.1s; }
+.restaurants-list .restaurants:nth-child(2) { animation-delay: 0.2s; }
+.restaurants-list .restaurants:nth-child(3) { animation-delay: 0.3s; }
+.restaurants-list .restaurants:nth-child(4) { animation-delay: 0.4s; }
+
+.restaurants:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.restaurants img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* --- Cart Icon --- */
 .cart-icon {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #fcbc54;
+    bottom: 30px;
+    right: 30px;
+    background-color: #E74C3C;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
+    font-size: 28px;
+    padding: 15px;
     border-radius: 50%;
-    box-shadow: 2px 2px 10px #0000004c;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .cart-icon:hover {
-    background-color: #fc7f2e;
-    transform: scale(1.1);
+    background-color: #C0392B;
+    animation: bounce 0.4s ease;
 }
 
-.about-us {
-    width: 900px;
-    height: 175px;
-    background-color: #1c5c7e;
+/* --- Footer --- */
+footer {
+    background-color: #34495E;
     color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0px 4px 8px #00000033;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 50px;
 }
 
-.about-us a{
+footer a {
+    color: #F1C40F;
     text-decoration: none;
-    color: #08acb8;
 }
 
-.about-us a:hover{
-    color: white;
+footer a:hover {
+    text-decoration: underline;
 }
 
-.edit-buttons {
-    margin-left: 20px;
-    padding: 10px;
-    
-}
-
-.edit-buttons .add {
-    background-color: #fc3c30;
-    color: white;
-    width: 50px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-}
-
-.edit-buttons .add:hover {
-    background-color: #fc7f2e;
-    transform: scale(1.03);
-    cursor: pointer;
-}
-
-.edit-buttons .update {
-    background-color: #1c5c7e;
-    color: white;
-    width: 70px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-}
-
-.edit-buttons .update:hover {
-    background-color: #08acb8;
-    transform: scale(1.03);
-    cursor: pointer;
-}
-
-.edit-buttons .delete {
-    background-color: #fc7f2e;
-    color: white;
-    width: 60px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-}
-
-.edit-buttons .delete:hover {
-    background-color: #fcbc54;
-    transform: scale(1.03);
-    cursor: pointer;
-}
-
+/* --- Responsive Design --- */
 @media screen and (max-width: 768px) {
     .navbar {
         flex-direction: column;
-        height: auto;
-        gap: 10px;
-        padding: 10px;
+        align-items: flex-start;
     }
 
     .search-box-container {
+        margin: 10px 0;
         width: 100%;
-        max-width: 90%;
-        margin: 10px auto;
-        flex-direction: column;
+        justify-content: flex-start;
     }
 
-    .about-us {
-        width: 90%;
-        height: auto;
-        padding: 15px;
-        margin: 10px auto;
+    .search-box {
+        width: 100%;
+    }
+
+    .search-button {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    main {
+        padding: 20px;
     }
 
     .restaurants-list {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .restaurants {
-        width: 90%;
-    }
-
-    .restaurants img {
-        height: auto;
-        max-height: 250px;
-    }
-
-    #dropdown-button {
-        width: 100%;
-        max-width: 200px;
-    }
-
-    .edit-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        margin: 10px 0;
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
 
     .cart-icon {
-        width: 50px;
-        height: 50px;
+        bottom: 20px;
+        right: 20px;
         font-size: 24px;
-        bottom: 15px;
-        right: 15px;
-    }
-
-    header, footer {
-        width: 100%;
+        padding: 12px;
     }
 }

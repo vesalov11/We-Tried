@@ -1,6 +1,6 @@
 package com.example.we_tried.order.repository;
 
-import com.example.we_tried.order.model.Order;
+import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.model.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +14,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, UUID> {
+public interface OrderRepository extends JpaRepository<FoodOrder, UUID> {
 
-    @Query("SELECT SUM(o.totalPrice) FROM Order o WHERE o.deliverer.id = :delivererId AND o.orderStatus = :status AND o.deliveredAt BETWEEN :start AND :end")
+    @Query("SELECT SUM(o.totalPrice) FROM FoodOrder o WHERE o.deliverer.id = :delivererId AND o.orderStatus = :status AND o.deliveredAt BETWEEN :start AND :end")
     Optional<BigDecimal> sumTotalByDelivererIdAndCompletedBetween(
             @Param("delivererId") UUID delivererId,
             @Param("status") OrderStatus status,
@@ -24,9 +24,9 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
             @Param("end") LocalDateTime end
     );
 
-    List<Order> findByDelivererIdAndOrderStatus(UUID delivererId, OrderStatus status);
+    List<FoodOrder> findByDelivererIdAndOrderStatus(UUID delivererId, OrderStatus status);
 
-    List<Order> findByDelivererId(UUID delivererId);
+    List<FoodOrder> findByDelivererId(UUID delivererId);
 
-    List<Order> findByOrderStatus(OrderStatus status);
+    List<FoodOrder> findByOrderStatus(OrderStatus status);
 }

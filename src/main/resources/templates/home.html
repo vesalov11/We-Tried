@@ -10,7 +10,8 @@
 <body>
 <header>
     <div class="navbar">
-        <div id="logo">LOGO</div>
+
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
 
         <div class="search-box-container">
             <form th:action="@{/restaurants}" th:method="GET">
@@ -22,9 +23,8 @@
         <div class="dropdown-menu">
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
-                <a th:href="@{/profile-admin}">Profile</a>
-                <a th:href="@{/orders-admin}">Orders</a>
-                <a href="#">Help</a>
+                <a th:href="@{/profile}">Profile</a>
+                <a th:href="@{/revenue}">Revenue</a>
                 <a th:href="@{/}">Log Out</a>
             </div>
         </div>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <a th:href="@{/shopping-cart}">
+    <a th:href="@{/cart}">
         <div class="cart-icon">
             🛒
         </div>

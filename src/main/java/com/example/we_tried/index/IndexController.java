@@ -10,11 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class IndexController {
 
     @GetMapping("/")
-    public ModelAndView getIndexPage() {
-        ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("loginRequest", new LoginRequest());
-        modelAndView.addObject("registerRequest", new RegisterRequest());
-        return modelAndView;
+    public String getIndexPage() {
+
+        return "index";
     }
 
 }
