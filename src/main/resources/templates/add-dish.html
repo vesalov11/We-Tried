@@ -10,8 +10,8 @@
 
 <main>
     <div class="form-container">
-        <form th:action="@{/dishes/add}" th:object="${createDishRequest}" method="POST" enctype="multipart/form-data">
-            <h2>Add New Dish</h2>
+        <form th:action="@{/dishes/add/{restaurantId}(restaurantId=${restaurantId})}" th:object="${createDishRequest}" method="POST" enctype="multipart/form-data">
+        <h2>Add New Dish</h2>
 
             <label for="name">Dish Name:</label>
             <input type="text" id="name" th:field="*{name}" required>
