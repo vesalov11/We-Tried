@@ -45,10 +45,11 @@
         <div th:each="type : ${dishTypes}">
             <div th:attr="id=${type.toString().toLowerCase()}">
                 <h2 th:text="${type}"></h2>
-                <div class="dish" th:each="dish : ${restaurant.dishes}">
-                    <div th:if="${dish.dishType == type}">
+                <div class="dishes-wrapper"> <!-- Тук нов контейнер за всички ястия от този тип -->
+                    <div class="dish" th:each="dish : ${restaurant.dishes}" th:if="${dish.dishType == type}">
                         <img th:src="@{'/images/' + ${dish.dishImage}}" th:alt="${dish.name}">
-                        <div class="description" th:text="${dish.name}">
+                        <div class="description">
+                            <h3 th:text="${dish.name}"></h3>
                             <p class="price" th:text="${dish.price + ' lv.'}"></p>
                             <p th:utext="${#strings.replace(dish.description, '\n', '<br>')}"></p>
                             <button class="add">Add</button>
@@ -58,6 +59,7 @@
             </div>
         </div>
     </div>
+
 
     <br><hr><br>
 
