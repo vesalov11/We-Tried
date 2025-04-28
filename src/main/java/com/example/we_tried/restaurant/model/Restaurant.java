@@ -24,19 +24,14 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
     private LocalTime openingTime;
 
-    @Column(nullable = false)
     private LocalTime closingTime;
 
     @Enumerated(EnumType.STRING)
