@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders</title>
-    <link rel="stylesheet" th:href="@{/static/css/deliverer-orders.css}">
+    <link rel="stylesheet" href="/css/deliverer-orders.css">
 </head>
 <body>
 <header>
     <div class="logo">
-        <img th:src="@{/images/company-logo.png}" alt="Company Logo">
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
     </div>
     <nav>
         <a th:href="@{/all-orders}" class="nav-button">All Orders</a>
         <div class="dropdown">
-            <a href="#" class="nav-button">Delivery</a>
+            <a href="#" class="nav-button">Account</a>
             <div class="dropdown-content">
                 <a th:href="@{/profile-delivery}">Profile</a>
-                <a href="#">Help</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>
