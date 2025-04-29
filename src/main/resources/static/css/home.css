@@ -227,10 +227,21 @@ button:hover {
 .restaurants-list {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
     justify-content: center;
     padding: 20px;
+    text-align: center;
 }
+
+.restaurants-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 
 .restaurants {
     background-color: #f9f9f9;
