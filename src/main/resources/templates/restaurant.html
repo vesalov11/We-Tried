@@ -52,7 +52,10 @@
                             <h3 th:text="${dish.name}"></h3>
                             <p class="price" th:text="${dish.price + ' lv.'}"></p>
                             <p th:utext="${#strings.replace(dish.description, '\n', '<br>')}"></p>
-                            <button class="add">Add</button>
+                            <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="add-button">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
                 </div>

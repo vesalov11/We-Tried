@@ -88,13 +88,15 @@ public class CartService {
                 .restaurant(restaurant)
                 .orderStatus(OrderStatus.WAITING_FOR_DELIVERY)
                 .orderDate(LocalDateTime.now())
-                .totalPrice(BigDecimal.ZERO)
+                .totalPrice(getTotalPrice(cart))
+                .orderItems(new ArrayList<>())
                 .cart(cart)
                 .build());
 
         cart.getOrders().add(newOrder);
         return newOrder;
     }
+
 
     private OrderItem createNewOrderItem(FoodOrder order, Dish dish) {
         return orderItemRepository.save(OrderItem.builder()
@@ -128,8 +130,12 @@ public class CartService {
     }
 
     @Transactional
-    public void checkout(UUID user, String deliveryAddress, String paymentMethod) {
-        Cart cart = cartRepository.findByOwnerId(user)
+    public void checkout(UUID userId, String deliveryAddress, String paymentMethod) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Cart cart = cartRepository.findByOwnerId(userId)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
 
         if (cart.getOrders().isEmpty()) {
@@ -145,9 +151,11 @@ public class CartService {
         }
 
         for (FoodOrder order : cart.getOrders()) {
+            order.setOwner(user);
             order.setDeliveryAddress(deliveryAddress);
             order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
             order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
+            updateOrderTotal(order);
             order.setCart(null);
             orderRepository.save(order);
         }
