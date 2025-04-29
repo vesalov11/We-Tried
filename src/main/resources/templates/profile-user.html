@@ -34,8 +34,7 @@
             <p><strong>Password:</strong> ************</p>
             <form th:action="@{/change-role}" method="post">
                 <input type="hidden" name="userId" th:value="${user.id}">
-                <input type="text" name="phoneNumber" placeholder="Enter phone number">
-                <button type="submit">Promote to Deliverer</button>
+
             </form>
         </div>
     </div>
@@ -46,8 +45,7 @@
             <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}">2025-04-01</span>
             <span th:text="${order.orderStatus}">Delivered</span>
             <span th:text="${order.totalPrice}">15.00</span>
-            <span class="order-dishes" th:text="${#strings.listJoin(order.orderItems.?[dish != null].![dish.name], ', ')}">Product Name</span>
-        </div>
+            <span class="order-dishes" th:text="${#strings.listJoin(dishNames, ', ')}">Product Name</span>        </div>
     </div>
 
 </main>
