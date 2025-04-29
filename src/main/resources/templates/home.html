@@ -46,10 +46,10 @@
     <br><hr><br>
 
     <div class="restaurants-list">
-        <div th:each="type : ${restaurantTypes}">
-            <div th:attr="id=${type.toString().toLowerCase()}">
-                <h2 th:text="${type}"></h2>
+        <div th:each="type : ${restaurantTypes}" th:attr="id=${type.toString().toLowerCase()}">
+            <h2 th:text="${type}"></h2>
 
+            <div class="restaurants-container">
                 <div class="restaurants" th:each="restaurant : ${restaurants}"
                      th:if="${restaurant.restaurantType.name() == type.name()}">
                     <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">

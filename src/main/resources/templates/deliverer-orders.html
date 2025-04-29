@@ -1,36 +1,10 @@
-<form th:action="@{/deliverer-orders/add}" method="POST">
-    <div class="orders-container">
-        <div class="order-card" th:each="order : ${delivererOrders}">
-            <img th:src="${order.restaurant.restaurantPicture}" alt="Restaurant Image" class="restaurant-img" />
-            <div class="order-info">
-                <h3 th:text="${order.restaurant.name}">Burger Palace</h3>
-                <p class="items">Items:
-                    <span th:each="item, iterStat : ${order.orderItems}">
-                        <span th:text="${item.dish.name + ' x' + item.quantity}"></span>
-                        <span th:if="${!iterStat.last}">, </span>
-                    </span>
-                </p>
-                <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
-                <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
-                <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
-            </div>
-            <div class="checkbox-container">
-                <input type="checkbox" th:id="'order' + ${order.id}" name="selectedOrders" value="${order.id}" style="transform: scale(1.5);">
-                <label th:for="'order' + ${order.id}"></label>
-            </div>
-        </div>
-    </div>
-
-    <input type="hidden" name="delivererId" th:value="${delivererId}" />
-
-    <button type="submit" id="addButton">Assign Orders to Me</button>
-</form><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Orders</title>
-    <link rel="stylesheet" href="/css/my-orders.css">
+    <link rel="stylesheet" href="/css/deliverer-orders.css">
 </head>
 <body>
 <header>
@@ -49,24 +23,31 @@
     </nav>
 </header>
 
-<div class="orders-container">
-    <div class="order-card" th:each="order : ${delivererOrders}">
-        <img th:src="${order.restaurant.restaurantPicture}" alt="Restaurant Image" class="restaurant-img" />
-        <div class="order-info">
-            <h3 th:text="${order.restaurant.name}">Burger Palace</h3>
-            <p class="items">Items:
-                <span th:each="item, iterStat : ${order.orderItems}">
-                    <span th:text="${item.dish.name + ' x' + item.quantity}"></span>
-                    <span th:if="${!iterStat.last}">, </span>
-                </span>
-            </p>
-            <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
-            <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
-            <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
+<form th:action="@{/deliverer-orders/add}" method="POST">
+    <div class="orders-container">
+        <div class="order-card" th:each="order : ${delivererOrders}">
+            <img th:src="${order.restaurant.restaurantPicture}" alt="Restaurant Image" class="restaurant-img" />
+            <div class="order-info">
+                <h3 th:text="${order.restaurant.name}">Burger Palace</h3>
+                <p class="items">Items:
+                    <span th:each="item, iterStat : ${order.orderItems}">
+                        <span th:text="${item.dish.name + ' x' + item.quantity}"></span>
+                        <span th:if="${!iterStat.last}">, </span>
+                    </span>
+                </p>
+                <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
+                <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
+                <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
+            </div>
+            <div class="checkbox-container">
+                <input type="checkbox" th:id="'order' + ${order.id}" name="selectedOrders" th:value="${order.id}" style="transform: scale(1.5);">
+                <label th:for="'order' + ${order.id}"></label>
+            </div>
         </div>
     </div>
-</div>
+
+    <input type="hidden" name="delivererId" th:value="${delivererId}" />
+</form>
 
 </body>
 </html>
-
