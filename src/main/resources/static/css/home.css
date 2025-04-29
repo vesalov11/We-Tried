@@ -11,6 +11,14 @@ body {
     animation: fadeIn 0.8s ease-out;
 }
 
+button {
+    cursor: pointer;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -157,13 +165,9 @@ main > * {
     animation: slideUp 0.8s ease-out;
 }
 
-/* --- Подравнени бутони --- */
 .edit-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-bottom: 20px;
+    text-align: center;
+    margin: 20px 0;
 }
 
 button.add,
@@ -198,6 +202,26 @@ button:hover {
     opacity: 0.9;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     animation: bounce 0.4s ease;
+}
+
+.menus {
+    text-align: center;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.menus button {
+    margin: 5px;
+    background-color: #F1C40F;
+    color: #34495E;
+}
+
+.menus button:hover {
+    background-color: #D4AC0D;
+}
+
+.menus a {
+    text-decoration: none;
 }
 
 .restaurants-list {

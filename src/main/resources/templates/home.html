@@ -23,10 +23,7 @@
             <button id="dropdown-button">User</button>
             <div id="dropdown-content">
                 <a th:href="@{/profile}">Profile</a>
-                <a th:if="${user.role.name() == 'ADMIN'}"
-                   th:href="@{/revenue}">
-                    Revenue
-                </a>
+                <a th:if="${user.role.name() == 'ADMIN'}" th:href="@{/revenue}">Revenue</a>
                 <a th:href="@{/}">Log Out</a>
             </div>
         </div>
@@ -34,40 +31,49 @@
 </header>
 
 <main>
-
     <div class="edit-buttons" th:if="${user.role.name() == 'ADMIN'}">
         <a th:href="@{/restaurants/new}">
             <button class="add">Add</button>
         </a>
     </div>
 
+    <div class="menus">
+        <a th:href="'#' + ${type.toString().toLowerCase()}" th:each="type : ${restaurantTypes}">
+            <button th:text="${type.toString()}">Menu</button>
+        </a>
+    </div>
+
     <br><hr><br>
 
     <div class="restaurants-list">
-        <div class="restaurants" th:each="restaurant : ${restaurants}">
+        <div th:each="type : ${restaurantTypes}">
+            <div th:attr="id=${type.toString().toLowerCase()}">
+                <h2 th:text="${type}"></h2>
 
-            <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">
-                <img th:src="@{${restaurant.restaurantPicture}}" th:alt="${restaurant.name}">
-            </a>
+                <div class="restaurants" th:each="restaurant : ${restaurants}">
+                    <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">
+                        <img th:src="@{${restaurant.restaurantPicture}}" th:alt="${restaurant.name}">
+                    </a>
 
-            <div class="description" th:text="${restaurant.name}">Restaurant Name</div>
+                    <div class="description" th:text="${restaurant.name}">Restaurant Name</div>
 
-            <div class="open-close-time">
-                <span th:text="'Open: ' + ${restaurant.openingTime}">Open: 10:00</span> |
-                <span th:text="'Close: ' + ${restaurant.closingTime}">Close: 22:00</span>
+                    <div class="open-close-time">
+                        <span th:text="'Open: ' + ${restaurant.openingTime}">Open: 10:00</span> |
+                        <span th:text="'Close: ' + ${restaurant.closingTime}">Close: 22:00</span>
+                    </div>
+
+                    <div class="edit-buttons" th:if="${user.role.name() == 'ADMIN'}">
+                        <a th:href="@{/restaurants/{restaurantId}/update(restaurantId=${restaurant.id})}">
+                            <button class="update">Update</button>
+                        </a>
+
+                        <form th:action="@{/restaurants/{restaurantId}/delete(restaurantId=${restaurant.id})}" method="post">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="delete">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="edit-buttons">
-                <a th:href="@{/restaurants/{restaurantId}/update(restaurantId=${restaurant.id})}" th:if="${user.role.name() == 'ADMIN'}">
-                    <button class="update">Update</button>
-                </a>
-
-                <form th:action="@{/restaurants/{restaurantId}/delete(restaurantId=${restaurant.id})}" method="post" th:if="${user.role.name() == 'ADMIN'}">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button type="submit" class="delete">Delete</button>
-                </form>
-            </div>
-
         </div>
     </div>
 
@@ -76,7 +82,6 @@
     </a>
 
     <br><hr><br>
-
 </main>
 
 <footer>
