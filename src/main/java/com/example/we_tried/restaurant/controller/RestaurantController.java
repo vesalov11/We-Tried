@@ -87,8 +87,8 @@ public class RestaurantController {
 
     @PostMapping("/new")
     public String createRestaurant(@Valid @ModelAttribute("createRestaurantRequest") CreateRestaurantRequest restaurant,
-                                   @RequestParam("image") MultipartFile image,
-                                   BindingResult bindingResult) throws IOException {
+                                   BindingResult bindingResult,
+                                   @RequestParam("image") MultipartFile image) throws IOException {
 
         if (bindingResult.hasErrors()) {
             return "add-restaurant";
@@ -112,16 +112,19 @@ public class RestaurantController {
         modelAndView.addObject("updateRestaurantRequest", new UpdateRestaurantRequest());
         modelAndView.addObject("restaurantType", RestaurantType.values());
 
+        modelAndView.addObject("restaurantId", restaurantId);
         return modelAndView;
     }
 
     @PutMapping("/{restaurantId}/update")
     public String updateRestaurant(@PathVariable UUID restaurantId,
-                                   @Valid @ModelAttribute("updateRestaurantRequest") UpdateRestaurantRequest updateRestaurantRequest,
-                                   @RequestParam(value = "image", required = false) MultipartFile image,
-                                   BindingResult bindingResult) throws IOException {
+                                   @Valid @ModelAttribute("updateRestaurantRequest")
+                                   UpdateRestaurantRequest updateRestaurantRequest,
+                                   BindingResult bindingResult,
+                                   @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
 
-        if (bindingResult.hasErrors()) {
+           if (bindingResult.hasErrors()) {
+
             return "update-restaurant";
         }
 
