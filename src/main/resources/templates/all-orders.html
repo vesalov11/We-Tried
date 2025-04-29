@@ -39,12 +39,9 @@
             <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
             <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
         </div>
-        <div class="checkbox-container">
-            <input type="checkbox" th:id="'order' + ${order.id}" style="transform: scale(1.5);">
-            <label th:for="'order' + ${order.id}"></label>
-        </div>
+        <button id="addButton">Add</button>
     </div>
 </div>
-<button id="addButton">Add</button>
+
 </body>
 </html>
