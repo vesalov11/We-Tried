@@ -21,20 +21,16 @@
             <h2>Register</h2>
             <form th:action="@{/register}" th:object="${registerRequest}" method="post">
                 <input type="text" th:field="*{username}" placeholder="Username">
-                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error"></div>
-                <small th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+                <small th:errors="*{username}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
 
                 <input type="email" th:field="*{email}" placeholder="Email">
-                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></div>
-                <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+                <small th:errors="*{email}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
 
                 <input type="password" th:field="*{password}" placeholder="Password">
-                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error"></div>
-                <small th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+                <small th:errors="*{password}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
 
                 <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password">
-                <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error"></div>
-                <small th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+                <small th:errors="*{confirmPassword}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
 
                 <button type="submit">Register</button>
             </form>

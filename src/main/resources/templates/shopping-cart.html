@@ -57,7 +57,7 @@
         <input type="text" name="deliveryAddress" placeholder="Enter your address" required>
 
         <label>Total</label>
-        <input type="text" th:value="${totalPrice} + ' lv.'" disabled>
+        <input type="text" th:value="${#numbers.formatDecimal(totalPrice, 1, 2)} + ' lv.'" disabled>
 
         <label>Payment Method</label>
         <select name="paymentMethod" required>
