@@ -34,7 +34,7 @@ class DelivererServiceTest {
         Deliverer deliverer = new Deliverer();
         when(delivererRepository.findById(id)).thenReturn(Optional.of(deliverer));
 
-        Deliverer result = delivererService.getDelivererById(id);
+        Optional<Deliverer> result = delivererService.findById(id);
 
         assertEquals(deliverer, result);
     }
@@ -44,14 +44,14 @@ class DelivererServiceTest {
         UUID id = UUID.randomUUID();
         when(delivererRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> delivererService.getDelivererById(id));
+        assertThrows(IllegalArgumentException.class, () -> delivererService.findById(id));
     }
 
     @Test
     void getCompletedOrders_shouldReturnOrders() {
         UUID id = UUID.randomUUID();
         List<FoodOrder> orders = List.of(new FoodOrder(), new FoodOrder());
-        when(orderRepository.findByDelivererIdAndOrderStatus(id, OrderStatus.COMPLETED)).thenReturn(orders);
+        when(orderRepository.findByDeliverer_IdAndOrderStatus(id, OrderStatus.COMPLETED)).thenReturn(orders);
 
         List<FoodOrder> result = delivererService.getCompletedOrders(id);
 
@@ -96,7 +96,7 @@ class DelivererServiceTest {
     void getDelivererOrders_shouldReturnOrders() {
         UUID id = UUID.randomUUID();
         List<FoodOrder> orders = List.of(new FoodOrder(), new FoodOrder());
-        when(orderRepository.findByDelivererId(id)).thenReturn(orders);
+        when(orderRepository.findByDeliverer_Id(id)).thenReturn(orders);
 
         List<FoodOrder> result = delivererService.getDelivererOrders(id);
 
@@ -135,7 +135,7 @@ class DelivererServiceTest {
         FoodOrder o2 = new FoodOrder();
         o2.setTotalPrice(new BigDecimal("200"));
 
-        when(orderRepository.findByDelivererId(id)).thenReturn(List.of(o1, o2));
+        when(orderRepository.findByDeliverer_Id(id)).thenReturn(List.of(o1, o2));
 
         BigDecimal result = delivererService.calculateTotalOrdersValue(id);
 

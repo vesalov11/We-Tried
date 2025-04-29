@@ -24,13 +24,14 @@ public interface OrderRepository extends JpaRepository<FoodOrder, UUID> {
             @Param("end") LocalDateTime end
     );
 
-    List<FoodOrder> findByDelivererIdAndOrderStatus(UUID delivererId, OrderStatus status);
+    List<FoodOrder> findByDeliverer_IdAndOrderStatus(UUID delivererId, OrderStatus status);
 
-    List<FoodOrder> findByDelivererId(UUID delivererId);
+    List<FoodOrder> findByDeliverer_Id(UUID delivererId);
 
     List<FoodOrder> findByOrderStatus(OrderStatus status);
 
     List<FoodOrder> findAllByOwnerId(UUID id);
+
 
 
 }

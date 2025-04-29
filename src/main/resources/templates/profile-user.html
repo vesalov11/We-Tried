@@ -32,7 +32,11 @@
             </p>
             <p><strong>Email:</strong> <span th:text="${user.email}">email@example.com</span></p>
             <p><strong>Password:</strong> ************</p>
-            <a class="change" th:href="@{/'userId.change'}">Deliverer</a>
+            <form th:action="@{/change-role}" method="post">
+                <input type="hidden" name="userId" th:value="${user.id}">
+                <input type="text" name="phoneNumber" placeholder="Enter phone number">
+                <button type="submit">Promote to Deliverer</button>
+            </form>
         </div>
     </div>
 

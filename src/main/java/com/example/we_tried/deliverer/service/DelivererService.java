@@ -3,8 +3,7 @@ package com.example.we_tried.deliverer.service;
 import com.example.we_tried.deliverer.model.Deliverer;
 import com.example.we_tried.deliverer.repository.DelivererRepository;
 import com.example.we_tried.order.model.FoodOrder;
-import com.example.we_tried.order.model.FoodOrder;
-import com.example.we_tried.order.model.OrderStatus; // Добавяне на OrderStatus
+import com.example.we_tried.order.model.OrderStatus;
 import com.example.we_tried.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,21 +27,20 @@ public class DelivererService {
         this.orderRepository = orderRepository;
     }
 
-    public Deliverer getDelivererById(UUID delivererId) {
-        return delivererRepository.findById(delivererId)
-                .orElseThrow(() -> new IllegalArgumentException("Deliverer not found with ID: " + delivererId));
+    public Optional<Deliverer> findById(UUID userId) {
+        return delivererRepository.findById(userId);
     }
 
     public List<FoodOrder> getCompletedOrders(UUID delivererId) {
 
-        return orderRepository.findByDelivererIdAndOrderStatus(delivererId, OrderStatus.COMPLETED); // Променено на OrderStatus
+        return orderRepository.findByDeliverer_IdAndOrderStatus(delivererId, OrderStatus.COMPLETED);
     }
 
     public BigDecimal calculateMonthlyRevenue(UUID delivererId) {
         LocalDateTime startOfMonth = LocalDate.now().withDayOfMonth(1).atStartOfDay();
         LocalDateTime endOfMonth = startOfMonth.plusMonths(1).minusSeconds(1);
 
-        return orderRepository.sumTotalByDelivererIdAndCompletedBetween(delivererId, OrderStatus.COMPLETED, startOfMonth, endOfMonth) // Променено на OrderStatus
+        return orderRepository.sumTotalByDelivererIdAndCompletedBetween(delivererId, OrderStatus.COMPLETED, startOfMonth, endOfMonth)
                 .orElse(BigDecimal.ZERO);
     }
 
@@ -50,7 +49,7 @@ public class DelivererService {
     }
 
     public List<FoodOrder> getDelivererOrders(UUID delivererId) {
-        return orderRepository.findByDelivererId(delivererId);
+        return orderRepository.findByDeliverer_Id(delivererId);
     }
 
     public boolean isEligibleForBonus(UUID delivererId) {
@@ -62,7 +61,7 @@ public class DelivererService {
 
     public BigDecimal calculateTotalOrdersValue(UUID delivererId) {
 
-        List<FoodOrder> orders = orderRepository.findByDelivererId(delivererId);
+        List<FoodOrder> orders = orderRepository.findByDeliverer_Id(delivererId);
 
         return orders.stream()
                 .map(FoodOrder::getTotalPrice)
@@ -72,4 +71,6 @@ public class DelivererService {
     public void deleteOrderById(UUID orderId) {
         orderRepository.deleteById(orderId);
     }
+
+
 }

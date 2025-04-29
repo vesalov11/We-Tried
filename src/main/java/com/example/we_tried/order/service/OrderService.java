@@ -23,7 +23,7 @@ public class OrderService {
     }
 
     public List<FoodOrder> getDelivererOrders(UUID delivererId) {
-        return orderRepository.findByDelivererId(delivererId);
+        return orderRepository.findByDeliverer_Id(delivererId);
     }
 
     public FoodOrder getOrderById(UUID orderId) {

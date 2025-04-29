@@ -39,11 +39,11 @@ class OrderServiceTest {
     void getDelivererOrders_shouldReturnDelivererOrders() {
         UUID delivererId = UUID.randomUUID();
         List<FoodOrder> orders = List.of(new FoodOrder());
-        when(orderRepository.findByDelivererId(delivererId)).thenReturn(orders);
+        when(orderRepository.findByDeliverer_Id(delivererId)).thenReturn(orders);
 
         List<FoodOrder> result = orderService.getDelivererOrders(delivererId);
 
         assertEquals(1, result.size());
-        verify(orderRepository).findByDelivererId(delivererId);
+        verify(orderRepository).findByDeliverer_Id(delivererId);
     }
 }

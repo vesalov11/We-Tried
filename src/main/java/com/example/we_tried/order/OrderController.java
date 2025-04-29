@@ -1,18 +1,15 @@
 package com.example.we_tried.order;
 
 import com.example.we_tried.deliverer.model.Deliverer;
-import com.example.we_tried.deliverer.repository.DelivererRepository;
 import com.example.we_tried.deliverer.service.DelivererService;
 import com.example.we_tried.order.model.FoodOrder;
 import com.example.we_tried.order.service.OrderService;
 import com.example.we_tried.security.AuthenticationMetaData;
-import com.example.we_tried.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,10 +69,12 @@ public class OrderController {
     }
 
 
-    @PostMapping("/deliverer-orders/add")
+    @PostMapping("/add")
     public String addOrdersToDeliverer(@RequestParam("selectedOrders") List<UUID> selectedOrderIds,
                                        @RequestParam("delivererId") UUID delivererId) {
-        Deliverer deliverer = delivererService.getDelivererById(delivererId);
+
+        Deliverer deliverer = delivererService.findById(delivererId)
+                .orElseThrow(() -> new IllegalArgumentException("Deliverer not found with ID: " + delivererId));
 
         for (UUID orderId : selectedOrderIds) {
             FoodOrder order = orderService.getOrderById(orderId);
@@ -83,7 +82,7 @@ public class OrderController {
             orderService.save(order);
         }
 
-        return "redirect:/{delivererId}/deliverer-orders";
+        return "redirect:/deliverer-orders";
     }
 
 }
