@@ -112,7 +112,7 @@ public class DishController {
     }
 
     @DeleteMapping("/{dishId}/delete")
-    public String deleteRestaurant(@PathVariable UUID dishId) {
+    public String deleteDish(@PathVariable UUID dishId) {
 
         dishService.delete(dishId);
 

@@ -34,7 +34,7 @@ public class CartController {
         ModelAndView model = new ModelAndView("shopping-cart");
         model.addObject("cart", cart);
         model.addObject("orders", cart.getOrders());
-        model.addObject("totalPrice", cartService.getTotalPrice(cart));
+        model.addObject("totalPrice", cart.getTotalPrice());
 
         return model;
     }
@@ -54,7 +54,7 @@ public class CartController {
             @RequestParam String paymentMethod) {
 
         cartService.checkout(authenticationMetaData.getId(), deliveryAddress, paymentMethod);
-        return "redirect:/cart";
+        return "redirect:/profile";
     }
 
     @PostMapping("/increase/{orderItemId}")
