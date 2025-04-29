@@ -2,13 +2,11 @@ package com.example.we_tried.dish;
 
 import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.model.DishType;
-import com.example.we_tried.dish.repository.DishRepository;
 import com.example.we_tried.dish.service.DishService;
 import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.restaurant.service.RestaurantService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,16 +29,13 @@ public class DishController {
 
     private final DishService dishService;
     private final RestaurantService restaurantService;
-    private final DishRepository dishRepository;
 
     @Autowired
-    public DishController(DishService dishService, RestaurantService restaurantService, DishRepository dishRepository) {
+    public DishController(DishService dishService, RestaurantService restaurantService) {
         this.dishService = dishService;
         this.restaurantService = restaurantService;
-        this.dishRepository = dishRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{restaurantId}/add")
     public ModelAndView createNewDish(@PathVariable UUID restaurantId) {
         ModelAndView modelAndView = new ModelAndView("add-dish");
@@ -71,13 +66,13 @@ public class DishController {
             imagePath = dishService.handleImageUpload(image);
         }
 
-        dishService.createDish(request, restaurantId, imagePath);
+        Restaurant restaurant = restaurantService.getById(restaurantId);
+        dishService.createDish(request, restaurant, imagePath);
 
         mv.setViewName("redirect:/restaurants/" + restaurantId);
         return mv;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{dishId}/update")
     public ModelAndView updateDish(@PathVariable UUID dishId) {
         Dish dish = dishService.getById(dishId);
@@ -111,14 +106,15 @@ public class DishController {
         }
 
         dishService.updateDish(dishId, request, imagePath);
-        mv.setViewName("redirect:/restaurants");
+        mv.setViewName("redirect:/dishes");
         return mv;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{dishId}/delete")
-    public String deleteDish(@PathVariable("dishId") UUID dishId) {
-        dishService.deleteDish(dishId);
+    public String deleteDish(@PathVariable UUID dishId) {
+
+        dishService.delete(dishId);
+
         return "redirect:/restaurants";
     }
 
