@@ -56,10 +56,9 @@ public class DishController {
 
         if (bindingResult.hasErrors()) {
             mv.setViewName("add-dish");
-            mv.addObject("createDishRequest", request);       // repopulate the form
-            mv.addObject("dishTypes", DishType.values());     // for <select>
-            mv.addObject("restaurantId", restaurantId);       // for form action URL
-            return mv;
+            mv.addObject("createDishRequest", request);
+            mv.addObject("dishTypes", DishType.values());
+            mv.addObject("restaurantId", restaurantId);
         }
 
         String imagePath = null;
@@ -95,7 +94,7 @@ public class DishController {
         if (bindingResult.hasErrors()) {
             Dish dish = dishService.getById(dishId);
             mv.setViewName("update-dish");
-            mv.addObject("dish", dish); // Needed for the form's action URL
+            mv.addObject("dish", dish);
             mv.addObject("dishTypes", DishType.values());
             mv.addObject("updateDishRequest", request);
             return mv;

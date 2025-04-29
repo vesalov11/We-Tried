@@ -94,17 +94,29 @@ public class CartService {
                 .build());
 
         cart.getOrders().add(newOrder);
+
         return newOrder;
     }
 
 
     private OrderItem createNewOrderItem(FoodOrder order, Dish dish) {
-        return orderItemRepository.save(OrderItem.builder()
+        OrderItem newOrderItem = OrderItem.builder()
                 .dish(dish)
                 .price(dish.getPrice())
                 .quantity(0)
                 .order(order)
-                .build());
+                .build();
+
+        newOrderItem = orderItemRepository.save(newOrderItem);
+        order.getOrderItems().add(newOrderItem);
+
+        // Обнови сумите
+        updateOrderTotal(order);
+        if (order.getCart() != null) {
+            updateCartTotal(order.getCart());
+        }
+
+        return newOrderItem;
     }
 
     public void updateOrderTotal(FoodOrder order) {
