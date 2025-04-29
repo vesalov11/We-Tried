@@ -6,13 +6,13 @@
 }
 
 body {
-    background-color: #fcf3e3;
+    background-color: white;
     min-height: 100vh;
     line-height: 1.6;
 }
 
 header {
-    background-color: #1c5c7e;
+    background-color: #34495E;
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -44,79 +44,50 @@ nav {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
-}
-
-nav a {
-    text-decoration: none;
-    display: inline-block;
 }
 
 .nav-button {
-    background-color: white;
-    color: #1c5c7e;
-    border: none;
-    padding: 10px 20px;
-    margin-left: 15px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    color: white;
+    text-decoration: none;
+    margin: 5px;
+    padding: 8px 15px;
+    background-color: #1c5c7e;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .nav-button:hover {
     background-color: #08acb8;
-    color: #fff;
-    transform: scale(1.03);
 }
 
 .dropdown {
     position: relative;
-    display: inline-block;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: white; 
-    color: #1c5c7e;
-    min-width: 120px; 
-    box-shadow: 0 4px 6px #0000001a;
-    border-radius: 20px;
-    z-index: 1000;
-    border: 1px solid #dcdcdc;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .dropdown-content a {
-    background-color: white;
-    color: #1c5c7e;
-    padding: 8px 15px; 
+    color: #333;
     text-decoration: none;
+    padding: 10px 15px;
     display: block;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
 .dropdown-content a:hover {
-    background-color: #08acb8;
-    color: white;
+    background-color: #f1f1f1;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
-
-.dropdown .nav-button {
-    background-color: white;
-    color: #1c5c7e;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.dropdown .nav-button:hover {
-    background-color: #08acb8;
-    color: white;
-    transform: scale(1.05);
 }
 
 .orders-container {
