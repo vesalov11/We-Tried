@@ -106,7 +106,7 @@ public class DishController {
         }
 
         dishService.updateDish(dishId, request, imagePath);
-        mv.setViewName("redirect:/dishes");
+        mv.setViewName("redirect:/restaurants");
         return mv;
     }
 
