@@ -8,6 +8,7 @@ import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.restaurant.service.RestaurantService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,6 +40,7 @@ public class DishController {
         this.dishRepository = dishRepository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{restaurantId}/add")
     public ModelAndView createNewDish(@PathVariable UUID restaurantId) {
         ModelAndView modelAndView = new ModelAndView("add-dish");
@@ -75,6 +77,7 @@ public class DishController {
         return mv;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{dishId}/update")
     public ModelAndView updateDish(@PathVariable UUID dishId) {
         Dish dish = dishService.getById(dishId);
@@ -112,6 +115,7 @@ public class DishController {
         return mv;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{dishId}/delete")
     public String deleteDish(@PathVariable("dishId") UUID dishId) {
         dishService.deleteDish(dishId);
