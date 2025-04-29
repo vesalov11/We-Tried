@@ -3,8 +3,13 @@ import com.example.we_tried.dish.model.DishType;
 import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.restaurant.model.RestaurantType;
 import com.example.we_tried.restaurant.service.RestaurantService;
+import com.example.we_tried.security.AuthenticationMetaData;
+import com.example.we_tried.user.model.User;
+import com.example.we_tried.user.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,17 +32,21 @@ import java.util.UUID;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final UserService userService;
 
     @Autowired
-    public RestaurantController(RestaurantService restaurantService) {
+    public RestaurantController(RestaurantService restaurantService, UserService userService) {
         this.restaurantService = restaurantService;
+        this.userService = userService;
     }
 
     @GetMapping
     public ModelAndView getAllRestaurants(
             @RequestParam(required = false) RestaurantType type,
-            @RequestParam(required = false) String search
+            @RequestParam(required = false) String search,
+            @AuthenticationPrincipal AuthenticationMetaData authenticationMetaData
     ) {
+        User user = userService.getById(authenticationMetaData.getId());
         List<Restaurant> restaurants;
 
         if(type != null) {
@@ -52,6 +61,8 @@ public class RestaurantController {
         modelAndView.addObject("restaurants", restaurants);
         modelAndView.addObject("restaurantTypes", RestaurantType.values());
         modelAndView.addObject("searchQuery", search);
+        modelAndView.addObject("user", user);
+
         return modelAndView;
     }
 
@@ -68,6 +79,7 @@ public class RestaurantController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{restaurantId}/delete")
     public String deleteRestaurant(@PathVariable UUID restaurantId) {
 
@@ -76,8 +88,10 @@ public class RestaurantController {
         return "redirect:/restaurants";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/new")
     public ModelAndView getNewRestaurantPage() {
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-restaurant");
         modelAndView.addObject("createRestaurantRequest", new CreateRestaurantRequest());
@@ -85,6 +99,7 @@ public class RestaurantController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/new")
     public String createRestaurant(@Valid @ModelAttribute("createRestaurantRequest") CreateRestaurantRequest restaurant,
                                    BindingResult bindingResult,
@@ -101,6 +116,7 @@ public class RestaurantController {
         return "redirect:/restaurants";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{restaurantId}/update")
     public ModelAndView getUpdateRestaurantPage(@PathVariable UUID restaurantId) {
 

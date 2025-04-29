@@ -4,6 +4,7 @@ import com.example.we_tried.deliverer.model.Deliverer;
 import com.example.we_tried.deliverer.service.DelivererService;
 import com.example.we_tried.order.model.FoodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@PreAuthorize("hasRole('DELIVERER')")
 @RequestMapping("/deliveries")
 public class DelivererController {
 
@@ -43,6 +45,7 @@ public class DelivererController {
         return modelAndView;
     }
 
+    @PreAuthorize("hasRole('DELIVERER')")
     @GetMapping("/all")
     public ModelAndView getAllOrders() {
         List<FoodOrder> allOrders = delivererService.getAllOrders();
