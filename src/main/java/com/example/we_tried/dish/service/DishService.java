@@ -78,7 +78,6 @@ public class DishService {
 
     public void delete(UUID dishId) {
         Dish dish = getById(dishId);
-
         dishRepository.delete(dish);
     }
 }

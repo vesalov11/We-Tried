@@ -57,9 +57,10 @@
                                 <button class="add">Update Dish</button>
                             </a>
 
-                            <a th:href="@{'/dishes/' + ${dish.id} + '/delete'}">
-                                <button class="add">Delete Dish</button>
-                            </a>
+                            <form th:action="@{'/dishes/' + ${dish.id} + '/delete'}" method="post">
+                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                <button type="submit" class="add">Delete Dish</button>
+                            </form>
                             <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
                                 <input type="hidden" name="quantity" value="1" />
                                 <button type="submit" class="add-button">Add to Cart</button>
