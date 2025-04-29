@@ -25,11 +25,7 @@
 <main>
 
     <div class="profile-section" th:object="${user}">
-        <div class="profile-circle">
 
-            <img th:src="@{|/images/${user.profilePictureUrl}|}" alt="Profile Picture"/>
-
-        </div>
         <div class="user-info">
             <p><strong>Username:</strong>
                 <a th:href="@{/users/{id}(id=${user.id})}" th:text="${user.username}">username</a>

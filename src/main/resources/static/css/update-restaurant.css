@@ -168,6 +168,7 @@ button:hover {
 
     input[type="text"],
     input[type="time"],
+    input[type="number"]
     select {
         padding: 7px;
         font-size: 14px;
