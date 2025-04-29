@@ -53,7 +53,7 @@ public class DelivererController {
         return modelAndView;
     }
 
-    @GetMapping("/my-orders/{delivererId}")
+    @GetMapping("/{delivererId}/my-orders")
     public ModelAndView getMyOrders(@PathVariable UUID delivererId) {
         List<FoodOrder> delivererOrders = delivererService.getDelivererOrders(delivererId);
 
