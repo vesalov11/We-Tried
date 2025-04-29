@@ -31,6 +31,7 @@
 <main>
     <div class="edit-buttons">
         <a th:href="@{'/dishes/' + ${restaurant.id} + '/add'}"><button class="add">Add Dish</button></a>
+
     </div>
 
     <div class="menus">
@@ -52,6 +53,13 @@
                             <h3 th:text="${dish.name}"></h3>
                             <p class="price" th:text="${dish.price + ' lv.'}"></p>
                             <p th:utext="${#strings.replace(dish.description, '\n', '<br>')}"></p>
+                            <a th:href="@{'/dishes/' + ${dish.id} + '/update'}">
+                                <button class="add">Update Dish</button>
+                            </a>
+
+                            <a th:href="@{'/dishes/' + ${dish.id} + '/delete'}">
+                                <button class="add">Delete Dish</button>
+                            </a>
                             <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
                                 <input type="hidden" name="quantity" value="1" />
                                 <button type="submit" class="add-button">Add to Cart</button>
