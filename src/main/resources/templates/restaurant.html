@@ -22,7 +22,7 @@
             <div id="dropdown-content">
                 <a th:href="@{/profile}">Profile</a>
                 <a th:href="@{/restaurants}">Home</a>
-                <a th:href="@{/logout}">Log Out</a>
+                <a th:href="@{/}">Log Out</a>
             </div>
         </div>
     </div>
@@ -58,10 +58,12 @@
                                 <button class="add">Update Dish</button>
                             </a>
 
-                            <a th:href="@{'/dishes/' + ${dish.id} + '/delete'}">
-                                <button class="add">Delete Dish</button>
-                            </a>
-                            <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
+                            <form th:action="@{/dishes/{dishId}/delete(dishId=${dish.id})}" method="post" th:if="${user.role.name() == 'ADMIN'}">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button type="submit" class="add">Delete Dish</button>
+                            </form>
+
+                            <form th:action="@{'/cart/add/' + ${dish.id}}" method="post" th:if="${user.role.name() == 'ADMIN'}">
                                 <input type="hidden" name="quantity" value="1" />
                                 <button type="submit" class="add-button">Add to Cart</button>
                             </form>
