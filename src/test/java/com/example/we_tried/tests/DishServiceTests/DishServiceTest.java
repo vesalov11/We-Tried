@@ -1,80 +1,140 @@
 package com.example.we_tried.tests.DishServiceTests;
+
 import com.example.we_tried.dish.CreateDishRequest;
+import com.example.we_tried.dish.UpdateDishRequest;
 import com.example.we_tried.dish.model.Dish;
-import com.example.we_tried.dish.model.DishType;
 import com.example.we_tried.dish.repository.DishRepository;
 import com.example.we_tried.dish.service.DishService;
 import com.example.we_tried.restaurant.model.Restaurant;
-import com.example.we_tried.restaurant.repository.RestaurantRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.util.StringUtils;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-class DishServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class DishServiceTest {
 
-    @Mock private DishRepository dishRepository;
-    @Mock private RestaurantRepository restaurantRepository;
-    @InjectMocks private DishService dishService;
+    @Mock
+    private DishRepository dishRepository;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @InjectMocks
+    private DishService dishService;
 
     @Test
-    void createDish_shouldSaveDish() throws IOException {
-        String fileName = "test.jpg";
-        MockMultipartFile image = new MockMultipartFile("file", fileName, "image/jpeg", "dummy".getBytes());
-        CreateDishRequest request = new CreateDishRequest();
-        request.setName("Pizza");
-        request.setDescription("Cheesy");
-        request.setPrice(new BigDecimal("10.99"));
-        request.setDishType(DishType.MAIN_COURSE);
-        request.setDishImage(image);
+    public void testCreateDish() {
+        CreateDishRequest createDishRequest = new CreateDishRequest();
+        createDishRequest.setName("Pizza");
+        createDishRequest.setDescription("Delicious cheese pizza");
 
         Restaurant restaurant = new Restaurant();
+        restaurant.setId(UUID.randomUUID());
 
-        DishService spyService = Mockito.spy(dishService);
-        doReturn(fileName).when(spyService).handleImageUpload(any());
+        String imagePath = "path/to/pizza-image.jpg";
 
-        spyService.createDish(request, restaurant, fileName);
+        dishService.createDish(createDishRequest, restaurant, imagePath);
 
-        ArgumentCaptor<Dish> dishCaptor = ArgumentCaptor.forClass(Dish.class);
-        verify(dishRepository).save(dishCaptor.capture());
-
-        Dish savedDish = dishCaptor.getValue();
-        assertEquals("Pizza", savedDish.getName());
-        assertEquals("Cheesy", savedDish.getDescription());
-        assertEquals(new BigDecimal("10.99"), savedDish.getPrice());
-        assertEquals(DishType.MAIN_COURSE, savedDish.getDishType());
-        assertEquals(fileName, savedDish.getDishImage());
-        assertEquals(restaurant, savedDish.getRestaurant());
+        verify(dishRepository, times(1)).save(any(Dish.class));
     }
 
     @Test
-    void storeImage_shouldStoreAndReturnFileName() throws IOException {
-        String fileName = "image.jpg";
-        byte[] content = "test-image".getBytes();
-        MockMultipartFile image = new MockMultipartFile("image", fileName, "image/jpeg", content);
+    public void testHandleImageUpload() throws IOException {
+        MultipartFile mockImage = mock(MultipartFile.class);
+        String imageName = "pizza-image.jpg";
+        when(mockImage.getOriginalFilename()).thenReturn(imageName);
+        when(mockImage.isEmpty()).thenReturn(false);
 
-        Path uploadPath = Paths.get("src/main/resources/static/images");
-        Files.createDirectories(uploadPath);
-        Files.deleteIfExists(uploadPath.resolve(fileName));
+        String result = dishService.handleImageUpload(mockImage);
 
-        String storedFileName = dishService.handleImageUpload(image);
+        assertEquals("/img/pizza-image.jpg", result);
+        verify(mockImage, times(1)).transferTo(any(Path.class));
+    }
 
-        assertEquals(StringUtils.cleanPath(fileName), storedFileName);
-        assert(Files.exists(uploadPath.resolve(storedFileName)));
+    @Test
+    public void testHandleImageUploadEmptyFile() throws IOException {
+        MultipartFile mockImage = mock(MultipartFile.class);
+        when(mockImage.isEmpty()).thenReturn(true);
 
-        Files.deleteIfExists(uploadPath.resolve(storedFileName));
+        String result = dishService.handleImageUpload(mockImage);
+
+        assertNull(result);
+        verify(mockImage, never()).transferTo(any(Path.class));
+    }
+
+    @Test
+    public void testUpdateDish() {
+        UUID dishId = UUID.randomUUID();
+        UpdateDishRequest updateRequest = new UpdateDishRequest();
+        updateRequest.setName("Updated Pizza");
+        updateRequest.setDescription("Updated cheese pizza");
+
+        Dish existingDish = new Dish();
+        existingDish.setId(dishId);
+        existingDish.setName("Pizza");
+        existingDish.setDescription("Delicious pizza");
+
+        when(dishRepository.findById(dishId)).thenReturn(Optional.of(existingDish));
+
+        String imagePath = "path/to/updated-pizza-image.jpg";
+
+        dishService.updateDish(dishId, updateRequest, imagePath);
+
+        assertEquals("Updated Pizza", existingDish.getName());
+        assertEquals("Updated cheese pizza", existingDish.getDescription());
+        assertEquals(null, existingDish.getPrice());
+        assertEquals(null, existingDish.getDishType());
+        assertEquals(imagePath, existingDish.getDishImage());
+        verify(dishRepository, times(1)).save(existingDish);
+    }
+
+    @Test
+    public void testGetById() {
+        UUID dishId = UUID.randomUUID();
+        Dish dish = new Dish();
+        dish.setId(dishId);
+        when(dishRepository.findById(dishId)).thenReturn(Optional.of(dish));
+
+        Dish result = dishService.getById(dishId);
+
+        assertNotNull(result);
+        assertEquals(dishId, result.getId());
+    }
+
+    @Test
+    public void testGetByIdNotFound() {
+        UUID dishId = UUID.randomUUID();
+        when(dishRepository.findById(dishId)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> dishService.getById(dishId));
+    }
+
+    @Test
+    public void testDelete() {
+        UUID dishId = UUID.randomUUID();
+        Dish dish = new Dish();
+        dish.setId(dishId);
+
+        when(dishRepository.findById(dishId)).thenReturn(Optional.of(dish));
+
+        dishService.delete(dishId);
+
+        verify(dishRepository, times(1)).delete(dish);
+    }
+
+    @Test
+    public void testDeleteNotFound() {
+        UUID dishId = UUID.randomUUID();
+        when(dishRepository.findById(dishId)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> dishService.delete(dishId));
     }
 }

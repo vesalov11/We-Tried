@@ -5,19 +5,14 @@ import com.example.we_tried.dish.UpdateDishRequest;
 import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.repository.DishRepository;
 import com.example.we_tried.restaurant.model.Restaurant;
-import com.example.we_tried.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -27,7 +22,6 @@ public class DishService {
     private static final String UPLOAD_DIR = "src/main/resources/static/img/";
 
     private final DishRepository dishRepository;
-    private final RestaurantRepository restaurantRepository;
 
     public void createDish(CreateDishRequest createDishRequest, Restaurant restaurant, String imagePath) {
 
