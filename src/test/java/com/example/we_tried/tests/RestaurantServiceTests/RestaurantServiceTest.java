@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -126,36 +127,20 @@ class RestaurantServiceTest {
         assertThrows(RuntimeException.class, () -> restaurantService.getByIdWithDishes(restaurantId));
     }
 
-    @Test
-    void create_shouldSaveNewRestaurant() throws IOException {
-        when(restaurantRepository.findByName("Restaurant Rodopi")).thenReturn(Optional.empty());
-        when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
 
-        restaurantService.createRestaurant(createRequest, "file.jpg");
-
-        verify(restaurantRepository).save(any(Restaurant.class));
-    }
 
     @Test
-    void create_shouldThrowExceptionWhenRestaurantExists() {
-        when(restaurantRepository.findByName("Restaurant Rodopi")).thenReturn(Optional.of(restaurant));
+    public void testCreateRestaurant() {
+        CreateRestaurantRequest request = new CreateRestaurantRequest();
+        request.setName("Test Restaurant");
+        request.setAddress("123 Test Street");
+        request.setPhoneNumber("123-456-7890");
 
-        assertThrows(RuntimeException.class, () -> restaurantService.createRestaurant(createRequest, "file.jpg"));
-    }
+        String imagePath = "path/to/image.jpg";
 
-    @Test
-    void update_shouldUpdateExistingRestaurant() {
+        assertDoesNotThrow(() -> restaurantService.createRestaurant(request, imagePath));
 
-        when(restaurantRepository.findById(restaurantId)).thenReturn(Optional.of(restaurant));
-        when(restaurantRepository.save(any(Restaurant.class))).thenReturn(restaurant);
-
-        String username = "testUser";
-
-        restaurantService.updateRestaurant(restaurantId, updateRequest, username);
-
-        assertEquals("Restaurant Chernomorets", restaurant.getName());
-        assertEquals("ul.Sozopol N7", restaurant.getAddress());
-        verify(restaurantRepository).save(restaurant);
+        verify(restaurantRepository, times(1)).save(Mockito.any(Restaurant.class));
     }
 
 

@@ -98,6 +98,33 @@ class CartServiceTest {
 
     @Test
     void addToCart_shouldCreateNewCartWhenNotExists() {
+        UUID userId = UUID.randomUUID();
+        UUID dishId = UUID.randomUUID();
+
+        User user = new User();
+        user.setId(userId);
+
+        Dish dish = new Dish();
+        dish.setId(dishId);
+        dish.setPrice(new BigDecimal("15.00"));
+
+        Cart cart = new Cart();
+        cart.setOwner(user);
+        cart.setTotalPrice(BigDecimal.ZERO);
+        cart.setOrders(new ArrayList<>());
+
+        FoodOrder order = new FoodOrder();
+        order.setRestaurant(new Restaurant());
+        order.setOrderItems(new ArrayList<>());
+        order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
+        order.setCart(cart);
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setDish(dish);
+        orderItem.setPrice(dish.getPrice());
+        orderItem.setQuantity(2);
+        orderItem.setOrder(order);
+
         when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.empty());
         when(dishRepository.findById(dishId)).thenReturn(Optional.of(dish));
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
@@ -110,7 +137,11 @@ class CartServiceTest {
         verify(cartRepository).save(any(Cart.class));
         verify(orderRepository).save(any(FoodOrder.class));
         verify(orderItemRepository).save(any(OrderItem.class));
+        assertEquals(2, orderItem.getQuantity());
+        assertEquals(new BigDecimal("30.00"), order.getTotalPrice());
+        assertEquals(new BigDecimal("30.00"), cart.getTotalPrice());
     }
+
 
     @Test
     void addToCart_shouldAddQuantityToExistingItem() {
@@ -150,9 +181,28 @@ class CartServiceTest {
 
     @Test
     void checkout_shouldProcessValidCart() {
-        order.getOrderItems().add(orderItem);
-        cart.getOrders().add(order);
+        UUID userId = UUID.randomUUID();
+        Cart cart = new Cart();
+        User user = new User();
+        user.setId(userId);
 
+        OrderItem orderItem = new OrderItem();
+        orderItem.setQuantity(1);
+        orderItem.setPrice(new BigDecimal("10.00"));
+
+        FoodOrder order = new FoodOrder();
+        order.setOrderItems(new ArrayList<>());
+        order.getOrderItems().add(orderItem);
+        order.setRestaurant(new Restaurant());
+        order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
+        order.setDeliveryAddress("Test Address");
+        order.setPaymentMethod(PaymentMethod.CARD);
+        cart.setOrders(new ArrayList<>());
+        cart.getOrders().add(order);
+        cart.setOwner(user);
+        cart.setTotalPrice(new BigDecimal("10.00"));
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.of(cart));
 
         cartService.checkout(userId, "Ivan Mihailov N49", "CARD");
