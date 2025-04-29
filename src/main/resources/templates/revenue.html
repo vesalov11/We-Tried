@@ -20,7 +20,6 @@
             <button id="dropdown-button">Admin</button>
             <div id="dropdown-content">
                 <a th:href="@{/restaurants}">Profile</a>
-                <!-- Add paths -->
                 <a href="">Orders</a>
             </div>
         </div>
@@ -29,10 +28,10 @@
 
 <main>
     <div class="filter-buttons">
-        <button class="filter" th:onclick="'fetchData('daily')'">Daily</button>
-        <button class="filter" th:onclick="'fetchData('weekly')'">Weekly</button>
-        <button class="filter" th:onclick="'fetchData('monthly')'">Monthly</button>
-        <button class="filter" th:onclick="'fetchData('yearly')'">Yearly</button>
+        <a th:href="@{/revenue(period='daily')}" th:classappend="${selectedPeriod == 'daily'} ? ' active-filter' : ''" class="filter">Daily</a>
+        <a th:href="@{/revenue(period='weekly')}" th:classappend="${selectedPeriod == 'weekly'} ? ' active-filter' : ''" class="filter">Weekly</a>
+        <a th:href="@{/revenue(period='monthly')}" th:classappend="${selectedPeriod == 'monthly'} ? ' active-filter' : ''" class="filter">Monthly</a>
+        <a th:href="@{/revenue(period='yearly')}" th:classappend="${selectedPeriod == 'yearly'} ? ' active-filter' : ''" class="filter">Yearly</a>
     </div>
 
     <br>
@@ -40,22 +39,26 @@
     <br>
 
     <div class="data-section">
-        <h2>Revenue Data</h2>
-        <table id="revenue-table">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Revenue</th>
-            </tr>
-            </thead>
-            <tbody id="revenue-body">
-            <tr th:each="revenue : ${revenueList}">
-                <td th:text="${revenue.date}"></td>
-                <td th:text="${revenue.revenue}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <h2>Revenue Data - <span th:text="${selectedPeriod}">[period]</span></h2>
+
+    <div th:if="${selectedPeriod == 'daily'}">
     </div>
+
+    <table id="revenue-table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Revenue</th>
+        </tr>
+        </thead>
+        <tbody id="revenue-body">
+        <tr th:each="revenue : ${revenueList}">
+            <td th:text="${revenue.date}"></td>
+            <td th:text="${revenue.revenue}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
     <br>
     <hr>
@@ -63,60 +66,19 @@
 </main>
 
 <footer>
-    <div class="about-us"></div>
-    <strong>WeDeliver</strong><br>
-    <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
-        Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+    <div class="about-us">
+        <strong>WeDeliver</strong><br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
 
-    <p>Find us on:<br>
-        📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
-        📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
-    </p>
+        <p>Find us on:<br>
+            📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
 
-    <p>Or you can call us on 📞 +359*********<br>
-        and send us an email on 📧 wedeliver@gmail.com</p>
+        <p>Or you can call us on 📞 +359*********<br> and send us an email on 📧 wedeliver@gmail.com</p>
     </div>
 </footer>
-
-<script>
-    const data = {
-        daily: [
-            { date: '2023-10-01', revenue: '$500' },
-            { date: '2023-10-02', revenue: '$450' },
-        ],
-        weekly: [
-            { date: '2', revenue: '$3000' },
-            { date: '4/8/2025 - 4/16/2025', revenue: '$3200' },
-        ],
-        monthly: [
-            { date: 'October', revenue: '$12000' },
-            { date: 'November', revenue: '$15000' },
-        ],
-        yearly: [
-            { date: '2022', revenue: '$150000' },
-            { date: '2023', revenue: '$180000' },
-        ],
-    };
-
-    function fetchData(period) {
-        const tableBody = document.getElementById('revenue-body');
-        tableBody.innerHTML = '';
-
-        const periodData = data[period];
-        periodData.forEach(entry => {
-            const row = document.createElement('tr');
-            const dateCell = document.createElement('td');
-            const revenueCell = document.createElement('td');
-
-            dateCell.textContent = entry.date;
-            revenueCell.textContent = entry.revenue;
-
-            row.appendChild(dateCell);
-            row.appendChild(revenueCell);
-            tableBody.appendChild(row);
-        });
-    }
-</script>
 
 </body>
 </html>
