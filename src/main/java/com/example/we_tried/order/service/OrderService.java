@@ -25,4 +25,13 @@ public class OrderService {
     public List<FoodOrder> getDelivererOrders(UUID delivererId) {
         return orderRepository.findByDelivererId(delivererId);
     }
+
+    public FoodOrder getOrderById(UUID orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
+    }
+
+    public void save(FoodOrder order) {
+        orderRepository.save(order);
+    }
 }

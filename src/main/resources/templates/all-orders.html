@@ -9,14 +9,15 @@
 <body>
 <header>
     <div class="logo">
-        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo">
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
     </div>
     <nav>
         <a th:href="@{/deliverer-orders}" class="nav-button">My Orders</a>
+
         <div class="dropdown">
             <a href="#" class="nav-button">Account</a>
             <div class="dropdown-content">
-                <a th:href="@{/deliveries/{delivererId}/profile(id=${deliverer.id})}">Profile</a>
+                <a th:href="@{/profile-delivery}">Profile</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>
@@ -25,21 +26,17 @@
 
 <div class="orders-container">
     <div class="order-card" th:each="order : ${allOrders}">
-        <img src="https://via.placeholder.com/150" alt="Restaurant" class="restaurant-img">
+        <img th:src="${order.restaurant.restaurantPicture}" alt="Restaurant Image" class="restaurant-img" />
         <div class="order-info">
-            <h3 th:text="${order.restaurant.name}">Restaurant Name</h3>
-
-            <p class="items">Items:</p>
-            <ul>
-                <li th:each="item : ${order.orderItems}"
-                    th:text="${item.quantity} + 'x ' + ${item.dish.name}">2x Burger</li>
-            </ul>
-
-            <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
-            <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St</p>
-            <p class="orderplaced" th:text="'Order placed at: ' + ${#temporals.format(order.orderDate, 'HH:mm:ss dd-MM-yyyy')}">
-                Order placed at: 12:00
+            <h3 th:text="${order.restaurant.name}">Burger Palace</h3>
+            <p class="items">Items:
+                <span th:each="item, iterStat : ${order.orderItems}">
+        <span th:text="${item.dish.name + ' x' + item.quantity}"></span>
+        <span th:if="${!iterStat.last}">, </span>
+    </span>
             </p>
+            <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
+            <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
             <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
         </div>
         <div class="checkbox-container">
@@ -48,7 +45,6 @@
         </div>
     </div>
 </div>
-
 <button id="addButton">Add</button>
 </body>
 </html>

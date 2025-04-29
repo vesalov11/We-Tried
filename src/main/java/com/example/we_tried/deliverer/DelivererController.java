@@ -3,6 +3,7 @@ package com.example.we_tried.deliverer;
 import com.example.we_tried.deliverer.model.Deliverer;
 import com.example.we_tried.deliverer.service.DelivererService;
 import com.example.we_tried.order.model.FoodOrder;
+import com.example.we_tried.order.model.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
-@PreAuthorize("hasRole('DELIVERER')")
 @RequestMapping("/deliveries")
 public class DelivererController {
 
@@ -42,26 +43,6 @@ public class DelivererController {
         modelAndView.addObject("monthlyRevenue", monthlyRevenue);
         modelAndView.addObject("hasBonus", hasBonus);
         modelAndView.addObject("totalOrdersValue", totalOrdersValue);
-
-        return modelAndView;
-    }
-
-    @GetMapping("/all")
-    public ModelAndView getAllOrders() {
-        List<FoodOrder> allOrders = delivererService.getAllOrders();
-
-        ModelAndView modelAndView = new ModelAndView("all-orders");
-        modelAndView.addObject("orders", allOrders);
-
-        return modelAndView;
-    }
-
-    @GetMapping("/deliverer-orders/{delivererId}")
-    public ModelAndView getMyOrders(@PathVariable UUID delivererId) {
-        List<FoodOrder> delivererOrders = delivererService.getDelivererOrders(delivererId);
-
-        ModelAndView modelAndView = new ModelAndView("deliverer-orders");
-        modelAndView.addObject("delivererOrders", delivererOrders);
 
         return modelAndView;
     }
