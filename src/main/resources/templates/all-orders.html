@@ -16,7 +16,7 @@
         <div class="dropdown">
             <a href="#" class="nav-button">Account</a>
             <div class="dropdown-content">
-                <a th:href="@{/profile-delivery}">Profile</a>
+                <a th:href="@{/deliveries/{delivererId}/profile(id=${deliverer.id})}">Profile</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>
