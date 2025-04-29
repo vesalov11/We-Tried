@@ -24,19 +24,20 @@ public class RevenueService {
     }
 
     public List<RevenueResponse> getRevenueByPeriod(String period) {
-        List<FoodOrder> completedOrders = orderRepository.findByOrderStatus(OrderStatus.COMPLETED);
+        List<FoodOrder> allOrders = orderRepository.findAll();
 
         return switch (period.toLowerCase()) {
-            case "daily"   -> groupByDay(completedOrders);
-            case "weekly"  -> groupByWeek(completedOrders);
-            case "monthly" -> groupByMonth(completedOrders);
-            case "yearly"  -> groupByYear(completedOrders);
+            case "daily"   -> groupByDay(allOrders);
+            case "weekly"  -> groupByWeek(allOrders);
+            case "monthly" -> groupByMonth(allOrders);
+            case "yearly"  -> groupByYear(allOrders);
             default        -> throw new IllegalArgumentException("Invalid period: " + period);
         };
     }
 
     private List<RevenueResponse> groupByDay(List<FoodOrder> orders) {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         return orders.stream()
                 .collect(Collectors.groupingBy(
                         o -> o.getOrderDate().toLocalDate().format(fmt),
@@ -101,4 +102,10 @@ public class RevenueService {
                 .map(e -> new RevenueResponse(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
     }
+    public BigDecimal calculateTotalRevenue(List<RevenueResponse> revenueList) {
+        return revenueList.stream()
+                .map(RevenueResponse::getRevenue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }
