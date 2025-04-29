@@ -14,19 +14,19 @@
         <h2>Add New Dish</h2>
 
             <label for="name">Dish Name:</label>
-            <input type="text" id="name" th:field="*{name}" required>
+            <input type="text" id="name" th:field="*{name}">
             <span class="danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
             <label for="description">Ingredients (separate with commas):</label>
-            <textarea id="description" th:field="*{description}" required></textarea>
+            <textarea id="description" th:field="*{description}"></textarea>
             <span class="danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 
             <label for="price">Price:</label>
-            <input type="number" id="price" th:field="*{price}" step="0.01" min="0" required>
+            <input type="number" id="price" th:field="*{price}" step="0.01" min="0">
             <span class="danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
 
             <label for="dishType">Dish Type:</label>
-            <select id="dishType" th:field="*{dishType}" required>
+            <select id="dishType" th:field="*{dishType}">
                 <option th:each="type : ${T(com.example.we_tried.dish.model.DishType).values()}"
                         th:value="${type}" th:text="${type}">
                 </option>
@@ -34,7 +34,7 @@
             <span class="danger" th:if="${#fields.hasErrors('dishType')}" th:errors="*{dishType}"></span>
 
             <label for="image">Dish Image:</label>
-            <input type="file" id="image" name="image" accept="image/*" required>
+            <input type="file" id="image" name="image" accept="image/*">
 
             <button type="submit">Add Dish</button>
         </form>

@@ -25,7 +25,6 @@ public class CreateDishRequest {
     @NotNull(message = "Dish type cannot be empty!")
     private DishType dishType;
 
-    @NotNull(message = "Dish image cannot be empty!")
     private MultipartFile dishImage;
 
 }

@@ -46,13 +46,20 @@ public class DishController {
     }
 
     @PostMapping("/{restaurantId}/add")
-    public String submitNewDish(@PathVariable UUID restaurantId,
-                                @Valid @ModelAttribute("createDishRequest") CreateDishRequest request,
-                                @RequestParam(value = "image", required = false) MultipartFile image,
-                                BindingResult bindingResult) throws IOException {
+    public ModelAndView submitNewDish(@PathVariable UUID restaurantId,
+                                      @Valid @ModelAttribute("createDishRequest") CreateDishRequest request,
+                                      BindingResult bindingResult,
+                                      @RequestParam(value = "image", required = false) MultipartFile image
+    ) throws IOException {
+
+        ModelAndView mv = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
-            return "add-dish";
+            mv.setViewName("add-dish");
+            mv.addObject("createDishRequest", request);       // repopulate the form
+            mv.addObject("dishTypes", DishType.values());     // for <select>
+            mv.addObject("restaurantId", restaurantId);       // for form action URL
+            return mv;
         }
 
         String imagePath = null;
@@ -63,7 +70,8 @@ public class DishController {
         Restaurant restaurant = restaurantService.getById(restaurantId);
         dishService.createDish(request, restaurant, imagePath);
 
-        return "redirect:/restaurants/" + restaurantId;
+        mv.setViewName("redirect:/restaurants/" + restaurantId);
+        return mv;
     }
 
     @GetMapping("/{dishId}/update")
@@ -77,13 +85,20 @@ public class DishController {
     }
 
     @PostMapping("/{dishId}/update")
-    public String submitUpdateDish(@PathVariable UUID dishId,
-                                   @Valid @ModelAttribute("updateDishRequest") UpdateDishRequest request,
-                                   @RequestParam(value = "image", required = false) MultipartFile image,
-                                   BindingResult bindingResult) throws IOException {
+    public ModelAndView submitUpdateDish(@PathVariable UUID dishId,
+                                         @Valid @ModelAttribute("updateDishRequest") UpdateDishRequest request,
+                                         @RequestParam(value = "image", required = false) MultipartFile image,
+                                         BindingResult bindingResult) throws IOException {
+
+        ModelAndView mv = new ModelAndView();
 
         if (bindingResult.hasErrors()) {
-            return "update-dish";
+            Dish dish = dishService.getById(dishId);
+            mv.setViewName("update-dish");
+            mv.addObject("dish", dish); // Needed for the form's action URL
+            mv.addObject("dishTypes", DishType.values());
+            mv.addObject("updateDishRequest", request);
+            return mv;
         }
 
         String imagePath = null;
@@ -92,8 +107,8 @@ public class DishController {
         }
 
         dishService.updateDish(dishId, request, imagePath);
-
-        return "redirect:/dishes";
+        mv.setViewName("redirect:/dishes");
+        return mv;
     }
 
     @DeleteMapping("/{dishId}/delete")
