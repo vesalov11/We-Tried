@@ -110,12 +110,12 @@ public class DishController {
         return mv;
     }
 
-    @PostMapping("{dishId}/delete")
+    @DeleteMapping("/{dishId}/delete")
     public String deleteDish(@PathVariable UUID dishId) {
-        System.out.println(">>> Deleting dish: " + dishId);
-        UUID restaurantId = dishService.getById(dishId).getRestaurant().getId();
+
         dishService.delete(dishId);
-        return "redirect:/restaurants/" + restaurantId;
+
+        return "redirect:/restaurants";
     }
 
 }

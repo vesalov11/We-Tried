@@ -25,10 +25,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 UUID delivererId = userDetails.getId();
                 response.sendRedirect("/all-orders");
             } else {
-                response.sendRedirect("/home");
+                response.sendRedirect("/restaurants");
             }
         } else {
-            response.sendRedirect("/home");
+            response.sendRedirect("/restaurants");
         }
 
     }

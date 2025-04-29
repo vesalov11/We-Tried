@@ -9,14 +9,14 @@
 <body>
 <header>
     <div class="logo">
-        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo">
     </div>
     <nav>
-        <a th:href="@{/all-orders}" class="nav-button">All Orders</a>
+        <a th:href="@{/all}" class="nav-button">All Orders</a>
         <div class="dropdown">
             <a href="#" class="nav-button">Account</a>
             <div class="dropdown-content">
-                <a th:href="@{/profile-delivery}">Profile</a>
+                <a th:href="@{/deliveries/{delivererId}/profile(id=${deliverer.id})}">Profile</a>
                 <a th:href="@{/logout}">Log Out</a>
             </div>
         </div>
@@ -25,17 +25,29 @@
 
 <div class="orders-container">
     <div class="order-card" th:each="order : ${delivererOrders}">
-        <img src="https://via.placeholder.com/150" alt="Restaurant" class="restaurant-img">
+        <img th:src="@{/img/restaurant-placeholder.png}" alt="Restaurant" class="restaurant-img">
         <div class="order-info">
-            <h3 th:text="${order.restaurant}">Burger Palace</h3>
-            <p class="items" th:text="'Items: ' + ${order.orderItems}">Items: 2x Classic Burger, 1x Fries</p>
+            <h3 th:text="${order.restaurant.name}">Restaurant Name</h3>
+
+            <p class="items">Items:</p>
+            <ul>
+                <li th:each="item : ${order.orderItems}"
+                    th:text="${item.quantity} + 'x ' + ${item.dish.name}">2x Burger</li>
+            </ul>
+
             <p class="price" th:text="'Price: $' + ${order.totalPrice}">Price: $18.50</p>
-            <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St, Apt 4B</p>
-            <p class="orderplaced" th:text="'Order placed in: ' + ${order.acceptedAt}">Order placed in: 12:00</p>
-            <p class="orderedelivered" th:text="'Order delivered in: ' + ${order.deliveredAt}">Order delivered in: 13:00</p>
+            <p class="address" th:text="'Delivery Address: ' + ${order.deliveryAddress}">Delivery Address: 123 Main St</p>
+
+            <p class="orderplaced"
+               th:if="${order.acceptedAt != null}"
+               th:text="'Order placed in: ' + ${#temporals.format(order.acceptedAt, 'HH:mm:ss dd-MM-yyyy')}">
+                Order placed in: 12:00
+            </p>
+
             <p class="phone" th:text="'Phone number: ' + ${order.phoneNumber}">Phone number: 12345678</p>
+
             <button class="remove-order" title="Remove Order">
-                <img src="img/garbage-bin-10420.png" alt="Remove">
+                <img th:src="@{/img/garbage-bin-10420.png}" alt="Remove">
             </button>
         </div>
     </div>

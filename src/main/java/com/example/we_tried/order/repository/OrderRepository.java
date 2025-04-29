@@ -31,4 +31,6 @@ public interface OrderRepository extends JpaRepository<FoodOrder, UUID> {
     List<FoodOrder> findByOrderStatus(OrderStatus status);
 
     List<FoodOrder> findAllByOwnerId(UUID id);
+
+
 }

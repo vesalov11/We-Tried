@@ -69,4 +69,7 @@ public class DelivererService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    public void deleteOrderById(UUID orderId) {
+        orderRepository.deleteById(orderId);
+    }
 }

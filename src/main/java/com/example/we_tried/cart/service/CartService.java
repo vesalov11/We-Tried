@@ -167,6 +167,7 @@ public class CartService {
             order.setDeliveryAddress(deliveryAddress);
             order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
             order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
+            order.setPhoneNumber(order.getPhoneNumber());
             updateOrderTotal(order);
             order.setCart(null);
             orderRepository.save(order);

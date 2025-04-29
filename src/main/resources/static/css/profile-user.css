@@ -127,7 +127,7 @@ a:hover {
 
 .orders-title {
     text-align: center;
-    margin: 20px 0;
+    margin: 10px 0;
     color: #34495E;
 }
 
@@ -136,14 +136,14 @@ a:hover {
     margin: 0 auto;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
 }
 
 .order-row {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 6px 0;
     border-bottom: 1px solid #f1f1f1;
 }
 
@@ -154,7 +154,22 @@ a:hover {
 .order-row span {
     flex: 1;
     text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
 }
+
+/* Ограничаване до 3 ястия */
+.order-dishes {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 
 footer {
     background-color: #34495E;

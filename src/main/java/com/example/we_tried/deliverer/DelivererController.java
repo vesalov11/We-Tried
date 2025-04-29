@@ -6,6 +6,7 @@ import com.example.we_tried.order.model.FoodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class DelivererController {
         this.delivererService = delivererService;
     }
 
-    @GetMapping("/profile/{delivererId}")
+    @GetMapping("/{delivererId}/profile")
     public ModelAndView getDelivererProfile(@PathVariable UUID delivererId) {
         Deliverer deliverer = delivererService.getDelivererById(delivererId);
         List<FoodOrder> deliveredOrders = delivererService.getCompletedOrders(delivererId);
@@ -45,7 +46,6 @@ public class DelivererController {
         return modelAndView;
     }
 
-    @PreAuthorize("hasRole('DELIVERER')")
     @GetMapping("/all")
     public ModelAndView getAllOrders() {
         List<FoodOrder> allOrders = delivererService.getAllOrders();
@@ -56,7 +56,7 @@ public class DelivererController {
         return modelAndView;
     }
 
-    @GetMapping("/{delivererId}/my-orders")
+    @GetMapping("/deliverer-orders/{delivererId}")
     public ModelAndView getMyOrders(@PathVariable UUID delivererId) {
         List<FoodOrder> delivererOrders = delivererService.getDelivererOrders(delivererId);
 
@@ -65,6 +65,13 @@ public class DelivererController {
 
         return modelAndView;
     }
+
+    @DeleteMapping("/{orderId}/delete")
+    public String deleteOrder(@PathVariable UUID orderId) {
+        delivererService.deleteOrderById(orderId);
+        return "redirect:/deliveries/{delivererId}/my-orders";
+    }
+
 
 
 
