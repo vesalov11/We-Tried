@@ -112,9 +112,9 @@ button:hover {
 
 .danger {
     margin-top: -10px;
-    margin-bottom: 10px;
     color: #E74C3C;
     font-size: 15px;
+    padding: 10px;
 }
 
 @media (max-width: 768px) {
