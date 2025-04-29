@@ -23,7 +23,10 @@
             <button id="dropdown-button">User</button>
             <div id="dropdown-content">
                 <a th:href="@{/profile}">Profile</a>
-                <a th:href="@{/revenue}">Revenue</a>
+                <a th:if="${user.role.name() == 'ADMIN'}"
+                   th:href="@{/revenue}">
+                    Revenue
+                </a>
                 <a th:href="@{/}">Log Out</a>
             </div>
         </div>

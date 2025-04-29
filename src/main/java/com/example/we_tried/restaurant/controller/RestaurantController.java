@@ -68,14 +68,17 @@ public class RestaurantController {
 
 
     @GetMapping("/{restaurantId}")
-    public ModelAndView getRestaurantDetails(@PathVariable UUID restaurantId) {
+    public ModelAndView getRestaurantDetails(@PathVariable UUID restaurantId, @AuthenticationPrincipal AuthenticationMetaData authenticationMetaData) {
 
         Restaurant restaurant = restaurantService.getByIdWithDishes(restaurantId);
+        User user = userService.getById(authenticationMetaData.getId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("restaurant");
         modelAndView.addObject("restaurant", restaurant);
         modelAndView.addObject("dishTypes", DishType.values());
+        modelAndView.addObject("dishes", restaurant.getDishes());
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 

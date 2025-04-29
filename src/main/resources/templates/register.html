@@ -10,14 +10,7 @@
 
 <main>
     <div class="container">
-
-        <input type="radio" name="form-toggle" id="show-register" checked hidden>
-
-        <div class="toggle-buttons">
-            <label for="show-register">Register</label>
-        </div>
-
-        <div class="form-box" id="register">
+        <div class="form-box" id="register" style="display: block;">
             <h2>Register</h2>
             <form th:action="@{/register}" th:object="${registerRequest}" method="post">
                 <input type="text" th:field="*{username}" placeholder="Username">
@@ -35,7 +28,6 @@
                 <button type="submit">Register</button>
             </form>
         </div>
-
     </div>
 </main>
 
