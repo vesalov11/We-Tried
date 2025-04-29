@@ -50,7 +50,8 @@
             <div th:attr="id=${type.toString().toLowerCase()}">
                 <h2 th:text="${type}"></h2>
 
-                <div class="restaurants" th:each="restaurant : ${restaurants}">
+                <div class="restaurants" th:each="restaurant : ${restaurants}"
+                     th:if="${restaurant.restaurantType.name() == type.name()}">
                     <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">
                         <img th:src="@{${restaurant.restaurantPicture}}" th:alt="${restaurant.name}">
                     </a>
