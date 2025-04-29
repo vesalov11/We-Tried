@@ -170,13 +170,16 @@ a:hover {
     text-overflow: ellipsis;
 }
 
+.change{
+    text-align: center;
+}
 
 footer {
     background-color: #34495E;
     color: white;
     padding: 20px;
     text-align: center;
-    margin-top: auto; /* Това ще гарантира, че footer-ът е на дъното */
+    margin-top: auto;
 }
 
 footer a {

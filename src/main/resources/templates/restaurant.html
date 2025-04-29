@@ -48,7 +48,8 @@
                 <h2 th:text="${type}"></h2>
                 <div class="dishes-wrapper">
                     <div class="dish" th:each="dish : ${restaurant.dishes}" th:if="${dish.dishType == type}">
-                        <img th:src="@{'/images/' + ${dish.dishImage}}" th:alt="${dish.name}">
+                        <img th:src="@{${dish.dishImage}}" th:alt="${dish.name}">
+
                         <div class="description">
                             <h3 th:text="${dish.name}"></h3>
                             <p class="price" th:text="${dish.price + ' lv.'}"></p>
