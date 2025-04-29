@@ -88,8 +88,15 @@ input[type="text"],
 input[type="time"],
 select,
 input[type="file"],
+input[type="number"],
 button {
-    width: 80%;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    transition: border 0.3s;
 }
 
 button {
@@ -168,6 +175,7 @@ button:hover {
 
     input[type="text"],
     input[type="time"],
+    input[type="number"],
     select {
         padding: 7px;
         font-size: 14px;
