@@ -1,0 +1,100 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table food_order {
+  id binary(16) [pk]
+  accepted_at time(6)
+  delivered_at time(6)
+  delivery_address varchar(255)
+  order_date datetime(6)
+  order_status enum('COMPLETED', 'PICKED_UP', 'WAITING_FOR_DELIVERY')
+  payment_method tinyint
+  phone_number varchar(255)
+  total_price decimal(38,2)
+  cart_id binary(16)
+  deliverer_id binary(16)
+  owner_id binary(16)
+  restaurant_id binary(16)
+}
+
+Table admin {
+  id binary(16) [pk]
+  email varchar(255)
+  first_name varchar(255)
+  last_name varchar(255)
+  password varchar(255)
+  role enum('ADMIN', 'DELIVERER', 'USER')
+  username varchar(255)
+}
+
+Table cart {
+  id binary(16) [pk]
+  total_price decimal(38,2)
+  owner_id binary(16)
+}
+
+Table deliverer {
+  id binary(16) [pk]
+  email varchar(255)
+  first_name varchar(255)
+  last_name varchar(255)
+  password varchar(255)
+  role enum('ADMIN', 'DELIVERER', 'USER')
+  username varchar(255)
+  active bit(1)
+  monthly_target decimal(38,2)
+  phone_number varchar(255)
+  value double
+  restaurant_id binary(16)
+}
+
+Table dish {
+  id binary(16) [pk]
+  description varchar(255)
+  dish_image varchar(255)
+  dish_type enum('DESSERT', 'MAIN_COURSE', 'PASTA', 'PIZZA', 'SALAD', 'STARTER', 'SUSHI')
+  name varchar(255)
+  price decimal(38,2)
+  restaurant_id binary(16)
+}
+
+Table order_item {
+  id binary(16) [pk]
+  price decimal(38,2)
+  quantity int
+  dish_id binary(16)
+  order_id binary(16)
+}
+
+Table restaurant {
+  id binary(16) [pk]
+  address varchar(255)
+  closing_time time(6)
+  name varchar(255)
+  opening_time time(6)
+  phone_number varchar(255)
+  restaurant_picture varchar(255)
+  restaurant_type enum()
+}
+
+Table user {
+  id binary(16) [pk]
+  email varchar(255)
+  first_name varchar(255)
+  last_name varchar(255)
+  password varchar(255)
+  role enum('ADMIN', 'DELIVERER', 'USER')
+  username varchar(255)
+  address varchar(255)
+  phone_number varchar(255)
+  profile_picture_url varchar(255)
+}
+Ref: food_order.owner_id > user.id
+Ref: food_order.cart_id > cart.id
+Ref: food_order.deliverer_id > deliverer.id
+Ref: food_order.restaurant_id > restaurant.id
+Ref: order_item.order_id > food_order.id
+Ref: order_item.dish_id > dish.id
+Ref: dish.restaurant_id > restaurant.id
+Ref: cart.owner_id > user.id
+Ref: deliverer.restaurant_id > restaurant.id
