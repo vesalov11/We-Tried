@@ -8,16 +8,12 @@ import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -29,7 +25,10 @@ public class DishService {
     private final DishRepository dishRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public void createDish(CreateDishRequest createDishRequest, Restaurant restaurant, String imagePath) {
+    public void createDish(CreateDishRequest createDishRequest, UUID restaurantId, String imagePath) {
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
 
         Dish dish = Dish.builder()
                 .name(createDishRequest.getName())
@@ -76,9 +75,8 @@ public class DishService {
         return dishRepository.findById(dishId).orElseThrow(() -> new RuntimeException("Dish not found"));
     }
 
-    public void delete(UUID dishId) {
-        Dish dish = getById(dishId);
+    public void deleteDish(UUID dishId) {
 
-        dishRepository.delete(dish);
+        dishRepository.deleteById(dishId);
     }
 }

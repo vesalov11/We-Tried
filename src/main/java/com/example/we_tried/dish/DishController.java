@@ -2,6 +2,7 @@ package com.example.we_tried.dish;
 
 import com.example.we_tried.dish.model.Dish;
 import com.example.we_tried.dish.model.DishType;
+import com.example.we_tried.dish.repository.DishRepository;
 import com.example.we_tried.dish.service.DishService;
 import com.example.we_tried.restaurant.model.Restaurant;
 import com.example.we_tried.restaurant.service.RestaurantService;
@@ -29,11 +30,13 @@ public class DishController {
 
     private final DishService dishService;
     private final RestaurantService restaurantService;
+    private final DishRepository dishRepository;
 
     @Autowired
-    public DishController(DishService dishService, RestaurantService restaurantService) {
+    public DishController(DishService dishService, RestaurantService restaurantService, DishRepository dishRepository) {
         this.dishService = dishService;
         this.restaurantService = restaurantService;
+        this.dishRepository = dishRepository;
     }
 
     @GetMapping("/{restaurantId}/add")
@@ -66,8 +69,7 @@ public class DishController {
             imagePath = dishService.handleImageUpload(image);
         }
 
-        Restaurant restaurant = restaurantService.getById(restaurantId);
-        dishService.createDish(request, restaurant, imagePath);
+        dishService.createDish(request, restaurantId, imagePath);
 
         mv.setViewName("redirect:/restaurants/" + restaurantId);
         return mv;
@@ -106,15 +108,13 @@ public class DishController {
         }
 
         dishService.updateDish(dishId, request, imagePath);
-        mv.setViewName("redirect:/dishes");
+        mv.setViewName("redirect:/restaurants");
         return mv;
     }
 
     @DeleteMapping("/{dishId}/delete")
-    public String deleteDish(@PathVariable UUID dishId) {
-
-        dishService.delete(dishId);
-
+    public String deleteDish(@PathVariable("dishId") UUID dishId) {
+        dishService.deleteDish(dishId);
         return "redirect:/restaurants";
     }
 

@@ -76,6 +76,7 @@ public class RestaurantController {
         modelAndView.setViewName("restaurant");
         modelAndView.addObject("restaurant", restaurant);
         modelAndView.addObject("dishTypes", DishType.values());
+        modelAndView.addObject("dishes", restaurant.getDishes());
         return modelAndView;
     }
 
