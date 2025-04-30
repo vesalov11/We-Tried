@@ -18,7 +18,7 @@
             <div id="dropdown-content">
                 <a th:href="@{/profile}">Profile</a>
                 <a th:href="@{/restaurants}">Home</a>
-                <a th:href="@{/logout}">Log Out</a>
+                <a th:href="@{/}">Log Out</a>
             </div>
         </div>
     </div>
@@ -34,15 +34,13 @@
             </div>
 
             <div class="quantity-buttons">
-                <!-- Decrease quantity -->
+
                 <form th:action="@{/cart/decrease/{id}(id=${item.id})}" method="post" style="display:inline;">
                     <button class="qty-btn" type="submit">−</button>
                 </form>
 
-                <!-- Show quantity -->
                 <input type="text" disabled th:placeholder="${item.quantity}" />
 
-                <!-- Increase quantity -->
                 <form th:action="@{/cart/increase/{id}(id=${item.id})}" method="post" style="display:inline;">
                     <button class="qty-btn" type="submit">+</button>
                 </form>

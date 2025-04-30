@@ -16,7 +16,7 @@
             <button id="dropdown-button">User</button>
             <div id="dropdown-content">
                 <a th:href="@{/restaurants}">Home</a>
-                <a th:href="@{/logout}">Log Out</a>
+                <a th:href="@{/}">Log Out</a>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
             <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}">2025-04-01</span>
             <span th:text="${order.orderStatus}">Delivered</span>
             <span th:text="${order.totalPrice}">15.00</span>
-            <span class="order-dishes" th:text="${#strings.listJoin(order.orderItems.?[dish != null].![dish.name], ', ')}">Product Name</span>
+            th:text="${order.orderItems != null ? #strings.listJoin(order.orderItems.^[dish != null].![dish.name], ', ') : 'No dishes'}">
         </div>
     </div>
 
