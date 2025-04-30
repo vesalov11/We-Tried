@@ -51,9 +51,10 @@ public class CartController {
     public String checkout(
             @AuthenticationPrincipal AuthenticationMetaData authenticationMetaData,
             @RequestParam String deliveryAddress,
-            @RequestParam String paymentMethod) {
+            @RequestParam String paymentMethod,
+            @RequestParam String phoneNumber) {
 
-        cartService.checkout(authenticationMetaData.getId(), deliveryAddress, paymentMethod);
+        cartService.checkout(authenticationMetaData.getId(), deliveryAddress, paymentMethod, phoneNumber);
         return "redirect:/profile";
     }
 
