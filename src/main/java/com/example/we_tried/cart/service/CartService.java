@@ -142,7 +142,7 @@ public class CartService {
     }
 
     @Transactional
-    public void checkout(UUID userId, String deliveryAddress, String paymentMethod) {
+    public void checkout(UUID userId, String deliveryAddress, String paymentMethod, String phoneNumber) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -167,7 +167,7 @@ public class CartService {
             order.setDeliveryAddress(deliveryAddress);
             order.setPaymentMethod(PaymentMethod.valueOf(paymentMethod));
             order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
-            order.setPhoneNumber(order.getPhoneNumber());
+            order.setPhoneNumber(phoneNumber);
             order.setOrderDate(LocalDateTime.now());
             updateOrderTotal(order);
             order.setCart(null);
