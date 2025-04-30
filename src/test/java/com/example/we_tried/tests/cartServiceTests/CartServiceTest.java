@@ -159,7 +159,7 @@ class CartServiceTest {
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.of(cart));
 
-        cartService.checkout(userId, "Ivan Mihailov N49", "CARD");
+        cartService.checkout(userId, "Ivan Mihailov N49", "CARD","059233232");
 
         assertNull(order.getCart());
         assertEquals(OrderStatus.WAITING_FOR_DELIVERY, order.getOrderStatus());
