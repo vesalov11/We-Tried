@@ -44,7 +44,11 @@
             <span th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}">2025-04-01</span>
             <span th:text="${order.orderStatus}">Delivered</span>
             <span th:text="${order.totalPrice}">15.00</span>
-            th:text="${order.orderItems != null ? #strings.listJoin(order.orderItems.^[dish != null].![dish.name], ', ') : 'No dishes'}">
+            <span th:each="item, iterStat : ${order.orderItems}"
+                  th:if="${item.dish != null}"
+                  th:text="${item.dish.name + (iterStat.last ? '' : ', ')}">
+    Dish Name
+  </span>
         </div>
     </div>
 

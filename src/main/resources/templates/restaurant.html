@@ -54,7 +54,7 @@
                             <h3 th:text="${dish.name}"></h3>
                             <p class="price" th:text="${dish.price + ' lv.'}"></p>
                             <p th:utext="${#strings.replace(dish.description, '\n', '<br>')}"></p>
-                            <a th:href="@{'/dishes/' + ${dish.id} + '/update'}">
+                            <a th:href="@{'/dishes/' + ${dish.id} + '/update'}" th:if="${user.role.name() == 'ADMIN'}">
                                 <button class="add">Update Dish</button>
                             </a>
 
@@ -63,7 +63,7 @@
                                 <button type="submit" class="add">Delete Dish</button>
                             </form>
 
-                            <form th:action="@{'/cart/add/' + ${dish.id}}" method="post" th:if="${user.role.name() == 'ADMIN'}">
+                            <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
                                 <input type="hidden" name="quantity" value="1" />
                                 <button type="submit" class="add-button">Add to Cart</button>
                             </form>
