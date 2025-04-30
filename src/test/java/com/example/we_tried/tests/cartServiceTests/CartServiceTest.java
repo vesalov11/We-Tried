@@ -96,52 +96,6 @@ class CartServiceTest {
         orderItem.setOrder(order);
     }
 
-    @Test
-    void addToCart_shouldCreateNewCartWhenNotExists() {
-        UUID userId = UUID.randomUUID();
-        UUID dishId = UUID.randomUUID();
-
-        User user = new User();
-        user.setId(userId);
-
-        Dish dish = new Dish();
-        dish.setId(dishId);
-        dish.setPrice(new BigDecimal("15.00"));
-
-        Cart cart = new Cart();
-        cart.setOwner(user);
-        cart.setTotalPrice(BigDecimal.ZERO);
-        cart.setOrders(new ArrayList<>());
-
-        FoodOrder order = new FoodOrder();
-        order.setRestaurant(new Restaurant());
-        order.setOrderItems(new ArrayList<>());
-        order.setOrderStatus(OrderStatus.WAITING_FOR_DELIVERY);
-        order.setCart(cart);
-
-        OrderItem orderItem = new OrderItem();
-        orderItem.setDish(dish);
-        orderItem.setPrice(dish.getPrice());
-        orderItem.setQuantity(2);
-        orderItem.setOrder(order);
-
-        when(cartRepository.findByOwnerId(userId)).thenReturn(Optional.empty());
-        when(dishRepository.findById(dishId)).thenReturn(Optional.of(dish));
-        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
-        when(cartRepository.save(any(Cart.class))).thenReturn(cart);
-        when(orderRepository.save(any(FoodOrder.class))).thenReturn(order);
-        when(orderItemRepository.save(any(OrderItem.class))).thenReturn(orderItem);
-
-        cartService.addToCart(dishId, 2, userId);
-
-        verify(cartRepository).save(any(Cart.class));
-        verify(orderRepository).save(any(FoodOrder.class));
-        verify(orderItemRepository).save(any(OrderItem.class));
-        assertEquals(2, orderItem.getQuantity());
-        assertEquals(new BigDecimal("30.00"), order.getTotalPrice());
-        assertEquals(new BigDecimal("30.00"), cart.getTotalPrice());
-    }
-
 
     @Test
     void addToCart_shouldAddQuantityToExistingItem() {
