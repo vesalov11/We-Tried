@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet"  href="/css/profile-delivery.css">
+</head>
+
+<body>
+
+<header>
+    <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+
+    <div>
+        <a th:href="@{/deliverer-orders}"><button>My orders</button></a>
+        <a th:href="@{/all-orders}"><button>All orders</button></a>
+        <a href="#"><button>Help</button></a>
+    </div>
+</header>
+
+<main>
+    <section>
+        <h2>Delivery Person Information</h2>
+        <p><strong>Name:</strong> <span th:text="${deliverer.firstName + deliverer.lastName}">[Delivery Person's Name]</span></p>
+        <p><strong>Phone:</strong> <span th:text="${deliverer.phoneNumber}">[Phone Number]</span></p>
+        <p><strong>Email:</strong> <span th:text="${deliverer.email}">[Email Address]</span></p>
+    </section>
+
+    <section>
+        <h2>Delivered Orders</h2>
+        <div th:each="order : ${deliveredOrders}">
+            <p th:text="'Order: ' + ${order.restaurant} + ' - ' + ${order.totalPrice}">[List of Delivered Orders]</p>
+        </div>
+        <p><strong>Total Value:</strong> <span th:text="${totalOrdersValue}">[Total Value]</span></p>
+    </section>
+</main>
+
+</body>
+
+</html>

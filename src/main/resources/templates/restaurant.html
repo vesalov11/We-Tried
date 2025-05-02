@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${restaurant.name}">Restaurant Page</title>
+    <link rel="stylesheet" href="/css/restaurant.css">
+</head>
+
+<body>
+<header>
+    <div class="navbar">
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+
+        <div class="search-box-container">
+            <input type="text" class="search-box" placeholder="Search here...">
+            <button class="search-button">Search</button>
+        </div>
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Account</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile}">Profile</a>
+                <a th:href="@{/restaurants}">Home</a>
+                <a th:href="@{/}">Log Out</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="edit-buttons">
+        <a th:href="@{'/dishes/' + ${restaurant.id} + '/add'}"><button class="add">Add Dish</button></a>
+
+    </div>
+
+    <div class="menus">
+        <a th:href="'#' + ${type.toString().toLowerCase()}" th:each="type : ${dishTypes}">
+            <button th:text="${type.toString()}">Menu</button>
+        </a>
+    </div>
+
+    <br><hr><br>
+
+    <div class="food-catalog">
+        <div th:each="type : ${dishTypes}">
+            <div th:attr="id=${type.toString().toLowerCase()}">
+                <h2 th:text="${type}"></h2>
+                <div class="dishes-wrapper">
+                    <div class="dish" th:each="dish : ${restaurant.dishes}" th:if="${dish.dishType == type}">
+                        <img th:src="@{${dish.dishImage}}" th:alt="${dish.name}">
+
+                        <div class="description">
+                            <h3 th:text="${dish.name}"></h3>
+                            <p class="price" th:text="${dish.price + ' lv.'}"></p>
+                            <p th:utext="${#strings.replace(dish.description, '\n', '<br>')}"></p>
+                            <a th:href="@{'/dishes/' + ${dish.id} + '/update'}" th:if="${user.role.name() == 'ADMIN'}">
+                                <button class="add">Update Dish</button>
+                            </a>
+
+                            <form th:action="@{/dishes/{dishId}/delete(dishId=${dish.id})}" method="post" th:if="${user.role.name() == 'ADMIN'}">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button type="submit" class="add">Delete Dish</button>
+                            </form>
+
+                            <form th:action="@{'/cart/add/' + ${dish.id}}" method="post">
+                                <input type="hidden" name="quantity" value="1" />
+                                <button type="submit" class="add-button">Add to Cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br><hr><br>
+
+    <a th:href="@{/cart}">
+        <div class="cart-icon">🛒</div>
+    </a>
+</main>
+
+<footer>
+    <div class="about-us">
+        <strong>WeDeliver</strong><br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+        <p>Find us on:<br>
+            📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
+
+        <p>Or you can call us on 📞 +359*********<br>
+            and email us on 📧 wedeliver@gmail.com</p>
+    </div>
+</footer>
+</body>
+</html>

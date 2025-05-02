@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeDeliver</title>
+    <link rel="stylesheet" type="text/css" href="/css/register.css">
+</head>
+<body>
+
+<main>
+    <div class="container">
+        <div class="form-box" id="register" style="display: block;">
+            <h2>Register</h2>
+            <form th:action="@{/register}" th:object="${registerRequest}" method="post">
+                <input type="text" th:field="*{username}" placeholder="Username">
+                <small th:errors="*{username}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+
+                <input type="email" th:field="*{email}" placeholder="Email">
+                <small th:errors="*{email}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+
+                <input type="password" th:field="*{password}" placeholder="Password">
+                <small th:errors="*{password}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+
+                <input type="password" th:field="*{confirmPassword}" placeholder="Confirm Password">
+                <small th:errors="*{confirmPassword}" class="danger" style="color: #fc2e2e; font-size: 15px;"></small>
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

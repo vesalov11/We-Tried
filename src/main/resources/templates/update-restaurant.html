@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Restaurant</title>
+  <link rel="stylesheet" href="/css/update-restaurant.css">
+</head>
+
+<body>
+
+<main>
+  <div class="form-container">
+    <form th:action="@{/restaurants/{restaurantId}/update(restaurantId=${restaurantId})}"
+          th:object="${updateRestaurantRequest}"
+          method="post"
+          enctype="multipart/form-data">
+
+      <input type="hidden" name="_method" value="put"/>
+
+      <h2>Update Restaurant</h2>
+
+      <label for="name">Restaurant Name</label>
+      <input type="text" id="name" th:field="*{name}">
+      <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="danger" style="color: #fc2e2e; font-size: 15px;"></span>
+
+      <label for="address">Address</label>
+      <input type="text" id="address" th:field="*{address}">
+      <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="danger" style="color: #fc2e2e; font-size: 15px;"></span>
+
+      <label for="phoneNumber">Phone Number</label>
+      <input type="text" id="phoneNumber" th:field="*{phoneNumber}">
+
+      <label for="openingTime">Opening Time</label>
+      <input type="time" id="openingTime" th:field="*{openingTime}">
+
+      <label for="closingTime">Closing Time</label>
+      <input type="time" id="closingTime" th:field="*{closingTime}">
+
+      <label for="restaurantType">Restaurant Type</label>
+      <select id="restaurantType" th:field="*{restaurantType}">
+        <option th:each="type : ${T(com.example.we_tried.restaurant.model.RestaurantType).values()}"
+                th:value="${type}" th:text="${type}">Type</option>
+      </select>
+
+      <label for="image">Restaurant Image:</label>
+      <input type="file" id="image" name="image" accept="image/*">
+
+      <button type="submit">Update Restaurant</button>
+    </form>
+  </div>
+</main>
+
+</body>
+</html>

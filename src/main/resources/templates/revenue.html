@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue</title>
+    <link rel="stylesheet" href="/css/revenue.css">
+</head>
+<body>
+<header>
+    <div class="navbar">
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+
+        <div class="search-box-container">
+            <input type="text" class="search-box" placeholder="Search here...">
+            <button class="search-button">Search</button>
+        </div>
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Admin</button>
+            <div id="dropdown-content">
+                <a th:href="@{/restaurants}">Profile</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="filter-buttons">
+        <a th:href="@{/revenue(period='daily')}" th:classappend="${selectedPeriod == 'daily'} ? ' active-filter' : ''" class="filter">Daily</a>
+        <a th:href="@{/revenue(period='weekly')}" th:classappend="${selectedPeriod == 'weekly'} ? ' active-filter' : ''" class="filter">Weekly</a>
+        <a th:href="@{/revenue(period='monthly')}" th:classappend="${selectedPeriod == 'monthly'} ? ' active-filter' : ''" class="filter">Monthly</a>
+        <a th:href="@{/revenue(period='yearly')}" th:classappend="${selectedPeriod == 'yearly'} ? ' active-filter' : ''" class="filter">Yearly</a>
+    </div>
+
+    <br>
+    <hr>
+    <br>
+
+    <div class="data-section">
+    <h2>Revenue Data - <span th:text="${selectedPeriod}">[period]</span></h2>
+
+    <div th:if="${selectedPeriod == 'daily'}">
+    </div>
+
+    <table id="revenue-table">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Revenue</th>
+        </tr>
+        </thead>
+        <tbody id="revenue-body">
+        <tr th:each="revenue : ${revenueList}">
+            <td th:text="${revenue.date}"></td>
+            <td th:text="${revenue.revenue}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+    <br>
+    <hr>
+    <br>
+</main>
+
+<footer>
+    <div class="about-us">
+        <strong>WeDeliver</strong><br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+        <p>Find us on:<br>
+            📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
+
+        <p>Or you can call us on 📞 +359*********<br> and send us an email on 📧 wedeliver@gmail.com</p>
+    </div>
+</footer>
+
+</body>
+</html>

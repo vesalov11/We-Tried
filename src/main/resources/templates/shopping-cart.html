@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="/css/shopping-cart.css">
+</head>
+
+<body>
+<header>
+    <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo" >
+    <div class="navbar">
+
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Account</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile}">Profile</a>
+                <a th:href="@{/restaurants}">Home</a>
+                <a th:href="@{/}">Log Out</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div th:each="order : ${orders}">
+        <div th:each="item : ${order.orderItems}" class="product">
+            <img th:src="@{/images/default-dish.jpg}" alt="Product Image">
+            <div class="product-info">
+                <h4 th:text="${item.dish.name}">Dish Name</h4>
+                <p th:text="${item.price} + ' lv.'">Price</p>
+            </div>
+
+            <div class="quantity-buttons">
+
+                <form th:action="@{/cart/decrease/{id}(id=${item.id})}" method="post" style="display:inline;">
+                    <button class="qty-btn" type="submit">−</button>
+                </form>
+
+                <input type="text" disabled th:placeholder="${item.quantity}" />
+
+                <form th:action="@{/cart/increase/{id}(id=${item.id})}" method="post" style="display:inline;">
+                    <button class="qty-btn" type="submit">+</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <form th:action="@{/cart/checkout}" method="post" class="order-info">
+        <label>Address of order</label>
+        <input type="text" name="deliveryAddress" placeholder="Enter your address" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phoneNumber" placeholder="Enter your phone number" required>
+
+        <label>Total</label>
+        <input  class="price_label" type="text" th:value="${#numbers.formatDecimal(totalPrice, 1, 2)} + ' lv.'" disabled>
+
+
+        <label>Payment Method</label>
+        <select name="paymentMethod" required>
+            <option th:each="method : ${T(com.example.we_tried.order.model.PaymentMethod).values()}"
+                    th:value="${method}"
+                    th:text="${method.name()}">
+            </option>
+        </select>
+
+        <button class="order-button" type="submit">ORDER</button>
+    </form>
+</main>
+
+<footer>
+    <div class="about-us">
+        WeDeliver<br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants. <br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+        <p>Find us on:<br>
+            📸Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
+
+        <p>Or you can call us on 📞+359*********<br>
+            and send us an email on 📧wedeliver@gmail.com</p>
+    </div>
+</footer>
+</body>
+</html>

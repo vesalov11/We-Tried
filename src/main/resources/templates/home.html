@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+
+<body>
+<header>
+    <div class="navbar">
+        <img src="/img/We-Tried-logo3.png" alt="WeTried logo" class="logo">
+
+        <div class="search-box-container">
+            <form th:action="@{/restaurants}" method="get">
+                <input type="text" class="search-box" name="search" th:value="${searchQuery}" placeholder="Search here...">
+                <button class="search-button" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="dropdown-menu">
+            <button id="dropdown-button">Account</button>
+            <div id="dropdown-content">
+                <a th:href="@{/profile}">Profile</a>
+                <a th:if="${user.role.name() == 'ADMIN'}" th:href="@{/revenue}">Revenue</a>
+                <a th:href="@{/}">Log Out</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="edit-buttons" th:if="${user.role.name() == 'ADMIN'}">
+        <a th:href="@{/restaurants/new}">
+            <button class="add">Add</button>
+        </a>
+    </div>
+
+    <div class="menus">
+        <a th:href="'#' + ${type.toString().toLowerCase()}" th:each="type : ${restaurantTypes}">
+            <button th:text="${type.toString()}">Menu</button>
+        </a>
+    </div>
+
+    <br><hr><br>
+
+    <div class="restaurants-list">
+        <div th:each="type : ${restaurantTypes}" th:attr="id=${type.toString().toLowerCase()}">
+            <h2 th:text="${type}"></h2>
+
+            <div class="restaurants-container">
+                <div class="restaurants" th:each="restaurant : ${restaurants}"
+                     th:if="${restaurant.restaurantType.name() == type.name()}">
+                    <a th:href="@{/restaurants/{id}(id=${restaurant.id})}">
+                        <img th:src="@{${restaurant.restaurantPicture}}" th:alt="${restaurant.name}">
+                    </a>
+
+                    <div class="description" th:text="${restaurant.name}">Restaurant Name</div>
+
+                    <div class="open-close-time">
+                        <span th:text="'Open: ' + ${restaurant.openingTime}">Open: 10:00</span> |
+                        <span th:text="'Close: ' + ${restaurant.closingTime}">Close: 22:00</span>
+                    </div>
+
+                    <div class="edit-buttons" th:if="${user.role.name() == 'ADMIN'}">
+                        <a th:href="@{/restaurants/{restaurantId}/update(restaurantId=${restaurant.id})}">
+                            <button class="update">Update</button>
+                        </a>
+
+                        <form th:action="@{/restaurants/{restaurantId}/delete(restaurantId=${restaurant.id})}" method="post">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="delete">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a th:href="@{/cart}">
+        <div class="cart-icon">🛒</div>
+    </a>
+
+    <br><hr><br>
+</main>
+
+<footer>
+    <div class="about-us">
+        <strong>WeDeliver</strong><br>
+        <p>WeTried, founded in 2025, offers fast and reliable food delivery from a wide range of restaurants.<br>
+            Our goal is to provide excellent service and ensure every customer is satisfied with their experience.</p>
+
+        <p>Find us on:<br>
+            📸 Instagram: <a href="https://www.instagram.com">@wedeliver</a><br>
+            📘 Facebook: <a href="https://www.facebook.com">WeDeliver</a>
+        </p>
+
+        <p>Or you can call us on 📞 +359*********<br>
+            and email us on 📧 wedeliver@gmail.com</p>
+    </div>
+</footer>
+
+</body>
+</html>
